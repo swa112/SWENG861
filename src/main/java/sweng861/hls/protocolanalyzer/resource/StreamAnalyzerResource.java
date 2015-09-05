@@ -19,7 +19,7 @@ import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 public class StreamAnalyzerResource {
 	
 	@GET
-	public Collection<ValidationErrorLogEntry> analyzeStreamResult(@QueryParam("url") String url){
+	public Collection<HLSMediaFile> analyzeStreamResult(@QueryParam("url") String url){
 		HLSMediaFileService fileMediaService = new HLSMediaFileServiceImpl();
 		List<HLSMediaFile> analyzedFiles = new ArrayList<HLSMediaFile>(); 
 		try {
@@ -30,10 +30,12 @@ public class StreamAnalyzerResource {
 //		for(HLSMediaFile file : analyzedFiles){
 //			
 //		}
-		Collection<ValidationErrorLogEntry> validationErrors = new ArrayList<ValidationErrorLogEntry>();
-		ValidationErrorLogEntry log1 = new ValidationErrorLogEntry(ValidationErrorSeverityType.FATAL, analyzedFiles.get(0), "xyz rule validation failed");
-		validationErrors.add(log1);
-		return validationErrors;
+		
+//		Collection<ValidationErrorLogEntry> validationErrors = new ArrayList<ValidationErrorLogEntry>();
+		ValidationErrorLogEntry log1 = new ValidationErrorLogEntry(ValidationErrorSeverityType.FATAL, "xyz rule validation failed");
+		analyzedFiles.get(0).addValidationError(log1);
+		//		validationErrors.add(log1);
+		return analyzedFiles;
 	}
 
 }

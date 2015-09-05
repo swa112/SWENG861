@@ -43,6 +43,22 @@ public enum MediaFileType {
 			return null;
 		}
 	},
+	
+	NOT_FOUND {
+
+		@Override
+		public MediaFileTagType[] getRequiredTags() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public MediaFileTagType[] getOptionTags() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+	}
 	;
 	
 	public abstract MediaFileTagType[] getRequiredTags();

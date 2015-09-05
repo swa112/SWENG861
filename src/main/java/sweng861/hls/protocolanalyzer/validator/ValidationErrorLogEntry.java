@@ -9,13 +9,10 @@ public class ValidationErrorLogEntry{
 	
 	private ValidationErrorSeverityType errorType; 
 	
-	private String fileName;
-	
 	private String message; 
 	
-	public ValidationErrorLogEntry(ValidationErrorSeverityType errorType, HLSMediaFile file, String message){
+	public ValidationErrorLogEntry(ValidationErrorSeverityType errorType,  String message){
 		this.errorType = errorType; 
-		this.fileName = file.getFileName();
 		this.message = message; 
 	}
 	
@@ -31,14 +28,7 @@ public class ValidationErrorLogEntry{
 		this.errorType = errorType;
 	}
 
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
+	
 	public String getMessage() {
 		return message;
 	}
