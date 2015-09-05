@@ -14,20 +14,20 @@ import sweng861.hls.protocolanalyzer.HLSConstants;
 import sweng861.hls.protocolanalyzer.validator.ValidationErrorLogEntry;
 import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 
-public class HLSMediaFileServiceImpl implements HLSMediaFileService{
+public class HLSMediaFileAnalyzerServiceImpl implements HLSMediaFileAnalyzerService{
 	
 	
 	public List<HLSMediaFile> analyzeFiles(String urlStr) throws MalformedURLException, IOException {
 		List<HLSMediaFile> fileList = new ArrayList<HLSMediaFile>();
-		parseAndCreateFiles(urlStr, fileList);
+		processFiles(urlStr, fileList);
 		return fileList;
 	}
 	
-	private void parseAndCreateFiles(String urlStr, List<HLSMediaFile> fileList) throws IOException {
+	private void processFiles(String urlStr, List<HLSMediaFile> fileList) throws IOException {
 			HLSMediaFile file = new HLSMediaFile(urlStr);
 			fileList.add(file);
 			int lastIndex = urlStr.lastIndexOf('/');
-			String baseUrl = urlStr.substring(0, lastIndex+1);
+			String baseUrl = urlStr.substring(0, lastIndex+1); //need to determine if relative or absolute
 
 			
 			URL url = null;
@@ -42,20 +42,30 @@ public class HLSMediaFileServiceImpl implements HLSMediaFileService{
 				do {
 					line = reader.readLine();
 					
-					file.addFileLine(line);
-						
-					if (line!=null && !line.matches(HLSConstants.TAG_PATTERN)){
-						
-						String nextURL = baseUrl.concat(line);
-						
-						//Line should be URL
-						if (!line.matches(HLSConstants.TS_FILE_PATTERN)){
-							parseAndCreateFiles(nextURL, fileList);
+					if (line != null) {
+						file.addFileLine(line);
+							
+						if (!line.matches(HLSConstants.TAG_PATTERN)){
+							
+							String nextURL = baseUrl.concat(line);
+							
+							//Line should be URL
+							if (!line.matches(HLSConstants.TS_FILE_PATTERN)){
+								processFiles(nextURL, fileList);
+							}
 						}
 					}
 					
-					
 				}while (line != null);
+				
+				MediaFileType fileType = MediaFileType.matchFileTypOnIdentifyingTag(file.getFileLines());
+				file.setFileType(fileType);
+				if (fileType.equals(MediaFileType.INVALID_FILE)){
+				
+					ValidationErrorLogEntry entry = new ValidationErrorLogEntry(
+							ValidationErrorSeverityType.FATAL, "An invalid file type was found.");
+					file.addValidationError(entry);
+				}
 			}catch(MalformedURLException e){
 				String messageFormat = "URL [%s] was not found or found invalid text in the file.";
 				ValidationErrorLogEntry entry = new ValidationErrorLogEntry(ValidationErrorSeverityType.WARNING, String.format(messageFormat, urlStr));

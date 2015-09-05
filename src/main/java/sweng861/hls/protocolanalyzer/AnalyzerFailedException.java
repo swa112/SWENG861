@@ -1,4 +1,4 @@
-package sweng861.hls.protocolanalyzer.resource;
+package sweng861.hls.protocolanalyzer;
 
 public class AnalyzerFailedException extends RuntimeException {
 

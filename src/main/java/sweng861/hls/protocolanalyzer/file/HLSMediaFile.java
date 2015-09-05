@@ -16,6 +16,9 @@ public class HLSMediaFile {
 	@XmlElement
 	private String fileName;
 	
+	@XmlElement
+	private MediaFileType fileType; 
+	
 	private List<String> fileLines;
 	
 	@XmlElement
@@ -26,7 +29,7 @@ public class HLSMediaFile {
 	}
 	
 	public HLSMediaFile(){
-		
+		//default constructor for JAXB
 	}
 
 
@@ -35,6 +38,14 @@ public class HLSMediaFile {
 	}
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public MediaFileType getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(MediaFileType fileType) {
+		this.fileType = fileType;
 	}
 
 	public List<String> getFileLines() {
