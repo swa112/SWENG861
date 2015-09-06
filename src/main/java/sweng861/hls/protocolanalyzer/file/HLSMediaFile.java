@@ -1,7 +1,9 @@
 package sweng861.hls.protocolanalyzer.file;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -19,12 +21,13 @@ public class HLSMediaFile {
 	@XmlElement
 	private MediaFileType fileType; 
 	
-	@XmlElement
+	@XmlElement //For debugging purposes only, remove this tag. 
 	private List<HLSMediaFileLineInfo> fileLines;
 	
 	@XmlElement
 	private List<ValidationErrorLogEntry> validationErrors = new ArrayList<ValidationErrorLogEntry>();
 	
+	private Set<MediaFileTagType> tagSet;
 
 	public HLSMediaFile(String fileName){
 		this.fileName = fileName;
@@ -62,6 +65,7 @@ public class HLSMediaFile {
 			this.fileLines = new ArrayList<HLSMediaFileLineInfo>();
 		}
 		this.fileLines.add(line);
+		addTag(line.getLineType());
 	}
 	
 	public List<ValidationErrorLogEntry> getValidationErrors() {
@@ -76,6 +80,21 @@ public class HLSMediaFile {
 		this.validationErrors = validationErrors;
 	}
 	
+	public Set<MediaFileTagType> getTagSet() {
+		return tagSet;
+	}
+
+//	public void setTagSet(Set<MediaFileTagType> tagSet) {
+//		this.tagSet = tagSet;
+//	}
+	
+	void addTag(MediaFileTagType tag) {
+		if(this.tagSet == null){
+			tagSet = new HashSet<MediaFileTagType>();
+		}
+		this.tagSet.add(tag);
+	}
+
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder();

@@ -15,17 +15,22 @@ import javax.inject.Singleton;
 import javax.ws.rs.Path;
 
 import sweng861.hls.protocolanalyzer.HLSConstants;
+import sweng861.hls.protocolanalyzer.validator.MediaFileValidator;
 import sweng861.hls.protocolanalyzer.validator.ValidationErrorLogEntry;
 import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
+import sweng861.hls.protocolanalyzer.validator.Validator;
 
 //@Singleton
 //@Path("singleton-bean")
 public class HLSMediaFileAnalyzerServiceImpl implements HLSMediaFileAnalyzerService{
 	
+	private static final int LINE_START = 1; 
 	
 	public List<HLSMediaFile> analyzeFiles(String urlStr) throws MalformedURLException, IOException {
 		List<HLSMediaFile> fileList = new ArrayList<HLSMediaFile>();
 		processFiles(urlStr, fileList);
+		Validator validator = new MediaFileValidator();
+		validator.validate(fileList);
 		return fileList;
 	}
 	
@@ -35,12 +40,10 @@ public class HLSMediaFileAnalyzerServiceImpl implements HLSMediaFileAnalyzerServ
 			int lastIndex = urlStr.lastIndexOf('/');
 			String baseUrl = urlStr.substring(0, lastIndex+1); //need to determine if relative or absolute
 
-			
-			URL url = null;
 			try {
 				BufferedReader reader = getFileReader(urlStr);
 				String line = "";
-				int lineNum = 1;
+				int lineNum = LINE_START;
 				do {
 					line = reader.readLine();
 					
@@ -50,10 +53,7 @@ public class HLSMediaFileAnalyzerServiceImpl implements HLSMediaFileAnalyzerServ
 						lineInfo.setLineData(line);
 						lineInfo.setLineNumber(lineNum);
 						lineInfo.setLineType(lineType);
-						//need to add line info to file object
 						file.addFileLine(lineInfo);
-						//If line isn't a tag, it should be URI.	
-//						if (!line.matches(HLSConstants.TAG_PATTERN)){
 						if(lineType.isURI()){
 							
 							if (!lineType.equals(MediaFileTagType.TRANSPORT_STREAM_URI)){
@@ -61,21 +61,14 @@ public class HLSMediaFileAnalyzerServiceImpl implements HLSMediaFileAnalyzerServ
 								processFiles(nextURL, fileList);
 							}
 						}
-//						} else {
-//							MediaFileTagType tagType = MediaFileTagType.findTagByLine(line);
-//						}
 					}
 					lineNum++;
 				}while (line != null);
 				
+				//After processing file, determine it's type. 
 				MediaFileType fileType = MediaFileType.matchFileTypOnIdentifyingTag(file.getFileLines());
 				file.setFileType(fileType);
-				if (fileType.equals(MediaFileType.INVALID_FILE)){
 				
-					ValidationErrorLogEntry entry = new ValidationErrorLogEntry(
-							ValidationErrorSeverityType.FATAL, "An invalid file type was found.", 0);
-					file.addValidationError(entry);
-				}
 			}catch(MalformedURLException e){
 				String messageFormat = "URL [%s] was not found or found invalid text in the file.";
 				ValidationErrorLogEntry entry = new ValidationErrorLogEntry(ValidationErrorSeverityType.WARNING, String.format(messageFormat, urlStr), 0);
@@ -93,8 +86,7 @@ public class HLSMediaFileAnalyzerServiceImpl implements HLSMediaFileAnalyzerServ
 
 	private BufferedReader getFileReader(String urlStr) throws MalformedURLException,
 			IOException {
-		URL url;
-		url = new URL(urlStr);
+		URL url = new URL(urlStr);
 		URLConnection connection = url.openConnection();
 		connection.connect();
 		InputStream inStream = (InputStream)connection.getContent();

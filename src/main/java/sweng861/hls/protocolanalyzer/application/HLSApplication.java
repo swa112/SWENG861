@@ -5,7 +5,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class HLSApplication extends ResourceConfig{
 	public HLSApplication(){
 		register(new ApplicationBinder());
-        packages(true, "sweng861.hls.protocolanalyzer");
+        packages("sweng861.hls.protocolanalyzer.resource", "sweng861.hls.protocolanalyzer.file");
         
 	}
 }
