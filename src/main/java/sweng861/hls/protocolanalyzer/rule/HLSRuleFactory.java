@@ -10,5 +10,9 @@ public class HLSRuleFactory {
 		ruleList.add(new FileMustBeRecognizedRule());
 		return ruleList;
 	}
+	
+	//TODO - use reflection to instantiate all instances that implement HLSRule. 
+	
+	//TODO - add method to getRules for Line Level vs. File Level checks unless there is a way to keep this abstract. 
 
 }

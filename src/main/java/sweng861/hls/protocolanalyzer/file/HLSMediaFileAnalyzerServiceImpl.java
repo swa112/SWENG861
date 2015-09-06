@@ -89,6 +89,7 @@ public class HLSMediaFileAnalyzerServiceImpl implements HLSMediaFileAnalyzerServ
 		URL url = new URL(urlStr);
 		URLConnection connection = url.openConnection();
 		connection.connect();
+		//TODO getHeaders to verify rule.
 		InputStream inStream = (InputStream)connection.getContent();
 		InputStreamReader inStreamReader = new InputStreamReader(inStream);
 		BufferedReader reader = new BufferedReader(inStreamReader);
