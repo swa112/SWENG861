@@ -120,11 +120,11 @@ public enum MediaFileType {
 	
 	public abstract MediaFileTagType getStartTag();
 	
-	public static MediaFileType matchFileTypOnIdentifyingTag(List<String> fileLines){
+	public static MediaFileType matchFileTypOnIdentifyingTag(List<HLSMediaFileLineInfo> fileLines){
 		for(MediaFileType file : MediaFileType.values()) {
 			MediaFileTagType fileIdentifyingTag = file.getFileIdentifyingTag();
-			for(String line : fileLines){
-				if (line.matches(fileIdentifyingTag.getTagPattern())){
+			for(HLSMediaFileLineInfo line : fileLines){
+				if (line.getLineType().equals(fileIdentifyingTag)){
 					return file;
 				}
 			}

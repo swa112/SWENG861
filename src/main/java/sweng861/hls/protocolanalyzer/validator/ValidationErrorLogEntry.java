@@ -2,8 +2,6 @@ package sweng861.hls.protocolanalyzer.validator;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
-
 @XmlRootElement
 public class ValidationErrorLogEntry{
 	
@@ -11,9 +9,12 @@ public class ValidationErrorLogEntry{
 	
 	private String message; 
 	
-	public ValidationErrorLogEntry(ValidationErrorSeverityType errorType,  String message){
+	private int lineNumber; 
+	
+	public ValidationErrorLogEntry(ValidationErrorSeverityType errorType,  String message, int lineNumber){
 		this.errorType = errorType; 
 		this.message = message; 
+		this.lineNumber = lineNumber;
 	}
 	
 	public ValidationErrorLogEntry(){
@@ -35,6 +36,14 @@ public class ValidationErrorLogEntry{
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public int getLineNumber() {
+		return lineNumber;
+	}
+
+	public void setLineNumber(int lineNumber) {
+		this.lineNumber = lineNumber;
 	}
 	
 	

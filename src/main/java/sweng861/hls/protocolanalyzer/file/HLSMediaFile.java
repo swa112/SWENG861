@@ -19,11 +19,13 @@ public class HLSMediaFile {
 	@XmlElement
 	private MediaFileType fileType; 
 	
-	private List<String> fileLines;
+	@XmlElement
+	private List<HLSMediaFileLineInfo> fileLines;
 	
 	@XmlElement
 	private List<ValidationErrorLogEntry> validationErrors = new ArrayList<ValidationErrorLogEntry>();
 	
+
 	public HLSMediaFile(String fileName){
 		this.fileName = fileName;
 	}
@@ -48,16 +50,16 @@ public class HLSMediaFile {
 		this.fileType = fileType;
 	}
 
-	public List<String> getFileLines() {
+	public List<HLSMediaFileLineInfo> getFileLines() {
 		return fileLines;
 	}
-	public void setFileLines(List<String> fileLines) {
+	public void setFileLines(List<HLSMediaFileLineInfo> fileLines) {
 		this.fileLines = fileLines;
 	}
 
-	public void addFileLine(String line) {
+	public void addFileLine(HLSMediaFileLineInfo line) {
 		if(this.fileLines == null){
-			this.fileLines = new ArrayList<String>();
+			this.fileLines = new ArrayList<HLSMediaFileLineInfo>();
 		}
 		this.fileLines.add(line);
 	}
@@ -78,7 +80,7 @@ public class HLSMediaFile {
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		sb.append("File: " + fileName);
-		for (String line: fileLines){
+		for (HLSMediaFileLineInfo line: fileLines){
 			sb.append("\t" + line);
 		}
 		return sb.toString();

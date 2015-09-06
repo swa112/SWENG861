@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -20,6 +21,9 @@ import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 @Path("/stream-analyzer")
 public class StreamAnalyzerResource {
 	
+//	@Inject
+//	private HLSMediaFileAnalyzerService fileMediaService;
+	
 	@GET
 	public Collection<HLSMediaFile> analyzeStreamResult(@QueryParam("url") @NotNull String url){
 		HLSMediaFileAnalyzerService fileMediaService = new HLSMediaFileAnalyzerServiceImpl();
@@ -34,7 +38,7 @@ public class StreamAnalyzerResource {
 //		}
 		
 //		Collection<ValidationErrorLogEntry> validationErrors = new ArrayList<ValidationErrorLogEntry>();
-		ValidationErrorLogEntry log1 = new ValidationErrorLogEntry(ValidationErrorSeverityType.FATAL, "xyz rule validation failed");
+		ValidationErrorLogEntry log1 = new ValidationErrorLogEntry(ValidationErrorSeverityType.FATAL, "xyz rule validation failed", 0);
 		analyzedFiles.get(0).addValidationError(log1);
 		//		validationErrors.add(log1);
 		return analyzedFiles;
