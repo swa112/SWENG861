@@ -1,10 +1,12 @@
-package sweng861.hls.protocolanalyzer.file;
+package sweng861.hls.protocolanalyzer;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
-public interface HLSMediaFileAnalyzerService {
+import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
+
+public interface HLSMediaStreamAnalyzerService {
 	
 	public List<HLSMediaFile> analyzeFiles(String urlStr) throws MalformedURLException, IOException;
 	

@@ -1,4 +1,4 @@
-package sweng861.hls.protocolanalyzer.file;
+package sweng861.hls.protocolanalyzer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +14,10 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.ws.rs.Path;
 
-import sweng861.hls.protocolanalyzer.HLSConstants;
+import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
+import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
+import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
+import sweng861.hls.protocolanalyzer.file.MediaFileType;
 import sweng861.hls.protocolanalyzer.validator.MediaFileValidator;
 import sweng861.hls.protocolanalyzer.validator.ValidationErrorLogEntry;
 import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
@@ -22,10 +25,11 @@ import sweng861.hls.protocolanalyzer.validator.Validator;
 
 //@Singleton
 //@Path("singleton-bean")
-public class HLSMediaFileAnalyzerServiceImpl implements HLSMediaFileAnalyzerService{
+//TODO - rename to media stream  instead of  file since this is processing multiple files. Move to protocolanalyzer package. 
+public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzerService{
 	
 	private static final int LINE_START = 1; 
-	
+	//May need to return an object that has higher level error information. 
 	public List<HLSMediaFile> analyzeFiles(String urlStr) throws MalformedURLException, IOException {
 		List<HLSMediaFile> fileList = new ArrayList<HLSMediaFile>();
 		processFiles(urlStr, fileList);

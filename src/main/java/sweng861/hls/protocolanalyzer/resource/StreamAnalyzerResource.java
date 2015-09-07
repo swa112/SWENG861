@@ -12,9 +12,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
 import sweng861.hls.protocolanalyzer.AnalyzerFailedException;
+import sweng861.hls.protocolanalyzer.HLSMediaStreamAnalyzerService;
+import sweng861.hls.protocolanalyzer.HLSMediaStreamAnalyzerServiceImpl;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
-import sweng861.hls.protocolanalyzer.file.HLSMediaFileAnalyzerService;
-import sweng861.hls.protocolanalyzer.file.HLSMediaFileAnalyzerServiceImpl;
 import sweng861.hls.protocolanalyzer.validator.ValidationErrorLogEntry;
 import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 
@@ -26,7 +26,7 @@ public class StreamAnalyzerResource {
 	
 	@GET
 	public Collection<HLSMediaFile> analyzeStreamResult(@QueryParam("url") @NotNull String url){
-		HLSMediaFileAnalyzerService fileMediaService = new HLSMediaFileAnalyzerServiceImpl();
+		HLSMediaStreamAnalyzerService fileMediaService = new HLSMediaStreamAnalyzerServiceImpl();
 		List<HLSMediaFile> analyzedFiles = new ArrayList<HLSMediaFile>(); 
 		try {
 			analyzedFiles = fileMediaService.analyzeFiles(url);

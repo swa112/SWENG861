@@ -10,8 +10,6 @@ import java.net.URLConnection;
 import java.util.List;
 
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
-import sweng861.hls.protocolanalyzer.file.HLSMediaFileAnalyzerService;
-import sweng861.hls.protocolanalyzer.file.HLSMediaFileAnalyzerServiceImpl;
 
 public class HLSApp {
 	
@@ -26,7 +24,7 @@ public class HLSApp {
 		String baseUrl = "http://devimages.apple.com/iphone/samples/bipbop";
 		URL url = null;
 		List<HLSMediaFile> analyzedFiles= null;
-		HLSMediaFileAnalyzerService fileService = new HLSMediaFileAnalyzerServiceImpl();
+		HLSMediaStreamAnalyzerService fileService = new HLSMediaStreamAnalyzerServiceImpl();
 		try {
 			//url = new URL("http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8");
 			 analyzedFiles = fileService.analyzeFiles(urlStr);

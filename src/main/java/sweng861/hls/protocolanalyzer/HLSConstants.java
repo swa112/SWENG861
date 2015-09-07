@@ -1,5 +1,6 @@
 package sweng861.hls.protocolanalyzer;
 
+//TODO - Remove this class...no longer needed. 
 public class HLSConstants {
 
 	public static final String TAG_PATTERN = "^#.+$";

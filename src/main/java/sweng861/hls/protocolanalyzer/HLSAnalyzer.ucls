@@ -12,9 +12,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <interface id="2" language="java" name="sweng861.hls.protocolanalyzer.file.HLSMediaFileAnalyzerService" 
+  <interface id="2" language="java" name="sweng861.hls.protocolanalyzer.HLSMediaFileAnalyzerService" 
     project="protocol-analyzer" 
-    file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/file/HLSMediaFileAnalyzerService.java" 
+    file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/HLSMediaFileAnalyzerService.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="221" y="112"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -23,9 +23,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="3" language="java" name="sweng861.hls.protocolanalyzer.file.HLSMediaFileAnalyzerServiceImpl" 
+  <class id="3" language="java" name="sweng861.hls.protocolanalyzer.HLSMediaFileAnalyzerServiceImpl" 
     project="protocol-analyzer" 
-    file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/file/HLSMediaFileAnalyzerServiceImpl.java" 
+    file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/HLSMediaFileAnalyzerServiceImpl.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="230" y="274"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -48,7 +48,7 @@
     project="protocol-analyzer" 
     file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/file/MediaFileTagType.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1231" y="166"/>    
+    <position height="-1" width="-1" x="1291" y="278"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -59,7 +59,7 @@
     project="protocol-analyzer" 
     file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/validator/ValidationErrorLogEntry.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1019" y="447"/>    
+    <position height="-1" width="-1" x="926" y="421"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -69,7 +69,7 @@
   <interface id="7" language="java" name="sweng861.hls.protocolanalyzer.validator.Validator" project="protocol-analyzer" 
     file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/validator/Validator.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="296" y="461"/>    
+    <position height="-1" width="-1" x="182" y="445"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -80,7 +80,7 @@
     project="protocol-analyzer" 
     file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/validator/ValidationErrorSeverityType.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1009" y="656"/>    
+    <position height="-1" width="-1" x="905" y="638"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -91,7 +91,7 @@
     project="protocol-analyzer" 
     file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/validator/MediaFileValidator.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="286" y="610"/>    
+    <position height="-1" width="-1" x="204" y="590"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      

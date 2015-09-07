@@ -43,6 +43,16 @@ public enum MediaFileTagAttributeType {
 	
 	;
 	
+	private MediaFileTagValueDataType dataType;
+	
+	private MediaFileTagAttributeType(/*MediaFileTagValueDataType dataType*/){
+//		this.dataType = dataType;
+	}
+	
+	public MediaFileTagValueDataType getDataType(){
+		return dataType;
+	}
+	
 	//TODO - map the attribute to it's data type. 
 	//TODO - may need to allow for custom rule checks
 

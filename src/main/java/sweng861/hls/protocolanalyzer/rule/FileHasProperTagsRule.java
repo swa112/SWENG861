@@ -7,12 +7,12 @@ import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
 import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 
- class FileHasProperTagsRule extends AbstractHLSRule {
+ class FileHasProperTagsRule extends AbstractMediaFileRule {
 	 
 	private static final String MISSING_REQUIRED_TAG_FORMAT = "Required Tag [%s] was not found";
 	private static final String INVALID_TAG_FORMAT = "Found tag [%s] that is not allowed in file";
 
-	public void runRuleCheck(HLSMediaFile file) {
+	protected void runRuleCheck(HLSMediaFile file) {
 		MediaFileTagType startTag = file.getFileType().getStartTag();
 		MediaFileTagType[] requiredTags = file.getFileType().getRequiredTags();
 		MediaFileTagType[] allowedTags = file.getFileType().getAllowedTags();
@@ -46,9 +46,6 @@ import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 
 	}
 
-	public boolean handlesRequest(HLSMediaFile file) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 
 }
