@@ -138,6 +138,8 @@ public enum MediaFileTagType {
 		
 	},
 	
+	//TODO - add end
+	
 	//**********Media Segment Tags**************//
 	
 	EXTINF("^#EXTINF.+$", false, true) {
@@ -290,6 +292,14 @@ public enum MediaFileTagType {
 	public abstract MediaFileTagAttributeType[] getRequiredAttributes();
 	
 	public abstract MediaFileTagAttributeType[] getOptionalAttributes();
+	
+	public boolean isTagProperlyFormatted(String aTagDataValue){
+		boolean isProperlyFormatted = false;
+		if (aTagDataValue.matches(this.getValueDataType().getDataTypeRegEx())){
+			isProperlyFormatted = true;
+		}
+		return isProperlyFormatted;
+	}
 
 	//TODO - add abstract method to indicate that the tag needs to check a URI on the next line.  (Dependent tags)
 	//TODO - add abstract method to indicate the tag has a custom rule. 

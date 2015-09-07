@@ -1,25 +1,15 @@
 package sweng861.hls.protocolanalyzer.rule;
 
-import sweng861.hls.protocolanalyzer.file.HLSMediaEntity;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
-import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.validator.ValidationErrorLogEntry;
 import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 
 public abstract class AbstractMediaFileTagRule implements HLSRule {
 
-	public void runRuleCheck(HLSMediaEntity mediaEntity) {
-		this.runRuleCheck((HLSMediaFileLineInfo) mediaEntity);
-	}
-
-	public boolean handlesRequest(HLSMediaEntity mediaEntity) {
-		return this.handlesRequest((HLSMediaFileLineInfo) mediaEntity);
-	}
+	private static final int FILE_LEVEL = 0;
 	
-	protected abstract void runRuleCheck(HLSMediaFileLineInfo fileLine);
-	
-	protected  boolean handlesRequest(HLSMediaFileLineInfo fileLine) {
-		return true;
+	public void runRuleCheck(HLSMediaFile file){
+		throw new UnsupportedOperationException(""); //TODO
 	}
 	
 	protected void addToErrorLog(HLSMediaFile file, ValidationErrorSeverityType severity, String message, int lineNum){
@@ -28,5 +18,10 @@ public abstract class AbstractMediaFileTagRule implements HLSRule {
 		file.addValidationError(entry);
 	}
 	
+	protected void addToErrorLog(HLSMediaFile file, ValidationErrorSeverityType severity, String message){
+		ValidationErrorLogEntry entry = new ValidationErrorLogEntry(
+				severity, message, FILE_LEVEL);
+		file.addValidationError(entry);
+	}
 
 }

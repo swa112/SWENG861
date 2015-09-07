@@ -12,7 +12,7 @@ import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 	private static final String MISSING_REQUIRED_TAG_FORMAT = "Required Tag [%s] was not found";
 	private static final String INVALID_TAG_FORMAT = "Found tag [%s] that is not allowed in file";
 
-	protected void runRuleCheck(HLSMediaFile file) {
+	public void runRuleCheck(HLSMediaFile file) {
 		MediaFileTagType startTag = file.getFileType().getStartTag();
 		MediaFileTagType[] requiredTags = file.getFileType().getRequiredTags();
 		MediaFileTagType[] allowedTags = file.getFileType().getAllowedTags();
@@ -27,12 +27,7 @@ import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 				super.addToErrorLog(file, ValidationErrorSeverityType.FATAL, String.format(MISSING_REQUIRED_TAG_FORMAT, requiredTag.name()));
 			}
 		}
-//		if (!file.getTagSet().containsAll(Arrays.asList(requiredTags))){
-//			ValidationErrorLogEntry entry = new ValidationErrorLogEntry(
-//					ValidationErrorSeverityType.FATAL, "A required tag is missing.", 0);
-//			file.addValidationError(entry);
-//		}
-//		
+		
 		Collection<MediaFileTagType> invalidTags = file.getTagSet();
 		invalidTags.removeAll(Arrays.asList(allowedTags));
 		if (!invalidTags.isEmpty()){

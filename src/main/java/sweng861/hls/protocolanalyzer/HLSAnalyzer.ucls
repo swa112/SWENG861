@@ -107,25 +107,21 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <realization id="13">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="2"/>  
-  </realization>  
-  <realization id="14">    
     <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="7"/>  
   </realization>  
-  <association id="15">    
+  <association id="14">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="16" name="fileType"/>      
-      <multiplicity id="17" minimum="0" maximum="1"/>    
+      <attribute id="15" name="fileType"/>      
+      <multiplicity id="16" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="18">    
+  <association id="17">    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="19" name="errorType"/>      
-      <multiplicity id="20" minimum="0" maximum="1"/>    
+      <attribute id="18" name="errorType"/>      
+      <multiplicity id="19" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  

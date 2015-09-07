@@ -10,10 +10,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
-import javax.ws.rs.Path;
-
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
@@ -25,7 +21,7 @@ import sweng861.hls.protocolanalyzer.validator.Validator;
 
 //@Singleton
 //@Path("singleton-bean")
-//TODO - rename to media stream  instead of  file since this is processing multiple files. Move to protocolanalyzer package. 
+ 
 public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzerService{
 	
 	private static final int LINE_START = 1; 
@@ -58,12 +54,9 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 						lineInfo.setLineNumber(lineNum);
 						lineInfo.setLineType(lineType);
 						file.addFileLine(lineInfo);
-						if(lineType.isURI()){
-							
-							if (!lineType.equals(MediaFileTagType.TRANSPORT_STREAM_URI)){
-								String nextURL = this.getNextURL(line, baseUrl, lineType);
-								processFiles(nextURL, fileList);
-							}
+						if(lineType.isURI() && !lineType.equals(MediaFileTagType.TRANSPORT_STREAM_URI)){
+							String nextURL = this.getNextURL(line, baseUrl, lineType);
+							processFiles(nextURL, fileList);
 						}
 					}
 					lineNum++;
