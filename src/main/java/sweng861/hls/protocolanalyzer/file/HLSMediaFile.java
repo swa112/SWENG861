@@ -21,7 +21,7 @@ public class HLSMediaFile implements HLSMediaEntity {
 	@XmlElement
 	private MediaFileType fileType; 
 	
-	@XmlElement //For debugging purposes only, remove this tag. 
+	//@XmlElement 
 	private List<HLSMediaFileLineInfo> fileLines;
 	
 	@XmlElement

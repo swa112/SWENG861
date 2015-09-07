@@ -1,41 +1,27 @@
 package sweng861.hls.protocolanalyzer.file;
 
 
+/**
+ * Enumerated type that represents a media file tag type. Add new types to extend the set of tag types when the specification is updated. 
+ * @author Scott
+ *
+ */
 public enum MediaFileTagType {
 	
 	//**********Basic Tags**************//
 	
-	EXTM3U("^#EXTM3U$", false, true) {
+	EXTM3U("^#EXTM3U$", false, false) {
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.NONE;
 		}
 
-		@Override
-		public MediaFileTagAttributeType[] getRequiredAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
-
-		@Override
-		public MediaFileTagAttributeType[] getOptionalAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
 	},
 	
 	EXT_X_VERSION("^#EXT-X-VERSION.+$", false, true) {
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.INTEGER;
-		}
-
-		@Override
-		public MediaFileTagAttributeType[] getRequiredAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
-
-		@Override
-		public MediaFileTagAttributeType[] getOptionalAttributes() {
-			return new MediaFileTagAttributeType [0];
 		}
 	},
 	
@@ -82,7 +68,7 @@ public enum MediaFileTagType {
 					MediaFileTagAttributeType.GROUP_ID,
 					MediaFileTagAttributeType.NAME,
 					MediaFileTagAttributeType.INSTREAM_ID
-					};
+			};
 		}
 
 		@Override
@@ -108,15 +94,7 @@ public enum MediaFileTagType {
 			return MediaFileTagValueDataType.DECIMAL_INTEGER;
 		}
 
-		@Override
-		public MediaFileTagAttributeType[] getRequiredAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
 
-		@Override
-		public MediaFileTagAttributeType[] getOptionalAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
 	},
 	
 	EXT_X_MEDIA_SEQUENCE("^#EXT-X-MEDIA-SEQUENCE.+$", false, true){
@@ -125,38 +103,24 @@ public enum MediaFileTagType {
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.DECIMAL_INTEGER;
 		}
-
-		@Override
-		public MediaFileTagAttributeType[] getRequiredAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
-
-		@Override
-		public MediaFileTagAttributeType[] getOptionalAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
 		
 	},
 	
-	//TODO - add end
+	EXT_X_ENDLIST("^#EXT-X-ENDLIST$", false, false){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.NONE;
+		}
+	},
 	
 	//**********Media Segment Tags**************//
 	
 	EXTINF("^#EXTINF.+$", false, true) {
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
-			return MediaFileTagValueDataType.INTEGER;
+			return MediaFileTagValueDataType.EXT_INF_CUSTOM;
 		}
 
-		@Override
-		public MediaFileTagAttributeType[] getRequiredAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
-
-		@Override
-		public MediaFileTagAttributeType[] getOptionalAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
 	},
 	
 	//**********URI Tags**************//
@@ -168,15 +132,6 @@ public enum MediaFileTagType {
 			return null;
 		}
 
-		@Override
-		public MediaFileTagAttributeType[] getRequiredAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
-
-		@Override
-		public MediaFileTagAttributeType[] getOptionalAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
 	},
 	
 	RELATIVE_PLAYLIST_URI("^.+\\.m3u8$|^.+\\.m3u$", true, false) {
@@ -186,15 +141,6 @@ public enum MediaFileTagType {
 			return null;
 		}
 
-		@Override
-		public MediaFileTagAttributeType[] getRequiredAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
-
-		@Override
-		public MediaFileTagAttributeType[] getOptionalAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
 	},
 	
 	TRANSPORT_STREAM_URI("^.+\\.ts$", true, false) {
@@ -202,16 +148,6 @@ public enum MediaFileTagType {
 		public MediaFileTagValueDataType getValueDataType() {
 			// TODO Auto-generated method stub
 			return null;
-		}
-
-		@Override
-		public MediaFileTagAttributeType[] getRequiredAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
-
-		@Override
-		public MediaFileTagAttributeType[] getOptionalAttributes() {
-			return new MediaFileTagAttributeType [0];
 		}
 	},
 	
@@ -224,31 +160,12 @@ public enum MediaFileTagType {
 			return null;
 		}
 
-		@Override
-		public MediaFileTagAttributeType[] getRequiredAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
-
-		@Override
-		public MediaFileTagAttributeType[] getOptionalAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
 	},
 	
 	NOT_A_TAG("", false, false) {
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.NONE;
-		}
-
-		@Override
-		public MediaFileTagAttributeType[] getRequiredAttributes() {
-			return new MediaFileTagAttributeType [0];
-		}
-
-		@Override
-		public MediaFileTagAttributeType[] getOptionalAttributes() {
-			return new MediaFileTagAttributeType [0];
 		}
 	},
 	
@@ -287,11 +204,30 @@ public enum MediaFileTagType {
 		return NOT_A_TAG;
 	}
 	
+	/**
+	 * Gets the data type associated with the tag. Must be overriden. 
+	 * @return
+	 */
 	public abstract MediaFileTagValueDataType getValueDataType();
 	
-	public abstract MediaFileTagAttributeType[] getRequiredAttributes();
 	
-	public abstract MediaFileTagAttributeType[] getOptionalAttributes();
+	/**
+	 * Gets the required attributes for the tab, by default returns an empty array. 
+	 * Override this for tags that have required attributes. 
+	 * @return
+	 */
+	public MediaFileTagAttributeType[] getRequiredAttributes() {
+		return new MediaFileTagAttributeType [0];
+	}
+
+	/**
+	 * Gets the optional attributes for the tab, by default returns an empty array. 
+	 * Override this for tags that have optional attributes. 
+	 * @return
+	 */
+	public MediaFileTagAttributeType[] getOptionalAttributes() {
+		return new MediaFileTagAttributeType [0];
+	}
 	
 	public boolean isTagProperlyFormatted(String aTagDataValue){
 		boolean isProperlyFormatted = false;

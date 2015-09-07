@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -14,6 +13,7 @@ import javax.ws.rs.QueryParam;
 import sweng861.hls.protocolanalyzer.AnalyzerFailedException;
 import sweng861.hls.protocolanalyzer.HLSMediaStreamAnalyzerService;
 import sweng861.hls.protocolanalyzer.HLSMediaStreamAnalyzerServiceImpl;
+import sweng861.hls.protocolanalyzer.MediaStreamAnalyzerResult;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.validator.ValidationErrorLogEntry;
 import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
@@ -25,23 +25,16 @@ public class StreamAnalyzerResource {
 //	private HLSMediaFileAnalyzerService fileMediaService;
 	
 	@GET
-	public Collection<HLSMediaFile> analyzeStreamResult(@QueryParam("url") @NotNull String url){
+	public MediaStreamAnalyzerResult analyzeStreamResult(@QueryParam("url") @NotNull String url){
 		HLSMediaStreamAnalyzerService fileMediaService = new HLSMediaStreamAnalyzerServiceImpl();
-		List<HLSMediaFile> analyzedFiles = new ArrayList<HLSMediaFile>(); 
+		MediaStreamAnalyzerResult result = null;
 		try {
-			analyzedFiles = fileMediaService.analyzeFiles(url);
+			result = fileMediaService.analyzeFiles(url);
 		}catch (IOException io){
 			throw new AnalyzerFailedException();
 		}
-//		for(HLSMediaFile file : analyzedFiles){
-//			
-//		}
-		
-//		Collection<ValidationErrorLogEntry> validationErrors = new ArrayList<ValidationErrorLogEntry>();
-		ValidationErrorLogEntry log1 = new ValidationErrorLogEntry(ValidationErrorSeverityType.FATAL, "xyz rule validation failed", 0);
-		analyzedFiles.get(0).addValidationError(log1);
-		//		validationErrors.add(log1);
-		return analyzedFiles;
+
+		return result;
 	}
 
 }

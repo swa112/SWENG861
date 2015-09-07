@@ -25,13 +25,15 @@ import sweng861.hls.protocolanalyzer.validator.Validator;
 public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzerService{
 	
 	private static final int LINE_START = 1; 
-	//May need to return an object that has higher level error information. 
-	public List<HLSMediaFile> analyzeFiles(String urlStr) throws MalformedURLException, IOException {
+	
+	public MediaStreamAnalyzerResult analyzeFiles(String urlStr) throws MalformedURLException, IOException {
+		MediaStreamAnalyzerResult result = new MediaStreamAnalyzerResult();
 		List<HLSMediaFile> fileList = new ArrayList<HLSMediaFile>();
 		processFiles(urlStr, fileList);
 		Validator validator = new MediaFileValidator();
 		validator.validate(fileList);
-		return fileList;
+		result.setFiles(fileList);
+		return result;
 	}
 	
 	private void processFiles(String urlStr, List<HLSMediaFile> fileList) throws IOException {

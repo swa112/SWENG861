@@ -17,11 +17,11 @@ import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 		MediaFileTagType[] requiredTags = file.getFileType().getRequiredTags();
 		MediaFileTagType[] allowedTags = file.getFileType().getAllowedTags();
 		
-		if(file.getFileLines().get(0).getLineType().equals(startTag)){
+		if(!file.getFileLines().get(0).getLineType().equals(startTag)){
 			super.addToErrorLog(file, ValidationErrorSeverityType.FATAL, "Expected start tag did not match.");
 		}
 		
-	
+	/*
 		for (MediaFileTagType requiredTag : requiredTags){
 			if (!file.getTagSet().contains(requiredTag)){
 				super.addToErrorLog(file, ValidationErrorSeverityType.FATAL, String.format(MISSING_REQUIRED_TAG_FORMAT, requiredTag.name()));
@@ -36,7 +36,7 @@ import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 			}
 			
 		}
-	
+	*/
 		// TODO: Make sure tags that must only appear once are only in the tag list once.
 
 	}

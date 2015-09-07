@@ -16,6 +16,10 @@ public enum MediaFileTagValueDataType {
 	
 	DECIMAL_RESOLUTION("^\\d+x\\d+"), //("^\\d+x\\d+")
 	
+	DECIMAL_FLOATING_POINT("^\\d+\\.\\d+$"),
+	
+	EXT_INF_CUSTOM("^\\d+(\\.\\d+)?,(.+)?$")
+	
 	//TODO- when needed add more data types
 	
 	;

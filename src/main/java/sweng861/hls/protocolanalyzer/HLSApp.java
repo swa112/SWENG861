@@ -27,7 +27,7 @@ public class HLSApp {
 		HLSMediaStreamAnalyzerService fileService = new HLSMediaStreamAnalyzerServiceImpl();
 		try {
 			//url = new URL("http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8");
-			 analyzedFiles = fileService.analyzeFiles(urlStr);
+//			 analyzedFiles = fileService.analyzeFiles(urlStr);
 		}catch (Exception e){
 			e.printStackTrace();
 		}

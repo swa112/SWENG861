@@ -5,9 +5,18 @@ import java.util.List;
 
 public class HLSRuleFactory {
 	
-	public static List<HLSRule> getRules(){
+	public static List<HLSRule> getFileRules(){
+			
 		List<HLSRule> ruleList = new ArrayList<HLSRule>();
 		ruleList.add(new FileMustBeRecognizedRule());
+		ruleList.add(new FileHasProperTagsRule());
+		return ruleList;
+	}
+	
+	public static List<HLSRule> getTagRules(){
+			
+		List<HLSRule> ruleList = new ArrayList<HLSRule>();
+		ruleList.add(new TagsAreProperlyFormattedRule());
 		return ruleList;
 	}
 	

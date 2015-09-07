@@ -40,6 +40,7 @@ public enum MediaFileTagAttributeType {
 	
 	CHARACTERISTICS("CHARACTERISTICS", MediaFileTagValueDataType.QUOTED_STRING),
 	
+	NOT_FOUND("ATTRIBUTE NOT FOUND", MediaFileTagValueDataType.NONE),
 	
 	;
 	
@@ -76,6 +77,15 @@ public enum MediaFileTagAttributeType {
 	 */
 	protected boolean isAllowedValue(String anAttributeDataValue){
 		return true;
+	}
+	
+	public static MediaFileTagAttributeType getAttributeTypeFromString(String anAttributeName){
+		for(MediaFileTagAttributeType type : MediaFileTagAttributeType.values()){
+			if (type.getAttributeName().equals(anAttributeName)){
+				return type;
+			}
+		}
+		return NOT_FOUND;
 	}
 	
 //	private boolean isAllowedValue(String anAttributeValue){
