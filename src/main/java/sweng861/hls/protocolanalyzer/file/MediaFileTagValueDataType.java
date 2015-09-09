@@ -4,7 +4,9 @@ public enum MediaFileTagValueDataType {
 	
 	NONE("\\z"), //Should be an empty string ("\\z") should I always check for a line end?
 	
-	INTEGER("\\d+"), // ("\\d+")
+	ANY("^.+$"),
+	
+	INTEGER("\\d+"),
 	
 	ATTRIBUTE_LIST("^((\\w|-)+=\\S+,?)+"), //expect /w followed by = and then optionally allow a , followed by zero or more ("^(0\\w+=\\S+,?)+"). Will need to be split on comma
 	

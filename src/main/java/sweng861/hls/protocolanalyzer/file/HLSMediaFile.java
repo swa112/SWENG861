@@ -14,7 +14,7 @@ import sweng861.hls.protocolanalyzer.validator.ValidationErrorLogEntry;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
-public class HLSMediaFile implements HLSMediaEntity {
+public class HLSMediaFile  {
 	@XmlElement
 	private String fileName;
 	

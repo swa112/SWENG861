@@ -1,6 +1,6 @@
 package sweng861.hls.protocolanalyzer.file;
 
-public class HLSMediaFileLineInfo implements HLSMediaEntity {
+public class HLSMediaFileLineInfo {
 	
 	private String lineData;
 	

@@ -1,12 +1,16 @@
 package sweng861.hls.protocolanalyzer;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +30,10 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 	
 	private static final int LINE_START = 1; 
 	
+	private static final String LOG_FORMAT = "%s: File: %s, line: %s, message: %s \n";
+	
+	private static final String APPLICATION = "APPLICATION";
+	
 	public MediaStreamAnalyzerResult analyzeFiles(String urlStr) throws MalformedURLException, IOException {
 		MediaStreamAnalyzerResult result = new MediaStreamAnalyzerResult();
 		List<HLSMediaFile> fileList = new ArrayList<HLSMediaFile>();
@@ -33,6 +41,7 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		Validator validator = new MediaFileValidator();
 		validator.validate(fileList);
 		result.setFiles(fileList);
+		writeToLog(result);
 		return result;
 	}
 	
@@ -41,9 +50,9 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 			fileList.add(file);
 			int lastIndex = urlStr.lastIndexOf('/');
 			String baseUrl = urlStr.substring(0, lastIndex+1); //need to determine if relative or absolute
-
+			BufferedReader reader; 
 			try {
-				BufferedReader reader = getFileReader(urlStr);
+				reader = getFileReader(urlStr);
 				String line = "";
 				int lineNum = LINE_START;
 				do {
@@ -67,7 +76,7 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 				//After processing file, determine it's type. 
 				MediaFileType fileType = MediaFileType.matchFileTypOnIdentifyingTag(file.getFileLines());
 				file.setFileType(fileType);
-				
+				reader.close();
 			}catch(MalformedURLException e){
 				String messageFormat = "URL [%s] was not found or found invalid text in the file.";
 				ValidationErrorLogEntry entry = new ValidationErrorLogEntry(ValidationErrorSeverityType.WARNING, String.format(messageFormat, urlStr), 0);
@@ -94,6 +103,30 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		BufferedReader reader = new BufferedReader(inStreamReader);
 		return reader;
 	}
+	
+	private void writeToLog(MediaStreamAnalyzerResult result) throws IOException{
+		long currentTime = System.currentTimeMillis();
+		Date currentDate = new Date(currentTime);
+		SimpleDateFormat format = new SimpleDateFormat("MMddyy");
+		String logFile = format.format(currentDate).concat(".log");
+		File log = new File("C:\\Users\\Scott\\Documents\\PSU Software Engineering\\Fall 2015\\SWENG861\\workspace\\protocal-analyzer\\logs\\" + logFile);
+		FileWriter writer = new FileWriter(log);
+		List<ValidationErrorLogEntry> allErrors = result.getErrors();
+		for (ValidationErrorLogEntry entry : allErrors){
+			writer.write(String.format(LOG_FORMAT,  entry.getErrorType().name(), APPLICATION, entry.getLineNumber(), entry.getMessage()));
+		}
+		List<HLSMediaFile> files = result.getFiles();
+		for (HLSMediaFile file : files){
+			List<ValidationErrorLogEntry> validationErrors = file.getValidationErrors();
+			for (ValidationErrorLogEntry entry : validationErrors){
+				writer.write(String.format(LOG_FORMAT, entry.getErrorType().name(), file.getFileName(),  entry.getLineNumber(), entry.getMessage()));
+			
+			}
+		}
+		
+		writer.close();
+	}
+	
 
 
 	

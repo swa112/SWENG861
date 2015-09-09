@@ -123,6 +123,20 @@ public enum MediaFileTagType {
 
 	},
 	
+	//*********Deprecated Tags*******//
+	EXT_X_ALLOW_CACHE("^EXT-X-ALLOW-CACHE.+$", false, true){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			// TODO Auto-generated method stub
+			return MediaFileTagValueDataType.ANY;
+		}
+		
+		@Override
+		public boolean isDeprecated(){
+			return true;
+		}
+	},
+	
 	//**********URI Tags**************//
 	
 	ABSOLUTE_PLAYLIST_URI("^http:\\\\.+\\.m3u8$|^http:\\\\.+\\.m3u$", true, false) {
@@ -235,6 +249,10 @@ public enum MediaFileTagType {
 			isProperlyFormatted = true;
 		}
 		return isProperlyFormatted;
+	}
+	
+	public boolean isDeprecated(){
+		return false; 
 	}
 
 	//TODO - add abstract method to indicate that the tag needs to check a URI on the next line.  (Dependent tags)

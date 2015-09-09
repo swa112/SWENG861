@@ -22,6 +22,7 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
 	private static final String TAG_MISSING_COLON = "Could not determine data type for tag [%s] because : could not be found";
 	private static final String ATTRIBUTE_DATA_TYPE = "Attribue [%s] data type does not match. Value = [%s]";
 	private static final String ATTRIBUTE_NOT_FOUND = "Attribue [%s] was not recognized for tag [%s]";
+	private static final String DEPRECATED_TAG_FOUND = "Found use of a deprecated tag: %s";
 
 	/**
 	 * @see HLSRule#runRuleCheck(HLSMediaFile, HLSMediaFileLineInfo)
@@ -29,8 +30,9 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
 	public void runRuleCheck(HLSMediaFile file, HLSMediaFileLineInfo fileLine) {
 
 		MediaFileTagType lineType = fileLine.getLineType();
-
 		String lineData = fileLine.getLineData();
+		checkForDeprecatedTag(lineType, file, fileLine);
+		
 		int index = lineData.indexOf(TAG_SEPARATOR);
 		if(index != -1){ 
 			String tagValue = lineData.substring(index + 1);
@@ -63,6 +65,12 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
 		//For each attribute, parse on the = and , to get the value and send it through the data type validator. 
 		//If the data type is an enumerated string, the enum validation should handle enforcing that the value is one of the enumerated strings. 
 
+	}
+	
+	private void checkForDeprecatedTag(MediaFileTagType type, HLSMediaFile file, HLSMediaFileLineInfo lineInfo){
+		if(type.isDeprecated()){
+			super.addToErrorLog(file, ValidationErrorSeverityType.INFO, String.format(DEPRECATED_TAG_FOUND, type.name()), lineInfo.getLineNumber());
+		}
 	}
 
 	private void checkTagAttributes(MediaFileTagType type, String tagValue, HLSMediaFile file, HLSMediaFileLineInfo lineInfo){

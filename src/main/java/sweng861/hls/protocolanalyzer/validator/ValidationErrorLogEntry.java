@@ -11,10 +11,12 @@ public class ValidationErrorLogEntry{
 	
 	private int lineNumber; 
 	
+	
 	public ValidationErrorLogEntry(ValidationErrorSeverityType errorType,  String message, int lineNumber){
 		this.errorType = errorType; 
 		this.message = message; 
 		this.lineNumber = lineNumber;
+		
 	}
 	
 	public ValidationErrorLogEntry(){
@@ -45,6 +47,8 @@ public class ValidationErrorLogEntry{
 	public void setLineNumber(int lineNumber) {
 		this.lineNumber = lineNumber;
 	}
+	
+	
 	
 	
 

@@ -37,6 +37,7 @@ public class MediaFileValidator implements Validator {
 	private void validateFileTags(List<HLSRule> tagRules, HLSMediaFile file){
 		List<HLSMediaFileLineInfo> fileLines = file.getFileLines();
 		for (HLSMediaFileLineInfo line : fileLines){
+			
 			if(line.getLineType().isEvaluateTag()){
 				for(HLSRule rule : tagRules){
 					rule.runRuleCheck(file, line);
