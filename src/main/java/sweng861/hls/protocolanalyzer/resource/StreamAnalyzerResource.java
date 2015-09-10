@@ -30,8 +30,8 @@ public class StreamAnalyzerResource {
 		MediaStreamAnalyzerResult result = null;
 		try {
 			result = fileMediaService.analyzeFiles(url);
-		}catch (IOException io){
-			throw new AnalyzerFailedException();
+		}catch (IOException io){ //io should be refactored. 
+			throw new AnalyzerFailedException("Analyzer failed. ", io);
 		}
 
 		return result;

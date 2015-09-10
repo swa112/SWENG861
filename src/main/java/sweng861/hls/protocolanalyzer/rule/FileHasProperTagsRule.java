@@ -15,13 +15,12 @@ import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 	public void runRuleCheck(HLSMediaFile file) {
 		MediaFileTagType startTag = file.getFileType().getStartTag();
 		MediaFileTagType[] requiredTags = file.getFileType().getRequiredTags();
-		MediaFileTagType[] allowedTags = file.getFileType().getAllowedTags();
+		MediaFileTagType[] optionalTags = file.getFileType().getOptionalTags();
 		
 		if(!file.getFileLines().get(0).getLineType().equals(startTag)){
 			super.addToErrorLog(file, ValidationErrorSeverityType.FATAL, "Expected start tag did not match.");
 		}
-		
-	/*
+			
 		for (MediaFileTagType requiredTag : requiredTags){
 			if (!file.getTagSet().contains(requiredTag)){
 				super.addToErrorLog(file, ValidationErrorSeverityType.FATAL, String.format(MISSING_REQUIRED_TAG_FORMAT, requiredTag.name()));
@@ -29,14 +28,14 @@ import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 		}
 		
 		Collection<MediaFileTagType> invalidTags = file.getTagSet();
-		invalidTags.removeAll(Arrays.asList(allowedTags));
+		invalidTags.removeAll(Arrays.asList(optionalTags));
+		invalidTags.removeAll(Arrays.asList(requiredTags));
 		if (!invalidTags.isEmpty()){
 			for (MediaFileTagType tag : invalidTags){
 				super.addToErrorLog(file, ValidationErrorSeverityType.FATAL, String.format(INVALID_TAG_FORMAT, tag.name()));
 			}
-			
 		}
-	*/
+	
 		// TODO: Make sure tags that must only appear once are only in the tag list once.
 
 	}

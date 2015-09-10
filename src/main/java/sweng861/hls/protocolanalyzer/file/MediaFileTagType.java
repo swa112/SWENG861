@@ -124,7 +124,7 @@ public enum MediaFileTagType {
 	},
 	
 	//*********Deprecated Tags*******//
-	EXT_X_ALLOW_CACHE("^EXT-X-ALLOW-CACHE.+$", false, true){
+	EXT_X_ALLOW_CACHE("^#EXT-X-ALLOW-CACHE.+$", false, true){
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
 			// TODO Auto-generated method stub

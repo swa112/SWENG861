@@ -6,7 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.net.MalformedURLException;
+import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Date;
@@ -28,8 +30,6 @@ import sweng861.hls.protocolanalyzer.validator.Validator;
  
 public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzerService{
 	
-	private static final int LINE_START = 1; 
-	
 	private static final String LOG_FORMAT = "%s: File: %s, line: %s, message: %s \n";
 	
 	private static final String APPLICATION = "APPLICATION";
@@ -49,20 +49,22 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 			HLSMediaFile file = new HLSMediaFile(urlStr);
 			fileList.add(file);
 			int lastIndex = urlStr.lastIndexOf('/');
-			String baseUrl = urlStr.substring(0, lastIndex+1); //need to determine if relative or absolute
+			String baseUrl = urlStr.substring(0, lastIndex+1); 
 			BufferedReader reader; 
+			LineNumberReader lineNumberReader;
 			try {
 				reader = getFileReader(urlStr);
+				lineNumberReader = new LineNumberReader(reader);
 				String line = "";
-				int lineNum = LINE_START;
+
 				do {
-					line = reader.readLine();
+					line = lineNumberReader.readLine();
 					
 					if (line != null) {
 						MediaFileTagType lineType = MediaFileTagType.findTagByLine(line);
 						HLSMediaFileLineInfo lineInfo = new HLSMediaFileLineInfo();
 						lineInfo.setLineData(line);
-						lineInfo.setLineNumber(lineNum);
+						lineInfo.setLineNumber(lineNumberReader.getLineNumber());
 						lineInfo.setLineType(lineType);
 						file.addFileLine(lineInfo);
 						if(lineType.isURI() && !lineType.equals(MediaFileTagType.TRANSPORT_STREAM_URI)){
@@ -70,12 +72,13 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 							processFiles(nextURL, fileList);
 						}
 					}
-					lineNum++;
+//					
 				}while (line != null);
 				
 				//After processing file, determine it's type. 
-				MediaFileType fileType = MediaFileType.matchFileTypOnIdentifyingTag(file.getFileLines());
+				MediaFileType fileType = MediaFileType.matchFileTypeOnIdentifyingTag(file.getFileLines());
 				file.setFileType(fileType);
+				lineNumberReader.close();
 				reader.close();
 			}catch(MalformedURLException e){
 				String messageFormat = "URL [%s] was not found or found invalid text in the file.";
@@ -103,6 +106,10 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		BufferedReader reader = new BufferedReader(inStreamReader);
 		return reader;
 	}
+	
+//	private Socket getSocketConnection(){
+//		Socket socket = new Sock
+//	}
 	
 	private void writeToLog(MediaStreamAnalyzerResult result) throws IOException{
 		long currentTime = System.currentTimeMillis();
