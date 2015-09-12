@@ -10,6 +10,7 @@ public class HLSRuleFactory {
 		List<HLSRule> ruleList = new ArrayList<HLSRule>();
 		ruleList.add(new FileMustBeRecognizedRule());
 		ruleList.add(new FileHasProperTagsRule());
+		ruleList.add(new TagsMustBeInProperSequenceRule());
 		return ruleList;
 	}
 	

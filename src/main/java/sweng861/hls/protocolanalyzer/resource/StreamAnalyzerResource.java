@@ -31,10 +31,17 @@ public class StreamAnalyzerResource {
 		try {
 			result = fileMediaService.analyzeFiles(url);
 		}catch (IOException io){ //io should be refactored. 
-			throw new AnalyzerFailedException("Analyzer failed. ", io);
+			throw new AnalyzerFailedException("Analyzer failed with exception: ", io);
 		}
 
 		return result;
+	}
+	
+	
+	@GET
+	@Path("/logs")
+	public MediaStreamAnalyzerResult analyzeStreamResult(){
+		return null;
 	}
 
 }

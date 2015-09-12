@@ -1,5 +1,10 @@
 package sweng861.hls.protocolanalyzer.file;
 
+/**
+ * Represents the data types for tags and attributes. 
+ * @author Scott
+ *
+ */
 public enum MediaFileTagValueDataType {
 	
 	NONE("\\z"), //Should be an empty string ("\\z") should I always check for a line end?
@@ -8,19 +13,23 @@ public enum MediaFileTagValueDataType {
 	
 	INTEGER("\\d+"),
 	
-	ATTRIBUTE_LIST("^((\\w|-)+=\\S+,?)+"), //expect /w followed by = and then optionally allow a , followed by zero or more ("^(0\\w+=\\S+,?)+"). Will need to be split on comma
+	ATTRIBUTE_LIST("^((\\w|-)+=\\S+,?)+"), 
 	
-	DECIMAL_INTEGER("\\d{1,20}") , //("\\d{1-20}") Does this need to be validated separately from the INTEGER type?
+	DECIMAL_INTEGER("\\d{1,20}") , 
 	
 	QUOTED_STRING("^\"\\w+\"$"),  
 	
-	ENUMERATED_STRING("\\w+"), //("\\w+") delegate matching the enumerated types defined by the attribute.  
+	ENUMERATED_STRING("\\w+"),
 	
-	DECIMAL_RESOLUTION("^\\d+x\\d+"), //("^\\d+x\\d+")
+	DECIMAL_RESOLUTION("^\\d+x\\d+"),
 	
 	DECIMAL_FLOATING_POINT("^\\d+\\.\\d+$"),
 	
-	EXT_INF_CUSTOM("^\\d+(\\.\\d+)?,(.+)?$")
+	EXT_INF_CUSTOM("^\\d+(\\.\\d+)?,(.+)?$"),
+	
+	SIGNED_DECIMAL_FLOATING_POINT("^([0-9]-\\.)+$"),
+	
+	HEXADECIMAL_SEQUENCE("^(0x|0X)[0-9][A-F]+$"),
 	
 	//TODO- when needed add more data types
 	

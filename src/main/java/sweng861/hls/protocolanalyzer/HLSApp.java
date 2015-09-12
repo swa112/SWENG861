@@ -21,20 +21,15 @@ public class HLSApp {
 	 */
 	public static void main(String[] args) {
 		String urlStr = "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8";
-		String baseUrl = "http://devimages.apple.com/iphone/samples/bipbop";
-		URL url = null;
-		List<HLSMediaFile> analyzedFiles= null;
+		
+		MediaStreamAnalyzerResult result;
 		HLSMediaStreamAnalyzerService fileService = new HLSMediaStreamAnalyzerServiceImpl();
 		try {
-			//url = new URL("http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8");
-//			 analyzedFiles = fileService.analyzeFiles(urlStr);
+			result = fileService.analyzeFiles(urlStr);
 		}catch (Exception e){
 			e.printStackTrace();
 		}
 		
-		for (HLSMediaFile file : analyzedFiles){
-			System.out.println(file);
-		}
 
 	}
 

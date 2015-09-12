@@ -1,6 +1,7 @@
 package sweng861.hls.protocolanalyzer;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -117,7 +118,8 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		SimpleDateFormat format = new SimpleDateFormat("MMddyy");
 		String logFile = format.format(currentDate).concat(".log");
 		File log = new File("C:\\Users\\Scott\\Documents\\PSU Software Engineering\\Fall 2015\\SWENG861\\workspace\\protocal-analyzer\\logs\\" + logFile);
-		FileWriter writer = new FileWriter(log);
+		FileWriter filewriter = new FileWriter(log);
+		BufferedWriter writer = new BufferedWriter(filewriter);
 		List<ValidationErrorLogEntry> allErrors = result.getErrors();
 		for (ValidationErrorLogEntry entry : allErrors){
 			writer.write(String.format(LOG_FORMAT,  entry.getErrorType().name(), APPLICATION, entry.getLineNumber(), entry.getMessage()));

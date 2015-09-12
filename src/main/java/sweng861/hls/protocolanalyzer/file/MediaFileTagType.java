@@ -35,12 +35,12 @@ public enum MediaFileTagType {
 
 		@Override
 		public MediaFileTagAttributeType[] getRequiredAttributes() {
-			return new MediaFileTagAttributeType[] {MediaFileTagAttributeType.BANDWIDTH};
+			return new MediaFileTagAttributeType[] {MediaFileTagAttributeType.BANDWIDTH}; //Is URI required.
 		}
 
 		@Override
 		public MediaFileTagAttributeType[] getOptionalAttributes() {
-			// TODO CODECS is a SHOULD
+	
 			return new MediaFileTagAttributeType[] {
 					MediaFileTagAttributeType.AVERAGE_BANDWITH,
 					MediaFileTagAttributeType.CODECS,
@@ -52,7 +52,18 @@ public enum MediaFileTagType {
 			};
 			
 		}
+		
+		@Override
+		public boolean isTagFollowedByRequiredType(MediaFileTagType typeForNextLine){
+			if(typeForNextLine.equals(MediaFileTagType.ABSOLUTE_PLAYLIST_URI) || typeForNextLine.equals(MediaFileTagType.RELATIVE_PLAYLIST_URI)){
+				return true;
+			} else {
+				return false; 
+			}
+		}
+
 	},
+	
 	
 	EXT_X_MEDIA("^#EXT-X-MEDIA.+$", false, true){
 
@@ -86,6 +97,42 @@ public enum MediaFileTagType {
 		
 	},
 	
+	EXT_X_I_FRAME_STREAM_INF("^#EXT-X-I-FRAME-STREAM-INF.+$", false, true){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.ATTRIBUTE_LIST;
+		}
+		
+		@Override
+		public MediaFileTagAttributeType[] getRequiredAttributes() {
+			return new MediaFileTagAttributeType[] {
+					MediaFileTagAttributeType.BANDWIDTH,
+					MediaFileTagAttributeType.URI};
+		}
+
+		@Override
+		public MediaFileTagAttributeType[] getOptionalAttributes() {
+	
+			return new MediaFileTagAttributeType[] {
+					MediaFileTagAttributeType.AVERAGE_BANDWITH,
+					MediaFileTagAttributeType.CODECS,
+					MediaFileTagAttributeType.RESOLUTION,
+					MediaFileTagAttributeType.AUDIO,
+					MediaFileTagAttributeType.VIDEO,
+					MediaFileTagAttributeType.SUBTITLES,
+					MediaFileTagAttributeType.CLOSED_CAPTIONS
+			};
+		}
+	},
+	
+	EXT_X_SESSION_DATA("^#EXT-X-SESSION-DATA.+$", false, true){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.ATTRIBUTE_LIST;
+		}
+		//TODO add required and optional attributes
+	},
+	
 	//**********Media Playlist Tags**************//
 	
 	EXT_X_TARGET_DURATION("^#EXT-X-TARGETDURATION.+$", false, true) {
@@ -93,7 +140,6 @@ public enum MediaFileTagType {
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.DECIMAL_INTEGER;
 		}
-
 
 	},
 	
@@ -103,7 +149,6 @@ public enum MediaFileTagType {
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.DECIMAL_INTEGER;
 		}
-		
 	},
 	
 	EXT_X_ENDLIST("^#EXT-X-ENDLIST$", false, false){
@@ -113,6 +158,44 @@ public enum MediaFileTagType {
 		}
 	},
 	
+	EXT_X_DISCONTINUITY_SEQUENCE("^#EXT-X-DISCONTINUITY-SEQUENCE.+$", false, true){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.DECIMAL_INTEGER;
+		}
+	},
+	
+	EXT_X_PLAYLIST_TYPE("^#EXT-X-PLAYLIST-TYPE.$", false, true){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.ENUMERATED_STRING;
+		}
+	},
+	
+	EXT_I_FRAMES_ONLY("^#EXT-I-FRAMES-ONLY$", false, false){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.NONE;
+		}
+	},
+	
+	//*********Master or Media Segment Tags*********//
+	
+	EXT_X_INDEPENDENT_SEGMENTS("^#EXT-X-INDEPENDENT-SEGMENTS$", false, false){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.NONE;
+		}
+	},
+	
+	EXT_X_START("^#EXT-X-START.+$", false, true){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.ATTRIBUTE_LIST;
+		}
+		//TODO add required and optional tags. 
+	},
+	
 	//**********Media Segment Tags**************//
 	
 	EXTINF("^#EXTINF.+$", false, true) {
@@ -120,7 +203,52 @@ public enum MediaFileTagType {
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.EXT_INF_CUSTOM;
 		}
-
+		
+		@Override
+		public boolean isTagFollowedByRequiredType(MediaFileTagType typeForNextLine){
+			if(typeForNextLine.equals(TRANSPORT_STREAM_URI)){
+				return true;
+			} else {
+				return false; 
+			}
+		}
+	},
+	
+	EXT_X_BYTERANGE("^#EXT-X-BYTERANGE.+$", false, true){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.DECIMAL_INTEGER;
+		}
+	}, 
+	
+	EXT_X_DISCONTINUITY("^#EXT-XDISCONTINUITY.+$", false, false){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.NONE;
+		}
+	},
+	
+	EXT_X_KEY("^#EXT-X-KEY.+$", false, true){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.ATTRIBUTE_LIST;
+		}
+		//TODO add required and optional attributes
+	}, 
+	
+	EXT_X_MAP("^#EXT-X-MAP.+$", false, true){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.ATTRIBUTE_LIST;
+		}
+		//TODO add required and optional attributes
+	}, 
+	
+	EXT_X_PROGRAM_DATE_TIME("^#EXT-X-PROGRAM-DATE-TIME.+$", false, true){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.ANY; //TODO add ISO format
+		}
 	},
 	
 	//*********Deprecated Tags*******//
@@ -139,7 +267,7 @@ public enum MediaFileTagType {
 	
 	//**********URI Tags**************//
 	
-	ABSOLUTE_PLAYLIST_URI("^http:\\\\.+\\.m3u8$|^http:\\\\.+\\.m3u$", true, false) {
+	ABSOLUTE_PLAYLIST_URI("^http:\\\\.+\\.(m3u8|m3u)$", true, false) {
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
 			// TODO Auto-generated method stub
@@ -148,11 +276,10 @@ public enum MediaFileTagType {
 
 	},
 	
-	RELATIVE_PLAYLIST_URI("^.+\\.m3u8$|^.+\\.m3u$", true, false) {
+	RELATIVE_PLAYLIST_URI("^.+\\.(m3u8|m3u)$", true, false) {
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
-			// TODO Auto-generated method stub
-			return null;
+			return MediaFileTagValueDataType.ANY;
 		}
 
 	},
@@ -160,8 +287,7 @@ public enum MediaFileTagType {
 	TRANSPORT_STREAM_URI("^.+\\.ts$", true, false) {
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
-			// TODO Auto-generated method stub
-			return null;
+			return MediaFileTagValueDataType.ANY;
 		}
 	},
 	
@@ -243,6 +369,18 @@ public enum MediaFileTagType {
 		return new MediaFileTagAttributeType [0];
 	}
 	
+	/**
+	 * Override to set a required following type. By default returns true. 
+	 * @return
+	 */
+	public boolean isTagFollowedByRequiredType(MediaFileTagType typeForNextLine){
+		return true;
+	}
+	/**
+	 * Checks that tag is properly formatted with the associated data type. 
+	 * @param aTagDataValue
+	 * @return
+	 */
 	public boolean isTagProperlyFormatted(String aTagDataValue){
 		boolean isProperlyFormatted = false;
 		if (aTagDataValue.matches(this.getValueDataType().getDataTypeRegEx())){
