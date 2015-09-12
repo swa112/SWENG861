@@ -27,7 +27,7 @@ public class HLSMediaFile  {
 	@XmlElement
 	private List<ValidationErrorLogEntry> validationErrors = new ArrayList<ValidationErrorLogEntry>();
 	
-	private Set<MediaFileTagType> tagSet;
+	private List<MediaFileTagType> tagList;
 
 	public HLSMediaFile(String fileName){
 		this.fileName = fileName;
@@ -80,8 +80,8 @@ public class HLSMediaFile  {
 		this.validationErrors = validationErrors;
 	}
 	
-	public Set<MediaFileTagType> getTagSet() {
-		return tagSet;
+	public List<MediaFileTagType> getTagList() {
+		return tagList;
 	}
 
 //	public void setTagSet(Set<MediaFileTagType> tagSet) {
@@ -89,10 +89,10 @@ public class HLSMediaFile  {
 //	}
 	
 	void addTag(MediaFileTagType tag) {
-		if(this.tagSet == null){
-			tagSet = new HashSet<MediaFileTagType>();
+		if(this.tagList == null){
+			tagList = new ArrayList<MediaFileTagType>();
 		}
-		this.tagSet.add(tag);
+		this.tagList.add(tag);
 	}
 
 	@Override

@@ -39,5 +39,7 @@ class TagsMustBeInProperSequenceRule extends AbstractMediaFileRule {
 		}
 		return nextTag;
 	}
+	
+
 
 }

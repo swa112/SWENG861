@@ -11,6 +11,8 @@ public class HLSRuleFactory {
 		ruleList.add(new FileMustBeRecognizedRule());
 		ruleList.add(new FileHasProperTagsRule());
 		ruleList.add(new TagsMustBeInProperSequenceRule());
+		ruleList.add(new MediaSequenceFilesMustBeInOrder());
+		ruleList.add(new FileHasCorrectNumberOfTagsRule());
 		return ruleList;
 	}
 	
@@ -24,6 +26,6 @@ public class HLSRuleFactory {
 	//TODO - use reflection to instantiate all instances that implement HLSRule. Get a list of classes within the package and test that they 
 	//are assignable from the abstract class to create the rule sets. 
 	
-	//TODO - add method to getRules for Line Level vs. File Level checks unless there is a way to keep this abstract. 
+
 
 }

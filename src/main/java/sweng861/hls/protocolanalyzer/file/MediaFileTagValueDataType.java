@@ -13,7 +13,7 @@ public enum MediaFileTagValueDataType {
 	
 	INTEGER("\\d+"),
 	
-	ATTRIBUTE_LIST("^((\\w|-)+=\\S+,?)+"), 
+	ATTRIBUTE_LIST("^((\\w|-)+=\\S+,?\\s?)+"), 
 	
 	DECIMAL_INTEGER("\\d{1,20}") , 
 	

@@ -2,6 +2,8 @@ package sweng861.hls.protocolanalyzer.file;
 
 import java.util.Arrays;
 
+import sweng861.hls.protocolanalyzer.annotation.DeprecatedFileEntity;
+
 public enum MediaFileTagAttributeType {
 	
 	BANDWIDTH ("BANDWIDTH", MediaFileTagValueDataType.DECIMAL_INTEGER),
@@ -97,6 +99,9 @@ public enum MediaFileTagAttributeType {
 	KEY_FORMAT_VERSIONS("KEYFORMATVERSIONS", MediaFileTagValueDataType.QUOTED_STRING),
 	
 	BYTE_RANGE("BYTERANGE", MediaFileTagValueDataType.QUOTED_STRING),
+	
+	@DeprecatedFileEntity(asOf="version 6")
+	PROGRAM_ID("PROGRAM-ID", MediaFileTagValueDataType.DECIMAL_INTEGER),
 	
 	NOT_FOUND("ATTRIBUTE NOT FOUND", MediaFileTagValueDataType.NONE),
 	

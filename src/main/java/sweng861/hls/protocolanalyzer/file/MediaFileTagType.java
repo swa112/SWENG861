@@ -1,5 +1,12 @@
 package sweng861.hls.protocolanalyzer.file;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+import sweng861.hls.protocolanalyzer.annotation.DeprecatedFileEntity;
+import sweng861.hls.protocolanalyzer.annotation.TagMustBeUnique;
+
 
 /**
  * Enumerated type that represents a media file tag type. Add new types to extend the set of tag types when the specification is updated. 
@@ -18,12 +25,61 @@ public enum MediaFileTagType {
 
 	},
 	
+	@TagMustBeUnique
 	EXT_X_VERSION("^#EXT-X-VERSION.+$", false, true) {
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.INTEGER;
 		}
 	},
+	
+	//**********Media Playlist Tags**************//
+	
+	EXT_X_TARGET_DURATION("^#EXT-X-TARGETDURATION.+$", false, true) {
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.DECIMAL_INTEGER;
+		}
+
+	},
+	
+	EXT_X_MEDIA_SEQUENCE("^#EXT-X-MEDIA-SEQUENCE.+$", false, true){
+
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.DECIMAL_INTEGER;
+		}
+	},
+	
+	EXT_X_ENDLIST("^#EXT-X-ENDLIST$", false, false){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.NONE;
+		}
+	},
+	
+	EXT_X_DISCONTINUITY_SEQUENCE("^#EXT-X-DISCONTINUITY-SEQUENCE.+$", false, true){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.DECIMAL_INTEGER;
+		}
+	},
+	
+	EXT_X_PLAYLIST_TYPE("^#EXT-X-PLAYLIST-TYPE.$", false, true){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.ENUMERATED_STRING;
+		}
+	},
+	
+	EXT_I_FRAMES_ONLY("^#EXT-I-FRAMES-ONLY$", false, false){
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.NONE;
+		}
+	},
+	
+	//*********Master or Media Segment Tags*********//
 	
 	//**********Master Playlist Tags**************//
 	
@@ -133,53 +189,7 @@ public enum MediaFileTagType {
 		//TODO add required and optional attributes
 	},
 	
-	//**********Media Playlist Tags**************//
-	
-	EXT_X_TARGET_DURATION("^#EXT-X-TARGETDURATION.+$", false, true) {
-		@Override
-		public MediaFileTagValueDataType getValueDataType() {
-			return MediaFileTagValueDataType.DECIMAL_INTEGER;
-		}
 
-	},
-	
-	EXT_X_MEDIA_SEQUENCE("^#EXT-X-MEDIA-SEQUENCE.+$", false, true){
-
-		@Override
-		public MediaFileTagValueDataType getValueDataType() {
-			return MediaFileTagValueDataType.DECIMAL_INTEGER;
-		}
-	},
-	
-	EXT_X_ENDLIST("^#EXT-X-ENDLIST$", false, false){
-		@Override
-		public MediaFileTagValueDataType getValueDataType() {
-			return MediaFileTagValueDataType.NONE;
-		}
-	},
-	
-	EXT_X_DISCONTINUITY_SEQUENCE("^#EXT-X-DISCONTINUITY-SEQUENCE.+$", false, true){
-		@Override
-		public MediaFileTagValueDataType getValueDataType() {
-			return MediaFileTagValueDataType.DECIMAL_INTEGER;
-		}
-	},
-	
-	EXT_X_PLAYLIST_TYPE("^#EXT-X-PLAYLIST-TYPE.$", false, true){
-		@Override
-		public MediaFileTagValueDataType getValueDataType() {
-			return MediaFileTagValueDataType.ENUMERATED_STRING;
-		}
-	},
-	
-	EXT_I_FRAMES_ONLY("^#EXT-I-FRAMES-ONLY$", false, false){
-		@Override
-		public MediaFileTagValueDataType getValueDataType() {
-			return MediaFileTagValueDataType.NONE;
-		}
-	},
-	
-	//*********Master or Media Segment Tags*********//
 	
 	EXT_X_INDEPENDENT_SEGMENTS("^#EXT-X-INDEPENDENT-SEGMENTS$", false, false){
 		@Override
@@ -221,7 +231,7 @@ public enum MediaFileTagType {
 		}
 	}, 
 	
-	EXT_X_DISCONTINUITY("^#EXT-XDISCONTINUITY.+$", false, false){
+	EXT_X_DISCONTINUITY("^#EXT-X-DISCONTINUITY.+$", false, false){
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.NONE;
@@ -252,6 +262,8 @@ public enum MediaFileTagType {
 	},
 	
 	//*********Deprecated Tags*******//
+	
+	@DeprecatedFileEntity(asOf="version 6")
 	EXT_X_ALLOW_CACHE("^#EXT-X-ALLOW-CACHE.+$", false, true){
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
@@ -391,6 +403,19 @@ public enum MediaFileTagType {
 	
 	public boolean isDeprecated(){
 		return false; 
+	}
+	
+	public static List<MediaFileTagType> getTagsThatMustBeUniquePerFile(){
+		List<MediaFileTagType> uniqueTags = new ArrayList<MediaFileTagType>();
+		Field[] fields = MediaFileTagType.class.getFields();
+		for (Field field : fields){
+			TagMustBeUnique annotation = field.getAnnotation(TagMustBeUnique.class);
+			if(annotation != null ){
+				uniqueTags.add(MediaFileTagType.valueOf(field.getName()));
+			}
+		}
+		return uniqueTags; 
+
 	}
 
 	//TODO - add abstract method to indicate that the tag needs to check a URI on the next line.  (Dependent tags)

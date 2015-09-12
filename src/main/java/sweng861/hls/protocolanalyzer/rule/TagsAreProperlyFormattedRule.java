@@ -1,11 +1,13 @@
 package sweng861.hls.protocolanalyzer.rule;
 
+import sweng861.hls.protocolanalyzer.annotation.DeprecatedFileEntity;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagAttributeType;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagValueDataType;
 import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
+import sweng861.hls.protocolanalyzer.validator.ValidationErrorType;
 
 /**
  * This rule enforces that the tags with expected values are properly set, i.e. if the tag expects an integer we validate that the tag value is an INT. 
@@ -79,7 +81,10 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
 		//Need a list of attributes to do the required and allowed checks. 
 		for (String attribute : attributes){
 			String[] nameValue = attribute.split(NAME_VALUE_SEPARATOR); //length should be 2. 
-			MediaFileTagAttributeType attributeType = MediaFileTagAttributeType.getAttributeTypeFromString(nameValue[0]);
+			MediaFileTagAttributeType attributeType = MediaFileTagAttributeType.getAttributeTypeFromString(nameValue[0].trim());
+			
+			checkForDeprecatedEntity(attributeType, file, lineInfo);
+			
 			if(!attributeType.equals(MediaFileTagAttributeType.NOT_FOUND)){
 				if (!attributeType.isAttributeValueProperlyFormatted(nameValue[1])){
 					super.addToErrorLog(
@@ -103,6 +108,27 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
 		}
 
 
+	}
+	
+	private void checkForDeprecatedEntity(MediaFileTagAttributeType attributeType, HLSMediaFile file, HLSMediaFileLineInfo lineInfo){
+		
+		DeprecatedFileEntity deprecatedIndicator = null;
+		try {
+			deprecatedIndicator = attributeType.getClass().getField(attributeType.name()).getAnnotation(DeprecatedFileEntity.class);
+		} catch (NoSuchFieldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(deprecatedIndicator !=null){
+			super.addToErrorLog(file, 
+					ValidationErrorType.USE_OF_DEPRECATED_ATTRIBUTE.getSeverity(),
+					String.format(ValidationErrorType.USE_OF_DEPRECATED_ATTRIBUTE.getMessageFormat(), attributeType.name(), deprecatedIndicator.asOf()), 
+					lineInfo.getLineNumber());
+		}
 	}
 
 }

@@ -46,6 +46,7 @@ public enum MediaFileType {
 		@Override
 		public MediaFileTagType[] getOptionalTags() {
 			return new MediaFileTagType [] {
+					MediaFileTagType.EXT_X_MEDIA_SEQUENCE,
 					MediaFileTagType.EXT_X_ENDLIST
 			}; //TODO
 		}
