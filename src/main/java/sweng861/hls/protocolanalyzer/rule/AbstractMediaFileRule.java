@@ -14,9 +14,14 @@ public abstract class AbstractMediaFileRule implements HLSRule {
 	}
 
 	protected void addToErrorLog(HLSMediaFile file, ValidationErrorSeverityType severity, String message){
+		addToErrorLog(file, severity, message, FILE_LEVEL);
+	}
+	
+	protected void addToErrorLog(HLSMediaFile file, ValidationErrorSeverityType severity, String message, int lineNumber){
 		ValidationErrorLogEntry entry = new ValidationErrorLogEntry(
-				severity, message, FILE_LEVEL);
+				severity, message, lineNumber);
 		file.addValidationError(entry);
 	}
+	
 
 }
