@@ -20,7 +20,8 @@ public class HLSApp {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String urlStr = "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8";
+//		String urlStr = "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8";
+		String urlStr = "ftp://tomcat:Apac-Hee@146.186.90.203/Arris/ipad.m3u8";
 		
 		MediaStreamAnalyzerResult result;
 		HLSMediaStreamAnalyzerService fileService = new HLSMediaStreamAnalyzerServiceImpl();

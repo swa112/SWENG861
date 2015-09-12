@@ -36,7 +36,8 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 	public MediaStreamAnalyzerResult analyzeFiles(String urlStr) throws MalformedURLException, IOException {
 		MediaStreamAnalyzerResult result = new MediaStreamAnalyzerResult();
 		List<HLSMediaFile> fileList = new ArrayList<HLSMediaFile>();
-		processFiles(urlStr, fileList);
+		result.setFiles(fileList);
+		processFiles(urlStr, result);
 		Validator validator = new MediaFileValidator();
 		validator.validate(fileList);
 		result.setFiles(fileList);
@@ -44,9 +45,8 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		return result;
 	}
 	
-	private void processFiles(String urlStr, List<HLSMediaFile> fileList) throws IOException {
+	private void processFiles(String urlStr, MediaStreamAnalyzerResult result){
 			HLSMediaFile file = new HLSMediaFile(urlStr);
-			fileList.add(file);
 			int lastIndex = urlStr.lastIndexOf('/');
 			String baseUrl = urlStr.substring(0, lastIndex+1); 
 			BufferedReader reader; 
@@ -68,7 +68,7 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 						file.addFileLine(lineInfo);
 						if(lineType.isURI() && !lineType.equals(MediaFileTagType.TRANSPORT_STREAM_URI)){
 							String nextURL = this.getNextURL(line, baseUrl, lineType);
-							processFiles(nextURL, fileList);
+							processFiles(nextURL, result);
 						}
 					}
 //					
@@ -77,12 +77,17 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 				//After processing file, determine it's type. 
 				MediaFileType fileType = MediaFileType.matchFileTypeOnIdentifyingTag(file.getFileLines());
 				file.setFileType(fileType);
+				result.getFiles().add(file); 
 				lineNumberReader.close();
 				reader.close();
 			}catch(MalformedURLException e){
 				String messageFormat = "URL [%s] was not found or found invalid text in the file.";
 				ValidationErrorLogEntry entry = new ValidationErrorLogEntry(ValidationErrorSeverityType.WARNING, String.format(messageFormat, urlStr), 0);
-				file.addValidationError(entry);
+				result.addError(entry);
+			}catch (IOException e){
+				String messageFormat = "URL [%s] was not found or found invalid text in the file.";
+				ValidationErrorLogEntry entry = new ValidationErrorLogEntry(ValidationErrorSeverityType.WARNING, String.format(messageFormat, urlStr), 0);
+				result.addError(entry);
 			}
 		
 		}

@@ -23,9 +23,14 @@ public class MediaStreamAnalyzerResult {
 	public void setErrors(List<ValidationErrorLogEntry> errors) {
 		this.errors = errors;
 	}
+	
+	public void addError (ValidationErrorLogEntry error){
+		this.errors.add(error);
+	}
 	public List<HLSMediaFile> getFiles() {
 		return files;
 	}
+	
 	public void setFiles(List<HLSMediaFile> files) {
 		this.files = files;
 	}
