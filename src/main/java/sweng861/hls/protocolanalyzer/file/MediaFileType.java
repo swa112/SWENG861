@@ -40,14 +40,16 @@ public enum MediaFileType {
 					MediaFileTagType.EXTM3U, 
 					MediaFileTagType.EXT_X_TARGET_DURATION,
 					MediaFileTagType.TRANSPORT_STREAM_URI, 
-					MediaFileTagType.EXTINF};
+					MediaFileTagType.EXTINF, 
+					MediaFileTagType.EXT_X_VERSION};
 		}
 
 		@Override
 		public MediaFileTagType[] getOptionalTags() {
 			return new MediaFileTagType [] {
 					MediaFileTagType.EXT_X_MEDIA_SEQUENCE,
-					MediaFileTagType.EXT_X_ENDLIST
+					MediaFileTagType.EXT_X_ENDLIST,
+					MediaFileTagType.COMMENT,
 			}; //TODO
 		}
 

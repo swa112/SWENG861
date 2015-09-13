@@ -31,11 +31,10 @@ class TagsMustBeInProperSequenceRule extends AbstractMediaFileRule {
 	
 	private MediaFileTagType getNextNonCommentLine(List<HLSMediaFileLineInfo> fileLines, int startIndex){
 		MediaFileTagType nextTag = fileLines.get(startIndex).getLineType();
-		while(nextTag.equals(MediaFileTagType.COMMENT)){
+		while(nextTag.equals(MediaFileTagType.COMMENT) && startIndex < fileLines.size()-1){
 			startIndex++;
-			if(startIndex <= fileLines.size()-1){
-				nextTag = fileLines.get(startIndex).getLineType();
-			}
+			nextTag = fileLines.get(startIndex).getLineType();
+			
 		}
 		return nextTag;
 	}

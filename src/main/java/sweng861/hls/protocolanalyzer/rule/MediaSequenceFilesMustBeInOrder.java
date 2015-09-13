@@ -33,7 +33,7 @@ class MediaSequenceFilesMustBeInOrder extends AbstractMediaFileRule {
 				if(sequence != -1){
 					if(line.getLineType().equals(MediaFileTagType.TRANSPORT_STREAM_URI)){
 						Matcher matcher = sequenceNumberPattern.matcher(line.getLineData());
-						if(matcher.find()){
+						if(matcher.find()){ //Should this be while?
 							String substring = line.getLineData().substring(matcher.start(), matcher.end());
 							Integer actualSequence = Integer.valueOf(substring);
 							if (actualSequence != sequence ){

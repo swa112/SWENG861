@@ -1,0 +1,17 @@
+#EXTM3U
+#EXT-X-VERSION:2
+#EXT-X-TARGETDURATION:6
+#EXT-X-MEDIA-SEQUENCE:6800
+#EXTINF:6, no desc
+ipadipad-med_06800.ts
+#EXTINF:6, no desc
+ipadipad-med_06801.ts
+#EXTINF:6, no desc
+ipadipad-med_06802.ts
+#EXTINF:6, no desc
+ipadipad-med_06803.ts
+#EXTINF:12, no desc
+ipadipad-med_06804.ts
+#EXTINF:6, no desc
+ipadipad-med_06805.ts
+#EXT-X-ENDLISTX

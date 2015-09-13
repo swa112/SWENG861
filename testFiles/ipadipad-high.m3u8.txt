@@ -1,0 +1,126 @@
+#EXTM3U
+#EXT-X-VERSION:2
+#EXT-X-VERSION:3
+#EXT-X-TARGETDURATION:6
+#EXT-X-MEDIA-SEQUENCE:6800
+#EXTINF:6, no desc
+ipadipad-high_06800.ts
+#EXTINF:6, no desc
+ipadipad-high_06801.ts
+#EXTINF:6, no desc
+ipadipad-high_06802.ts
+#EXTINF:6, no desc
+ipadipad-high_06803.ts
+#EXTINF:6, no desc
+ipadipad-high_06804.ts
+#EXTINF:6, no desc
+ipadipad-high_06805.ts
+#EXTINF:6, no desc
+ipadipad-high_06806.ts
+#EXTINF:6, no desc
+ipadipad-high_06807.ts
+#EXTINF:6, no desc
+ipadipad-high_06808.ts
+#EXTINF:6, no desc
+ipadipad-high_06809.ts
+#EXTINF:6, no desc
+ipadipad-high_06800.ts
+#EXTINF:6, no desc
+ipadipad-high_06811.ts
+#EXTINF:6, no desc
+ipadipad-high_06812.ts
+#EXTINF:6, no desc
+ipadipad-high_06813.ts
+#EXTINF:6, no desc
+ipadipad-high_06814.ts
+#EXTINF:6, no desc
+ipadipad-high_06815.ts
+#EXTINF:6, no desc
+ipadipad-high_06816.ts
+#EXTINF:6, no desc
+ipadipad-high_06817.ts
+#EXTINF:6, no desc
+ipadipad-high_06818.ts
+#EXTINF:6, no desc
+ipadipad-high_06819.ts
+#EXTINF:6, no desc
+ipadipad-high_06820.ts
+#EXTINF:6, no desc
+ipadipad-high_06821.ts
+#EXTINF:6, no desc
+ipadipad-high_06822.ts
+#EXTINF:6, no desc
+ipadipad-high_06823.ts
+#EXTINF:6, no desc
+ipadipad-high_06824.ts
+#EXTINF:6, no desc
+ipadipad-high_06825.ts
+#EXTINF:6, no desc
+ipadipad-high_06826.ts
+#EXTINF:6, no desc
+ipadipad-high_06827.ts
+#EXTINF:6, no desc
+ipadipad-high_06828.ts
+#EXTINF:6, no desc
+ipadipad-high_06829.ts
+#EXTINF:6, no desc
+ipadipad-high_06830.ts
+#EXTINF:6, no desc
+ipadipad-high_06831.ts
+#EXTINF:6, no desc
+ipadipad-high_06832.ts
+#EXTINF:6, no desc
+ipadipad-high_06833.ts
+#EXTINF:6, no desc
+ipadipad-high_06834.ts
+#EXTINF:6, no desc
+ipadipad-high_06835.ts
+#EXTINF:6, no desc
+ipadipad-high_06836.ts
+#EXTINF:6, no desc
+ipadipad-high_06837.ts
+#EXTINF:6, no desc
+ipadipad-high_06838.ts
+#EXTINF:6, no desc
+ipadipad-high_06839.ts
+#EXTINF:6, no desc
+ipadipad-high_06840.ts
+#EXTINF:6, no desc
+ipadipad-high_06841.ts
+#EXTINF:6, no desc
+ipadipad-high_06842.ts
+#EXTINF:6, no desc
+ipadipad-high_06843.ts
+#EXTINF:6, no desc
+ipadipad-high_06844.ts
+#EXTINF:6, no desc
+ipadipad-high_06845.ts
+#EXTINF:6, no desc
+ipadipad-high_06846.ts
+#EXTINF:6, no desc
+ipadipad-high_06847.ts
+#EXTINF:6, no desc
+ipadipad-high_06848.ts
+#EXTINF:6, no desc
+ipadipad-high_06849.ts
+#EXTINF:6, no desc
+ipadipad-high_06850.ts
+#EXTINF:6, no desc
+ipadipad-high_06851.ts
+#EXTINF:6, no desc
+ipadipad-high_06852.ts
+#EXTINF:6, no desc
+ipadipad-high_06853.ts
+#EXTINF:6, no desc
+ipadipad-high_06854.ts
+#EXTINF:6, no desc
+ipadipad-high_06855.ts
+#EXTINF:6, no desc
+ipadipad-high_06856.ts
+#EXTINF:6, no desc
+ipadipad-high_06857.ts
+#EXTINF:6, no desc
+ipadipad-high_06858.ts
+#EXTINF:6, no desc
+ipadipad-high_06859.ts
+#EXT-X-ENDLIST
