@@ -109,9 +109,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="11" language="java" name="sweng861.hls.protocolanalyzer.validator.MediaFileValidator" 
+  <class id="11" language="java" name="sweng861.hls.protocolanalyzer.evaluator.MediaFileEvaluator" 
     project="protocol-analyzer" 
-    file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/validator/MediaFileValidator.java" 
+    file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/evaluator/MediaFileEvaluator.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="167" y="603"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

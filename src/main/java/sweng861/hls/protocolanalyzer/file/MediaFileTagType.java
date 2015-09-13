@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import sweng861.hls.protocolanalyzer.annotation.DeprecatedFileEntity;
+import sweng861.hls.protocolanalyzer.annotation.DeprecatedProtocol;
 import sweng861.hls.protocolanalyzer.annotation.TagMustBeUnique;
 
 
@@ -263,7 +263,7 @@ public enum MediaFileTagType {
 	
 	//*********Deprecated Tags*******//
 	
-	@DeprecatedFileEntity(asOf="version 6")
+	@DeprecatedProtocol(asOf="version 6")
 	EXT_X_ALLOW_CACHE("^#EXT-X-ALLOW-CACHE.+$", false, true){
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {

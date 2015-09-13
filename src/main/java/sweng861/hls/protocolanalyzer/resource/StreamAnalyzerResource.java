@@ -14,9 +14,9 @@ import sweng861.hls.protocolanalyzer.AnalyzerFailedException;
 import sweng861.hls.protocolanalyzer.HLSMediaStreamAnalyzerService;
 import sweng861.hls.protocolanalyzer.HLSMediaStreamAnalyzerServiceImpl;
 import sweng861.hls.protocolanalyzer.MediaStreamAnalyzerResult;
+import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
+import sweng861.hls.protocolanalyzer.evaluator.ErrorSeverityType;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
-import sweng861.hls.protocolanalyzer.validator.ValidationErrorLogEntry;
-import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 
 @Path("/stream-analyzer")
 public class StreamAnalyzerResource {

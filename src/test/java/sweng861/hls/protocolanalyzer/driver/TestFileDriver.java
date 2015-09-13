@@ -14,12 +14,12 @@ import java.util.List;
 
 import sweng861.hls.protocolanalyzer.LogUtility;
 import sweng861.hls.protocolanalyzer.MediaStreamAnalyzerResult;
+import sweng861.hls.protocolanalyzer.evaluator.MediaFileEvaluator;
+import sweng861.hls.protocolanalyzer.evaluator.Evaluator;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
 import sweng861.hls.protocolanalyzer.file.MediaFileType;
-import sweng861.hls.protocolanalyzer.validator.MediaFileValidator;
-import sweng861.hls.protocolanalyzer.validator.Validator;
 
 /**
  * @author Scott
@@ -79,7 +79,7 @@ public class TestFileDriver {
 
 		}
 		
-		Validator validator = new MediaFileValidator();
+		Evaluator validator = new MediaFileEvaluator();
 		validator.validate(result.getFiles());
 		result.setFiles(result.getFiles());
 		try {
@@ -87,6 +87,7 @@ public class TestFileDriver {
 		}catch (IOException io){
 			io.printStackTrace();
 		}
+		System.out.println("Test Driver ended. Check logs for results");
 	}
 
 }

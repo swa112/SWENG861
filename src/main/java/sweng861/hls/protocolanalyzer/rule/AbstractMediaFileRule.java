@@ -1,9 +1,9 @@
 package sweng861.hls.protocolanalyzer.rule;
 
+import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
+import sweng861.hls.protocolanalyzer.evaluator.ErrorSeverityType;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
-import sweng861.hls.protocolanalyzer.validator.ValidationErrorLogEntry;
-import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 
 public abstract class AbstractMediaFileRule implements HLSRule {
 
@@ -13,12 +13,12 @@ public abstract class AbstractMediaFileRule implements HLSRule {
 		throw new UnsupportedOperationException();//TODO
 	}
 
-	protected void addToErrorLog(HLSMediaFile file, ValidationErrorSeverityType severity, String message){
+	protected void addToErrorLog(HLSMediaFile file, ErrorSeverityType severity, String message){
 		addToErrorLog(file, severity, message, FILE_LEVEL);
 	}
 	
-	protected void addToErrorLog(HLSMediaFile file, ValidationErrorSeverityType severity, String message, int lineNumber){
-		ValidationErrorLogEntry entry = new ValidationErrorLogEntry(
+	protected void addToErrorLog(HLSMediaFile file, ErrorSeverityType severity, String message, int lineNumber){
+		ErrorLogEntry entry = new ErrorLogEntry(
 				severity, message, lineNumber);
 		file.addValidationError(entry);
 	}

@@ -9,9 +9,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.EqualPredicate;
 
+import sweng861.hls.protocolanalyzer.evaluator.ErrorType;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
-import sweng861.hls.protocolanalyzer.validator.ValidationErrorType;
 
 /**
  * @author Scott
@@ -30,8 +30,8 @@ class FileHasCorrectNumberOfTagsRule extends AbstractMediaFileRule {
 			int matches = CollectionUtils.countMatches(tagList, predicate);
 			if(matches > 1){
 				super.addToErrorLog(file, 
-						ValidationErrorType.TAG_THAT_MUST_BE_UNIQUE_APPERS_MORE_THAN_ONCE.getSeverity(), 
-						String.format(ValidationErrorType.TAG_THAT_MUST_BE_UNIQUE_APPERS_MORE_THAN_ONCE.getMessageFormat(), uniqueTag.name(), matches));
+						ErrorType.TAG_THAT_MUST_BE_UNIQUE_APPERS_MORE_THAN_ONCE.getSeverity(), 
+						String.format(ErrorType.TAG_THAT_MUST_BE_UNIQUE_APPERS_MORE_THAN_ONCE.getMessageFormat(), uniqueTag.name(), matches));
 			}
 		}
 

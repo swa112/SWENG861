@@ -1,4 +1,4 @@
-package sweng861.hls.protocolanalyzer.validator;
+package sweng861.hls.protocolanalyzer.evaluator;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.rule.HLSRule;
 import sweng861.hls.protocolanalyzer.rule.HLSRuleFactory;
 
-public class MediaFileValidator implements Validator {
+public class MediaFileEvaluator implements Evaluator {
 
 	public void validate(List<HLSMediaFile> files) {
 		List<HLSRule> fileLevelRules = HLSRuleFactory.getFileRules();

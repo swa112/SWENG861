@@ -1,9 +1,9 @@
-package sweng861.hls.protocolanalyzer.validator;
+package sweng861.hls.protocolanalyzer.evaluator;
 
 import javax.xml.bind.annotation.XmlEnum;
 
 @XmlEnum
-public enum ValidationErrorSeverityType {
+public enum ErrorSeverityType {
 	
 	FATAL, 
 	

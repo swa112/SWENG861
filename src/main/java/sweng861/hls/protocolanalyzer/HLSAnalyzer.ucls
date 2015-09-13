@@ -33,10 +33,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="4" language="java" name="sweng861.hls.protocolanalyzer.validator.ValidationErrorLogEntry" 
-    project="protocol-analyzer" 
-    file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/validator/ValidationErrorLogEntry.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry" project="protocol-analyzer" 
+    file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/evaluator/ErrorLogEntry.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="926" y="421"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -44,8 +43,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="5" language="java" name="sweng861.hls.protocolanalyzer.validator.Validator" project="protocol-analyzer" 
-    file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/validator/Validator.java" binary="false" 
+  <interface id="5" language="java" name="sweng861.hls.protocolanalyzer.evaluator.Evaluator" project="protocol-analyzer" 
+    file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/evaluator/Evaluator.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="182" y="445"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -54,9 +53,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <enumeration id="6" language="java" name="sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType" 
+  <enumeration id="6" language="java" name="sweng861.hls.protocolanalyzer.evaluator.ErrorSeverityType" 
     project="protocol-analyzer" 
-    file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/validator/ValidationErrorSeverityType.java" 
+    file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/evaluator/ErrorSeverityType.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="905" y="638"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -65,9 +64,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="7" language="java" name="sweng861.hls.protocolanalyzer.validator.MediaFileValidator" 
+  <class id="7" language="java" name="sweng861.hls.protocolanalyzer.evaluator.MediaFileEvaluator" 
     project="protocol-analyzer" 
-    file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/validator/MediaFileValidator.java" 
+    file="/protocol-analyzer/src/main/java/sweng861/hls/protocolanalyzer/evaluator/MediaFileEvaluator.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="204" y="590"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -76,44 +75,44 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <realization id="8">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="5"/>  
-  </realization>  
-  <association id="9">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="10" name="fileType">        
+  <association id="8">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="9" name="errorType">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="11" minimum="0" maximum="1">        
+      <multiplicity id="10" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="11">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="12" name="fileType">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="13" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="12">    
+  <realization id="14">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <association id="15">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="13" name="validationErrors">        
+      <attribute id="16" name="validationErrors">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="14" minimum="0" maximum="2147483647">        
+      <multiplicity id="17" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="15">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="16" name="errorType">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="17" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

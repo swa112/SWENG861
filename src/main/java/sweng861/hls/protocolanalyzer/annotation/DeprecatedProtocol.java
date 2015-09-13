@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DeprecatedFileEntity {
+public @interface DeprecatedProtocol {
 
 	public String asOf();
 }

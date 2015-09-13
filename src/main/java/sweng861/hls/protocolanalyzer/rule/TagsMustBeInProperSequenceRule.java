@@ -2,10 +2,10 @@ package sweng861.hls.protocolanalyzer.rule;
 
 import java.util.List;
 
+import sweng861.hls.protocolanalyzer.evaluator.ErrorSeverityType;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
-import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
 
 class TagsMustBeInProperSequenceRule extends AbstractMediaFileRule {
 	
@@ -20,7 +20,7 @@ class TagsMustBeInProperSequenceRule extends AbstractMediaFileRule {
 				MediaFileTagType nextNonCommentLine = this.getNextNonCommentLine(fileLines, i+1);
 				if (!hlsMediaFileLineInfo.getLineType().isTagFollowedByRequiredType(nextNonCommentLine)){
 					super.addToErrorLog(file, 
-							ValidationErrorSeverityType.FATAL,
+							ErrorSeverityType.FATAL,
 							String.format(MISSING_FOLLOWING_TAG, hlsMediaFileLineInfo.getLineType().name()),
 							hlsMediaFileLineInfo.getLineNumber());
 				}

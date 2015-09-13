@@ -2,7 +2,7 @@ package sweng861.hls.protocolanalyzer.file;
 
 import java.util.Arrays;
 
-import sweng861.hls.protocolanalyzer.annotation.DeprecatedFileEntity;
+import sweng861.hls.protocolanalyzer.annotation.DeprecatedProtocol;
 
 public enum MediaFileTagAttributeType {
 	
@@ -100,7 +100,7 @@ public enum MediaFileTagAttributeType {
 	
 	BYTE_RANGE("BYTERANGE", MediaFileTagValueDataType.QUOTED_STRING),
 	
-	@DeprecatedFileEntity(asOf="version 6")
+	@DeprecatedProtocol(asOf="version 6")
 	PROGRAM_ID("PROGRAM-ID", MediaFileTagValueDataType.DECIMAL_INTEGER),
 	
 	NOT_FOUND("ATTRIBUTE NOT FOUND", MediaFileTagValueDataType.NONE),

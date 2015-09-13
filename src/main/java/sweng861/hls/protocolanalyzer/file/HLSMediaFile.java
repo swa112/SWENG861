@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import sweng861.hls.protocolanalyzer.validator.ValidationErrorLogEntry;
+import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
@@ -25,7 +25,7 @@ public class HLSMediaFile  {
 	private List<HLSMediaFileLineInfo> fileLines;
 	
 	@XmlElement
-	private List<ValidationErrorLogEntry> validationErrors = new ArrayList<ValidationErrorLogEntry>();
+	private List<ErrorLogEntry> validationErrors = new ArrayList<ErrorLogEntry>();
 	
 	private List<MediaFileTagType> tagList;
 
@@ -68,15 +68,15 @@ public class HLSMediaFile  {
 		addTag(line.getLineType());
 	}
 	
-	public List<ValidationErrorLogEntry> getValidationErrors() {
+	public List<ErrorLogEntry> getValidationErrors() {
 		return this.validationErrors;
 	}
 	
-	public void addValidationError(ValidationErrorLogEntry validationError){
+	public void addValidationError(ErrorLogEntry validationError){
 		this.validationErrors.add(validationError);
 	}
 
-	public void setValidationErrors(List<ValidationErrorLogEntry> validationErrors) {
+	public void setValidationErrors(List<ErrorLogEntry> validationErrors) {
 		this.validationErrors = validationErrors;
 	}
 	

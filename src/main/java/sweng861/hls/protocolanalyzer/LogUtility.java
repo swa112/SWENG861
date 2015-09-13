@@ -11,8 +11,8 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
-import sweng861.hls.protocolanalyzer.validator.ValidationErrorLogEntry;
 
 /**
  * @author Scott
@@ -32,14 +32,14 @@ public final class LogUtility {
 		File log = new File("C:\\Users\\Scott\\Documents\\PSU Software Engineering\\Fall 2015\\SWENG861\\workspace\\protocal-analyzer\\logs\\" + logFile);
 		FileWriter filewriter = new FileWriter(log);
 		BufferedWriter writer = new BufferedWriter(filewriter);
-		List<ValidationErrorLogEntry> allErrors = result.getErrors();
-		for (ValidationErrorLogEntry entry : allErrors){
+		List<ErrorLogEntry> allErrors = result.getErrors();
+		for (ErrorLogEntry entry : allErrors){
 			writer.write(String.format(LOG_FORMAT,  entry.getErrorType().name(), APPLICATION, entry.getLineNumber(), entry.getMessage()));
 		}
 		List<HLSMediaFile> files = result.getFiles();
 		for (HLSMediaFile file : files){
-			List<ValidationErrorLogEntry> validationErrors = file.getValidationErrors();
-			for (ValidationErrorLogEntry entry : validationErrors){
+			List<ErrorLogEntry> validationErrors = file.getValidationErrors();
+			for (ErrorLogEntry entry : validationErrors){
 				writer.write(String.format(LOG_FORMAT, entry.getErrorType().name(), file.getFileName(),  entry.getLineNumber(), entry.getMessage()));
 			
 			}

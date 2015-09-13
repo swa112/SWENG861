@@ -18,15 +18,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import sweng861.hls.protocolanalyzer.evaluator.MediaFileEvaluator;
+import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
+import sweng861.hls.protocolanalyzer.evaluator.ErrorSeverityType;
+import sweng861.hls.protocolanalyzer.evaluator.ErrorType;
+import sweng861.hls.protocolanalyzer.evaluator.Evaluator;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
 import sweng861.hls.protocolanalyzer.file.MediaFileType;
-import sweng861.hls.protocolanalyzer.validator.MediaFileValidator;
-import sweng861.hls.protocolanalyzer.validator.ValidationErrorLogEntry;
-import sweng861.hls.protocolanalyzer.validator.ValidationErrorSeverityType;
-import sweng861.hls.protocolanalyzer.validator.ValidationErrorType;
-import sweng861.hls.protocolanalyzer.validator.Validator;
 
 //@Singleton
 //@Path("singleton-bean")
@@ -35,7 +35,7 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 	
 	private final static String [] allowedContentHeaders = new String []{
 		"application/mpegurl", 
-		"application/x-mpegurl", 
+		"audio/x-mpegurl", 
 		"application/vnd.apple.mpegurl"};
 	
 	public MediaStreamAnalyzerResult analyzeFiles(String urlStr) throws MalformedURLException, IOException {
@@ -43,7 +43,7 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		List<HLSMediaFile> fileList = new ArrayList<HLSMediaFile>();
 		result.setFiles(fileList);
 		processFiles(urlStr, result);
-		Validator validator = new MediaFileValidator();
+		Evaluator validator = new MediaFileEvaluator();
 		validator.validate(fileList);
 		result.setFiles(fileList);
 		LogUtility.writeToLog(result);
@@ -90,11 +90,11 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 			
 			}catch(MalformedURLException e){
 				String messageFormat = "URL [%s] was not found or found invalid text in the file.";
-				ValidationErrorLogEntry entry = new ValidationErrorLogEntry(ValidationErrorSeverityType.WARNING, String.format(messageFormat, urlStr), 0);
+				ErrorLogEntry entry = new ErrorLogEntry(ErrorSeverityType.WARNING, String.format(messageFormat, urlStr), 0);
 				result.addError(entry);
 			}catch (IOException e){
 				String messageFormat = "URL [%s] was not found or found invalid text in the file.";
-				ValidationErrorLogEntry entry = new ValidationErrorLogEntry(ValidationErrorSeverityType.WARNING, String.format(messageFormat, urlStr), 0);
+				ErrorLogEntry entry = new ErrorLogEntry(ErrorSeverityType.WARNING, String.format(messageFormat, urlStr), 0);
 				result.addError(entry);
 			}finally {
 				try {
@@ -122,9 +122,9 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		connection.connect();
 		String header = connection.getHeaderField("Content-type");
 		if (!Arrays.asList(allowedContentHeaders).contains(header)){
-			ValidationErrorLogEntry logEntry = new ValidationErrorLogEntry(
-					ValidationErrorType.INVALID_CONTENT_TYPE_HEADER.getSeverity(),
-					String.format(ValidationErrorType.INVALID_CONTENT_TYPE_HEADER.getMessageFormat(),header), 
+			ErrorLogEntry logEntry = new ErrorLogEntry(
+					ErrorType.INVALID_CONTENT_TYPE_HEADER.getSeverity(),
+					String.format(ErrorType.INVALID_CONTENT_TYPE_HEADER.getMessageFormat(),header), 
 					0);
 			result.addError(logEntry);
 		}

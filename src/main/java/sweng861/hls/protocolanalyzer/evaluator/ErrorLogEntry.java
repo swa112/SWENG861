@@ -1,33 +1,33 @@
-package sweng861.hls.protocolanalyzer.validator;
+package sweng861.hls.protocolanalyzer.evaluator;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class ValidationErrorLogEntry{
+public class ErrorLogEntry{
 	
-	private ValidationErrorSeverityType errorType; 
+	private ErrorSeverityType errorType; 
 	
 	private String message; 
 	
 	private int lineNumber; 
 	
 	
-	public ValidationErrorLogEntry(ValidationErrorSeverityType errorType,  String message, int lineNumber){
+	public ErrorLogEntry(ErrorSeverityType errorType,  String message, int lineNumber){
 		this.errorType = errorType; 
 		this.message = message; 
 		this.lineNumber = lineNumber;
 		
 	}
 	
-	public ValidationErrorLogEntry(){
+	public ErrorLogEntry(){
 		
 	}
 
-	public ValidationErrorSeverityType getErrorType() {
+	public ErrorSeverityType getErrorType() {
 		return errorType;
 	}
 
-	public void setErrorType(ValidationErrorSeverityType errorType) {
+	public void setErrorType(ErrorSeverityType errorType) {
 		this.errorType = errorType;
 	}
 
