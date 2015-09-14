@@ -98,9 +98,15 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 				result.addError(entry);
 			}finally {
 				try {
-					inStreamReader.close();
-					lineNumberReader.close();
-					reader.close();
+					if (inStreamReader != null){
+						inStreamReader.close();
+					}
+					if (lineNumberReader != null){
+						lineNumberReader.close();
+					}
+					if (lineNumberReader != null){
+						reader.close();
+					}
 				}catch (IOException io) {
 					System.err.println("Unable to close readers!");
 				}
