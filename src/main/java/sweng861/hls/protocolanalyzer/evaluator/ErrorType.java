@@ -6,7 +6,7 @@ public enum ErrorType {
 	
 	MEDIA_SEGMENTS_NOT_IN_SEQUENCE(ErrorSeverityType.FATAL, "Media Segment [%s] did not match expected sequence of [%d]"),
 	
-	TAG_THAT_MUST_BE_UNIQUE_APPERS_MORE_THAN_ONCE (ErrorSeverityType.FATAL, "Tag [%s] was found %d times, but it can only have a signle occurence."),
+	TAG_HAS_INVALID_NUMBER_OF_OCCURENCES (ErrorSeverityType.FATAL, "Tag [%s] was found %d times, but it must occur [%s]"),
 	
 	INVALID_CONTENT_TYPE_HEADER(ErrorSeverityType.FATAL, "HTTP Content-Type header [%s] is invalid."),
 	
@@ -16,7 +16,9 @@ public enum ErrorType {
 	
 	MISSING_REQUIRED_TAG_FORMAT(ErrorSeverityType.FATAL, "Required Tag [%s] was not found in file type %s"),
 	
-	INVALID_TAG_FORMAT (ErrorSeverityType.FATAL, "Found tag [%s] that is not allowed in file type %s"),
+	INVALID_TAG_FOR_FILE (ErrorSeverityType.FATAL, "Found tag [%s] that is not allowed in file type %s"),
+	
+	FOUND_IMPROPER_TAG (ErrorSeverityType.WARNING, "Found tag [%s] that does not match known tag types."),
 	
 	MISSING_START_TAG (ErrorSeverityType.FATAL, "Start tag for file type %s [%s] was not found"),
 	

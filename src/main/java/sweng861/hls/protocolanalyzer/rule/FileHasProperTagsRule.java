@@ -37,10 +37,13 @@ import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
 		invalidTags.removeAll(Arrays.asList(requiredTags));
 		if (!invalidTags.isEmpty()){
 			for (MediaFileTagType tag : invalidTags){
-				super.addToErrorLog(file, 
-						ErrorType.INVALID_TAG_FORMAT.getSeverity(), 
-						String.format(ErrorType.INVALID_TAG_FORMAT.getMessageFormat(), file.getFileType().name(), tag.name()));
-			}
+				if(!tag.equals(MediaFileTagType.NOT_A_TAG)){ //Improper tags are handled in a different rule. 
+					super.addToErrorLog(file, 
+							ErrorType.INVALID_TAG_FOR_FILE.getSeverity(), 
+							String.format(ErrorType.INVALID_TAG_FOR_FILE.getMessageFormat(), tag.name(), file.getFileType().name()));
+				}
+			}	
+			
 		}
 
 	}

@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sweng861.hls.protocolanalyzer.annotation.DeprecatedProtocol;
-import sweng861.hls.protocolanalyzer.annotation.TagMustBeUnique;
+import sweng861.hls.protocolanalyzer.annotation.FollowedBy;
+import sweng861.hls.protocolanalyzer.annotation.Times;
+import sweng861.hls.protocolanalyzer.annotation.TimesType;
 
 
 /**
@@ -14,6 +16,32 @@ import sweng861.hls.protocolanalyzer.annotation.TagMustBeUnique;
  *
  */
 public enum MediaFileTagType {
+	
+	//**********URI Tags**************//
+	
+	ABSOLUTE_PLAYLIST_URI("^https?:\\\\.+\\.(m3u8|m3u)$", true, false) {
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+	},
+	
+	RELATIVE_PLAYLIST_URI("^.+\\.(m3u8|m3u)$", true, false) {
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.ANY;
+		}
+
+	},
+	
+	TRANSPORT_STREAM_URI("^.+\\.ts$", true, false) {
+		@Override
+		public MediaFileTagValueDataType getValueDataType() {
+			return MediaFileTagValueDataType.ANY;
+		}
+	},
 	
 	//**********Basic Tags**************//
 	
@@ -25,7 +53,7 @@ public enum MediaFileTagType {
 
 	},
 	
-	@TagMustBeUnique
+	@Times(TimesType.ONCE)
 	EXT_X_VERSION("^#EXT-X-VERSION.+$", false, true) {
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
@@ -79,10 +107,11 @@ public enum MediaFileTagType {
 		}
 	},
 	
-	//*********Master or Media Segment Tags*********//
 	
 	//**********Master Playlist Tags**************//
 	
+	@Times(TimesType.MORE_THAN_ONCE)
+	@FollowedBy({MediaFileTagType.ABSOLUTE_PLAYLIST_URI, MediaFileTagType.RELATIVE_PLAYLIST_URI })
 	EXT_X_STREAM_INF("^#EXT-X-STREAM-INF.+$", false, true) {
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
@@ -91,7 +120,7 @@ public enum MediaFileTagType {
 
 		@Override
 		public MediaFileTagAttributeType[] getRequiredAttributes() {
-			return new MediaFileTagAttributeType[] {MediaFileTagAttributeType.BANDWIDTH}; //Is URI required.
+			return new MediaFileTagAttributeType[] {MediaFileTagAttributeType.BANDWIDTH}; 
 		}
 
 		@Override
@@ -107,15 +136,6 @@ public enum MediaFileTagType {
 					MediaFileTagAttributeType.CLOSED_CAPTIONS
 			};
 			
-		}
-		
-		@Override
-		public boolean isTagFollowedByRequiredType(MediaFileTagType typeForNextLine){
-			if(typeForNextLine.equals(MediaFileTagType.ABSOLUTE_PLAYLIST_URI) || typeForNextLine.equals(MediaFileTagType.RELATIVE_PLAYLIST_URI)){
-				return true;
-			} else {
-				return false; 
-			}
 		}
 
 	},
@@ -208,19 +228,11 @@ public enum MediaFileTagType {
 	
 	//**********Media Segment Tags**************//
 	
+	@FollowedBy({MediaFileTagType.TRANSPORT_STREAM_URI})
 	EXTINF("^#EXTINF.+$", false, true) {
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.EXT_INF_CUSTOM;
-		}
-		
-		@Override
-		public boolean isTagFollowedByRequiredType(MediaFileTagType typeForNextLine){
-			if(typeForNextLine.equals(TRANSPORT_STREAM_URI)){
-				return true;
-			} else {
-				return false; 
-			}
 		}
 	},
 	
@@ -257,7 +269,7 @@ public enum MediaFileTagType {
 	EXT_X_PROGRAM_DATE_TIME("^#EXT-X-PROGRAM-DATE-TIME.+$", false, true){
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
-			return MediaFileTagValueDataType.ANY; //TODO add ISO format
+			return MediaFileTagValueDataType.ISO_DATE;
 		}
 	},
 	
@@ -277,39 +289,14 @@ public enum MediaFileTagType {
 		}
 	},
 	
-	//**********URI Tags**************//
-	
-	ABSOLUTE_PLAYLIST_URI("^http:\\\\.+\\.(m3u8|m3u)$", true, false) {
-		@Override
-		public MediaFileTagValueDataType getValueDataType() {
-			// TODO Auto-generated method stub
-			return null;
-		}
 
-	},
-	
-	RELATIVE_PLAYLIST_URI("^.+\\.(m3u8|m3u)$", true, false) {
-		@Override
-		public MediaFileTagValueDataType getValueDataType() {
-			return MediaFileTagValueDataType.ANY;
-		}
-
-	},
-	
-	TRANSPORT_STREAM_URI("^.+\\.ts$", true, false) {
-		@Override
-		public MediaFileTagValueDataType getValueDataType() {
-			return MediaFileTagValueDataType.ANY;
-		}
-	},
 	
 	//**********Comment and Not found Tags**************//
 
-	COMMENT("^#.+$", false, false) {
+	COMMENT("^#[^EXT].+$", false, false) {
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
-			// TODO Auto-generated method stub
-			return null;
+			return MediaFileTagValueDataType.ANY;
 		}
 
 	},
@@ -381,13 +368,7 @@ public enum MediaFileTagType {
 		return new MediaFileTagAttributeType [0];
 	}
 	
-	/**
-	 * Override to set a required following type. By default returns true. 
-	 * @return
-	 */
-	public boolean isTagFollowedByRequiredType(MediaFileTagType typeForNextLine){
-		return true;
-	}
+
 	/**
 	 * Checks that tag is properly formatted with the associated data type. 
 	 * @param aTagDataValue
@@ -405,16 +386,16 @@ public enum MediaFileTagType {
 		return false; 
 	}
 	
-	public static List<MediaFileTagType> getTagsThatMustBeUniquePerFile(){
-		List<MediaFileTagType> uniqueTags = new ArrayList<MediaFileTagType>();
+	public static List<MediaFileTagType> getTagsWithTimesConstraint(){
+		List<MediaFileTagType> tagsWithTimesConstraint = new ArrayList<MediaFileTagType>();
 		Field[] fields = MediaFileTagType.class.getFields();
 		for (Field field : fields){
-			TagMustBeUnique annotation = field.getAnnotation(TagMustBeUnique.class);
+			Times annotation = field.getAnnotation(Times.class);
 			if(annotation != null ){
-				uniqueTags.add(MediaFileTagType.valueOf(field.getName()));
+				tagsWithTimesConstraint.add(MediaFileTagType.valueOf(field.getName()));
 			}
 		}
-		return uniqueTags; 
+		return tagsWithTimesConstraint; 
 
 	}
 

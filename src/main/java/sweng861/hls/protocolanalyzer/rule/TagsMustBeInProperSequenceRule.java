@@ -2,6 +2,7 @@ package sweng861.hls.protocolanalyzer.rule;
 
 import java.util.List;
 
+import sweng861.hls.protocolanalyzer.annotation.FollowedBy;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorSeverityType;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
@@ -18,7 +19,7 @@ class TagsMustBeInProperSequenceRule extends AbstractMediaFileRule {
 			if(i != fileLines.size()-1){
 				HLSMediaFileLineInfo hlsMediaFileLineInfo = fileLines.get(i);
 				MediaFileTagType nextNonCommentLine = this.getNextNonCommentLine(fileLines, i+1);
-				if (!hlsMediaFileLineInfo.getLineType().isTagFollowedByRequiredType(nextNonCommentLine)){
+				if (!isTagFollowedByRequiredType(hlsMediaFileLineInfo.getLineType(), nextNonCommentLine)){
 					super.addToErrorLog(file, 
 							ErrorSeverityType.FATAL,
 							String.format(MISSING_FOLLOWING_TAG, hlsMediaFileLineInfo.getLineType().name()),
@@ -37,6 +38,30 @@ class TagsMustBeInProperSequenceRule extends AbstractMediaFileRule {
 			
 		}
 		return nextTag;
+	}
+	
+	public boolean isTagFollowedByRequiredType(MediaFileTagType currentTag, MediaFileTagType typeForNextLine){
+		
+		FollowedBy followedBy = null;
+		
+		try {
+			followedBy = currentTag.getClass().getField(currentTag.name()).getAnnotation(FollowedBy.class);
+		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		}
+
+		if (followedBy != null){
+			MediaFileTagType[] values = followedBy.value();
+			for(MediaFileTagType type : values){
+				if (type.equals(typeForNextLine)){
+					return true;
+				}
+			}
+			return false;
+		}
+		return true;
 	}
 	
 

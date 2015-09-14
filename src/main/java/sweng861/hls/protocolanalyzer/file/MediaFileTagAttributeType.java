@@ -96,7 +96,7 @@ public enum MediaFileTagAttributeType {
 	
 	KEY_FORMAT("KEYFORMAT", MediaFileTagValueDataType.QUOTED_STRING),
 	
-	KEY_FORMAT_VERSIONS("KEYFORMATVERSIONS", MediaFileTagValueDataType.QUOTED_STRING),
+	KEY_FORMAT_VERSIONS("KEYFORMATVERSIONS", MediaFileTagValueDataType.QUOTED_STRING),  
 	
 	BYTE_RANGE("BYTERANGE", MediaFileTagValueDataType.QUOTED_STRING),
 	

@@ -31,7 +31,7 @@ public enum MediaFileTagValueDataType {
 	
 	HEXADECIMAL_SEQUENCE("^(0x|0X)[0-9][A-F]+$"),
 	
-	//TODO- when needed add more data types
+	ISO_DATE("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{3}Z")
 	
 	;
 	

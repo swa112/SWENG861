@@ -12,15 +12,15 @@ import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
  * @author Scott
  *
  */
- class EvaluateCommentsToFindIncorrectTags extends AbstractMediaFileRule{
+ class FileDoesNotContainImproperTagsRule extends AbstractMediaFileRule{
 
 	public void runRuleCheck(HLSMediaFile file) {
-		if (file.getTagList().contains(MediaFileTagType.COMMENT)){
+		if (file.getTagList().contains(MediaFileTagType.NOT_A_TAG)){
 			for (HLSMediaFileLineInfo line : file.getFileLines()){
-				if (line.getLineType().equals(MediaFileTagType.COMMENT)){
+				if (line.getLineType().equals(MediaFileTagType.NOT_A_TAG)){
 					super.addToErrorLog(file, 
-							ErrorType.COMMENT_FOUND.getSeverity(), 
-							String.format(ErrorType.COMMENT_FOUND.getMessageFormat(), line.getLineData(), line.getLineNumber()));
+							ErrorType.FOUND_IMPROPER_TAG.getSeverity(), 
+							String.format(ErrorType.FOUND_IMPROPER_TAG.getMessageFormat(), line.getLineData(), line.getLineNumber()));
 				}
 			}
 		}
