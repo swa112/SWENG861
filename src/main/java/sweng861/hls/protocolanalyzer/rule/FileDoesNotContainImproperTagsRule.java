@@ -12,23 +12,23 @@ import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
  * @author Scott
  *
  */
- class FileDoesNotContainImproperTagsRule extends AbstractMediaFileRule{
+class FileDoesNotContainImproperTagsRule extends AbstractMediaFileTagRule{
 
-	public void runRuleCheck(HLSMediaFile file) {
-		if (file.getTagList().contains(MediaFileTagType.NOT_A_TAG)){
-			for (HLSMediaFileLineInfo line : file.getFileLines()){
-				if (line.getLineType().equals(MediaFileTagType.NOT_A_TAG)){
-					super.addToErrorLog(file, 
-							ErrorType.FOUND_IMPROPER_TAG.getSeverity(), 
-							String.format(ErrorType.FOUND_IMPROPER_TAG.getMessageFormat(), line.getLineData(), line.getLineNumber()));
-				}
-			}
+	public void runRuleCheck(HLSMediaFile file, HLSMediaFileLineInfo line) {
+
+		if (line.getLineType().equals(MediaFileTagType.NOT_A_TAG)){
+			super.addToErrorLog(file, 
+					ErrorType.FOUND_IMPROPER_TAG.getSeverity(), 
+					String.format(ErrorType.FOUND_IMPROPER_TAG.getMessageFormat(), line.getLineData()), 
+					line.getLineNumber());
 		}
-		
+
+
+
 	}
-	 
-	 
-	
-	
+
+
+
+
 
 }

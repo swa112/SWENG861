@@ -13,7 +13,6 @@ public class HLSRuleFactory {
 		ruleList.add(new TagsMustBeInProperSequenceRule());
 		ruleList.add(new MediaSequenceFilesAreValidForPlaylist());
 		ruleList.add(new FileHasCorrectNumberOfTagsRule());
-		ruleList.add(new FileDoesNotContainImproperTagsRule());
 		return ruleList;
 	}
 	
@@ -21,6 +20,7 @@ public class HLSRuleFactory {
 			
 		List<HLSRule> ruleList = new ArrayList<HLSRule>();
 		ruleList.add(new TagsAreProperlyFormattedRule());
+		ruleList.add(new FileDoesNotContainImproperTagsRule());
 		return ruleList;
 	}
 	

@@ -68,7 +68,7 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 				do {
 					line = lineNumberReader.readLine();
 					
-					if (line != null) {
+					if (line != null && !line.trim().isEmpty()) {
 						MediaFileTagType lineType = MediaFileTagType.findTagByLine(line);
 						HLSMediaFileLineInfo lineInfo = new HLSMediaFileLineInfo();
 						lineInfo.setLineData(line);
@@ -90,26 +90,26 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 			
 			}catch(MalformedURLException e){
 				String messageFormat = "URL [%s] was not found or found invalid text in the file.";
-				ErrorLogEntry entry = new ErrorLogEntry(ErrorSeverityType.WARNING, String.format(messageFormat, urlStr), 0);
+				ErrorLogEntry entry = new ErrorLogEntry(ErrorSeverityType.FATAL, String.format(messageFormat, urlStr), 0);
 				result.addError(entry);
 			}catch (IOException e){
 				String messageFormat = "URL [%s] was not found or found invalid text in the file.";
-				ErrorLogEntry entry = new ErrorLogEntry(ErrorSeverityType.WARNING, String.format(messageFormat, urlStr), 0);
+				ErrorLogEntry entry = new ErrorLogEntry(ErrorSeverityType.FATAL, String.format(messageFormat, urlStr), 0);
 				result.addError(entry);
 			}finally {
-//				try {
-//					if (inStreamReader != null){
-//						inStreamReader.close();
-//					}
-//					if (lineNumberReader != null){
-//						lineNumberReader.close();
-//					}
-//					if (lineNumberReader != null){
-//						reader.close();
-//					}
-//				}catch (IOException io) {
-//					System.err.println("Unable to close readers!");
-//				}
+				try {
+					if (inStreamReader != null){
+						inStreamReader.close();
+					}
+					if (lineNumberReader != null){
+						lineNumberReader.close();
+					}
+					if (lineNumberReader != null){
+						reader.close();
+					}
+				}catch (IOException io) {
+					System.err.println("Unable to close readers!");
+				}
 			}
 		
 		}

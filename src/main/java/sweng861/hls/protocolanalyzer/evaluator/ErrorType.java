@@ -23,6 +23,9 @@ public enum ErrorType {
 	MISSING_START_TAG (ErrorSeverityType.FATAL, "Start tag for file type %s [%s] was not found"),
 	
 	INVALID_FILE_TYPE (ErrorSeverityType.FATAL, "File [%s] is not a recognized file type"),
+
+	MISSING_FOLLOWING_TAG  (ErrorSeverityType.FATAL, "The tag [%s] is not followed by the required type."),
+
 	;
 	private ErrorSeverityType severity; 
 	

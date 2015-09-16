@@ -4,14 +4,13 @@ import java.util.List;
 
 import sweng861.hls.protocolanalyzer.annotation.FollowedBy;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorSeverityType;
+import sweng861.hls.protocolanalyzer.evaluator.ErrorType;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
 
 class TagsMustBeInProperSequenceRule extends AbstractMediaFileRule {
 	
-	private static final String MISSING_FOLLOWING_TAG = "The tag [%s] is not followed by the required type. ";
-
 	public void runRuleCheck(HLSMediaFile file) {
 		
 		List<HLSMediaFileLineInfo> fileLines = file.getFileLines();
@@ -21,8 +20,8 @@ class TagsMustBeInProperSequenceRule extends AbstractMediaFileRule {
 				MediaFileTagType nextNonCommentLine = this.getNextNonCommentLine(fileLines, i+1);
 				if (!isTagFollowedByRequiredType(hlsMediaFileLineInfo.getLineType(), nextNonCommentLine)){
 					super.addToErrorLog(file, 
-							ErrorSeverityType.FATAL,
-							String.format(MISSING_FOLLOWING_TAG, hlsMediaFileLineInfo.getLineType().name()),
+							ErrorType.MISSING_FOLLOWING_TAG.getSeverity(),
+							String.format(ErrorType.MISSING_FOLLOWING_TAG.getMessageFormat(), hlsMediaFileLineInfo.getLineType().name()),
 							hlsMediaFileLineInfo.getLineNumber());
 				}
 			}
