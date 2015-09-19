@@ -22,8 +22,7 @@ public enum MediaFileTagType {
 	ABSOLUTE_PLAYLIST_URI("^https?:\\\\.+\\.(m3u8|m3u)$", true, false) {
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
-			// TODO Auto-generated method stub
-			return null;
+			return MediaFileTagValueDataType.ANY;
 		}
 
 	},
@@ -206,7 +205,22 @@ public enum MediaFileTagType {
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.ATTRIBUTE_LIST;
 		}
-		//TODO add required and optional attributes
+		@Override
+		public MediaFileTagAttributeType[] getRequiredAttributes() {
+			return new MediaFileTagAttributeType[] {
+					MediaFileTagAttributeType.DATA_ID,
+			};
+		}
+
+		@Override
+		public MediaFileTagAttributeType[] getOptionalAttributes() {
+	
+			return new MediaFileTagAttributeType[] {
+					MediaFileTagAttributeType.URI,
+					MediaFileTagAttributeType.LANGUAGE,
+				
+			};
+		}
 	},
 	
 
@@ -223,7 +237,20 @@ public enum MediaFileTagType {
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.ATTRIBUTE_LIST;
 		}
-		//TODO add required and optional tags. 
+		@Override
+		public MediaFileTagAttributeType[] getRequiredAttributes() {
+			return new MediaFileTagAttributeType[] {
+					MediaFileTagAttributeType.TIME_OFFSET,
+			};
+		}
+
+		@Override
+		public MediaFileTagAttributeType[] getOptionalAttributes() {
+	
+			return new MediaFileTagAttributeType[] {
+					MediaFileTagAttributeType.PRECISE,				
+			};
+		}
 	},
 	
 	//**********Media Segment Tags**************//
@@ -255,7 +282,24 @@ public enum MediaFileTagType {
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.ATTRIBUTE_LIST;
 		}
-		//TODO add required and optional attributes
+		@Override
+		public MediaFileTagAttributeType[] getRequiredAttributes() {
+			return new MediaFileTagAttributeType[] {
+					MediaFileTagAttributeType.METHOD,
+					MediaFileTagAttributeType.URI,
+			};
+		}
+
+		@Override
+		public MediaFileTagAttributeType[] getOptionalAttributes() {
+	
+			return new MediaFileTagAttributeType[] {
+					MediaFileTagAttributeType.IV,
+					MediaFileTagAttributeType.KEY_FORMAT,
+					MediaFileTagAttributeType.KEY_FORMAT_VERSIONS,
+					
+			};
+		}
 	}, 
 	
 	EXT_X_MAP("^#EXT-X-MAP.+$", false, true){
@@ -263,7 +307,20 @@ public enum MediaFileTagType {
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.ATTRIBUTE_LIST;
 		}
-		//TODO add required and optional attributes
+		@Override
+		public MediaFileTagAttributeType[] getRequiredAttributes() {
+			return new MediaFileTagAttributeType[] {
+					MediaFileTagAttributeType.URI,
+			};
+		}
+
+		@Override
+		public MediaFileTagAttributeType[] getOptionalAttributes() {
+	
+			return new MediaFileTagAttributeType[] {
+					MediaFileTagAttributeType.BYTE_RANGE,					
+			};
+		}
 	}, 
 	
 	EXT_X_PROGRAM_DATE_TIME("^#EXT-X-PROGRAM-DATE-TIME.+$", false, true){
@@ -279,7 +336,6 @@ public enum MediaFileTagType {
 	EXT_X_ALLOW_CACHE("^#EXT-X-ALLOW-CACHE.+$", false, true){
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
-			// TODO Auto-generated method stub
 			return MediaFileTagValueDataType.ANY;
 		}
 		
@@ -399,8 +455,7 @@ public enum MediaFileTagType {
 
 	}
 
-	//TODO - add abstract method to indicate that the tag needs to check a URI on the next line.  (Dependent tags)
-	//TODO - add abstract method to indicate the tag has a custom rule. 
+
 	
 	public static void main(String [] args){
 		String test = "#EXT-X-TARGET-DURATION:10";

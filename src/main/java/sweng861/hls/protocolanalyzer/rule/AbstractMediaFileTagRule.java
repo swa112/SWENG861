@@ -2,6 +2,7 @@ package sweng861.hls.protocolanalyzer.rule;
 
 import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorSeverityType;
+import sweng861.hls.protocolanalyzer.evaluator.ErrorType;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 
 public abstract class AbstractMediaFileTagRule implements HLSRule {
@@ -13,9 +14,9 @@ public abstract class AbstractMediaFileTagRule implements HLSRule {
 	}
 	
 	
-	protected void addToErrorLog(HLSMediaFile file, ErrorSeverityType severity, String message, int lineNumber){
+	protected void addToErrorLog(HLSMediaFile file, ErrorType errorType, String message, int lineNumber){
 		ErrorLogEntry entry = new ErrorLogEntry(
-				severity, message, lineNumber);
+				errorType, message, lineNumber);
 		file.addValidationError(entry);
 	}
 

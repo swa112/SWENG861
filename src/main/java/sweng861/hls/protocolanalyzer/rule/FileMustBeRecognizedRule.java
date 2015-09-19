@@ -10,7 +10,7 @@ import sweng861.hls.protocolanalyzer.file.MediaFileType;
 		MediaFileType fileType = file.getFileType();
 		if (fileType == null || fileType.equals(MediaFileType.INVALID_FILE)){
 			super.addToErrorLog(file, 
-					ErrorType.INVALID_FILE_TYPE.getSeverity(), 
+					ErrorType.INVALID_FILE_TYPE, 
 					String.format(ErrorType.INVALID_FILE_TYPE.getMessageFormat(), file.getFileName()));
 		}
 	}

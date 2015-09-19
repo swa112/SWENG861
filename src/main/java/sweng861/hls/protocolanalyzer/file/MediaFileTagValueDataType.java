@@ -19,7 +19,7 @@ public enum MediaFileTagValueDataType {
 	
 	QUOTED_STRING("^\"\\w+\"$"),  
 	
-	ENUMERATED_STRING("\\w+"),
+	ENUMERATED_STRING("^\\w+$"),
 	
 	DECIMAL_RESOLUTION("^\\d+x\\d+"),
 	

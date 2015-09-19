@@ -1,32 +1,26 @@
 package sweng861.hls.protocolanalyzer;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.net.MalformedURLException;
-import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import sweng861.hls.protocolanalyzer.evaluator.MediaFileEvaluator;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
-import sweng861.hls.protocolanalyzer.evaluator.ErrorSeverityType;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorType;
 import sweng861.hls.protocolanalyzer.evaluator.Evaluator;
+import sweng861.hls.protocolanalyzer.evaluator.MediaFileEvaluator;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
 import sweng861.hls.protocolanalyzer.file.MediaFileType;
+import sweng861.hls.protocolanalyzer.log.Logger;
 
 //@Singleton
 //@Path("singleton-bean")
@@ -46,7 +40,9 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		Evaluator validator = new MediaFileEvaluator();
 		validator.validate(fileList);
 		result.setFiles(fileList);
-		LogUtility.writeToLog(result);
+		Logger logger = new Logger(result);
+		logger.run();
+//		LogUtility.writeToLog(result);
 		return result;
 	}
 	
@@ -89,13 +85,9 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 				result.getFiles().add(file); 
 			
 			}catch(MalformedURLException e){
-				String messageFormat = "URL [%s] was not found or found invalid text in the file.";
-				ErrorLogEntry entry = new ErrorLogEntry(ErrorSeverityType.FATAL, String.format(messageFormat, urlStr), 0);
-				result.addError(entry);
+				logURIError(urlStr, result);
 			}catch (IOException e){
-				String messageFormat = "URL [%s] was not found or found invalid text in the file.";
-				ErrorLogEntry entry = new ErrorLogEntry(ErrorSeverityType.FATAL, String.format(messageFormat, urlStr), 0);
-				result.addError(entry);
+				logURIError(urlStr, result);
 			}finally {
 				try {
 					if (inStreamReader != null){
@@ -114,6 +106,12 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		
 		}
 	
+	private void logURIError(String url, MediaStreamAnalyzerResult result){
+		String mesage = String.format(ErrorType.INVALID_URI_FOUND.getMessageFormat(), url);
+		ErrorLogEntry entry = new ErrorLogEntry(ErrorType.INVALID_URI_FOUND, mesage, 0);
+		result.addError(entry);
+	}
+	
 	private String getNextURL(String uri, String baseUrl,  MediaFileTagType uriType){
 		if(uriType.equals(MediaFileTagType.RELATIVE_PLAYLIST_URI)){
 			return baseUrl.concat(uri);
@@ -129,7 +127,7 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		String header = connection.getHeaderField("Content-type");
 		if (!Arrays.asList(allowedContentHeaders).contains(header)){
 			ErrorLogEntry logEntry = new ErrorLogEntry(
-					ErrorType.INVALID_CONTENT_TYPE_HEADER.getSeverity(),
+					ErrorType.INVALID_CONTENT_TYPE_HEADER,
 					String.format(ErrorType.INVALID_CONTENT_TYPE_HEADER.getMessageFormat(),header), 
 					0);
 			result.addError(logEntry);

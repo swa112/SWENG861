@@ -5,15 +5,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ErrorLogEntry{
 	
-	private ErrorSeverityType errorType; 
+	private ErrorType error;
+	
+	private ErrorSeverityType severity; 
 	
 	private String message; 
 	
 	private int lineNumber; 
 	
 	
-	public ErrorLogEntry(ErrorSeverityType errorType,  String message, int lineNumber){
-		this.errorType = errorType; 
+	public ErrorLogEntry(ErrorType errorType,  String message, int lineNumber){
+		this.error = errorType; 
+		this.severity = errorType.getSeverity();
 		this.message = message; 
 		this.lineNumber = lineNumber;
 		
@@ -23,15 +26,23 @@ public class ErrorLogEntry{
 		
 	}
 
-	public ErrorSeverityType getErrorType() {
-		return errorType;
+	public ErrorType getError() {
+		return error;
 	}
 
-	public void setErrorType(ErrorSeverityType errorType) {
-		this.errorType = errorType;
+	public void setError(ErrorType error) {
+		this.error = error;
 	}
-
 	
+	
+	public ErrorSeverityType getSeverity() {
+		return severity;
+	}
+
+	public void setSeverity(ErrorSeverityType severity) {
+		this.severity = severity;
+	}
+
 	public String getMessage() {
 		return message;
 	}

@@ -35,13 +35,6 @@ public class MediaStreamAnalyzerResult {
 		this.files = files;
 	}
 	
-//	public List<ValidationErrorLogEntry> getAllErrors(){
-//		List<ValidationErrorLogEntry> aggregateList = new ArrayList<ValidationErrorLogEntry>();
-//		aggregateList.addAll(errors);
-//		for (HLSMediaFile file : files){
-//			aggregateList.addAll(file.getValidationErrors());
-//		}
-//		return aggregateList;
-//	}
+
 
 }

@@ -5,21 +5,19 @@ package sweng861.hls.protocolanalyzer.driver;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import sweng861.hls.protocolanalyzer.LogUtility;
 import sweng861.hls.protocolanalyzer.MediaStreamAnalyzerResult;
-import sweng861.hls.protocolanalyzer.evaluator.MediaFileEvaluator;
 import sweng861.hls.protocolanalyzer.evaluator.Evaluator;
+import sweng861.hls.protocolanalyzer.evaluator.MediaFileEvaluator;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
 import sweng861.hls.protocolanalyzer.file.MediaFileType;
+import sweng861.hls.protocolanalyzer.log.Logger;
 
 /**
  * @author Scott
@@ -30,15 +28,18 @@ public class TestFileDriver {
 	/**
 	 * @param args
 	 */
+	
+
+	
 	public static void main(String[] args) {
 		List<HLSMediaFile> fileList = new ArrayList<HLSMediaFile>();
 		MediaStreamAnalyzerResult result = new MediaStreamAnalyzerResult();
 		result.setFiles(fileList);
-		String directory = "C:\\Users\\Scott\\Documents\\PSU Software Engineering\\Fall 2015\\SWENG861\\workspace\\protocal-analyzer";
-		File master = new File(directory + "\\testFiles\\ipad.m3u8");
-		File high = new File (directory + "\\testFiles\\ipadipad-high.m3u8");
-		File med = new File (directory +"\\testFiles\\ipadipad-med.m3u8");
-		File low = new File (directory + "\\testFiles\\ipadipad-low.m3u8");
+		String directory = "C:\\Users\\Scott\\Documents\\PSU Software Engineering\\Fall 2015\\SWENG861\\workspace\\protocal-analyzer\\testFiles2";
+		File master = new File(directory + "\\ipad.m3u8");
+		File high = new File (directory + "\\ipadipad-high.m3u8");
+		File med = new File (directory +"\\ipadipad-med.m3u8");
+		File low = new File (directory + "\\ipadipad-low.m3u8");
 		File [] files = new File[] {master, high, med, low};
 		
 		for (File file : files) {
@@ -82,11 +83,9 @@ public class TestFileDriver {
 		Evaluator validator = new MediaFileEvaluator();
 		validator.validate(result.getFiles());
 		result.setFiles(result.getFiles());
-		try {
-			LogUtility.writeToLog(result);
-		}catch (IOException io){
-			io.printStackTrace();
-		}
+		Logger logger = new Logger(result);
+		logger.run();
+
 		System.out.println("Test Driver ended. Check logs for results");
 	}
 

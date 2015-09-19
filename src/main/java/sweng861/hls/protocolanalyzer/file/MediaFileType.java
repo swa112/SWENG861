@@ -19,7 +19,9 @@ public enum MediaFileType {
 		@Override
 		public MediaFileTagType[] getOptionalTags() {
 			// TODO Auto-generated method stub
-			return new MediaFileTagType [] {};
+			return new MediaFileTagType [] {
+					MediaFileTagType.EXT_X_ALLOW_CACHE
+			};
 		}
 
 		@Override

@@ -1,0 +1,18 @@
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-TARGETDURATION:6.0
+#EXT-X-MEDIA-SEQUENCE:6800
+#EXT-X-MEDIA:TYPE=video
+#EXTINF:6.0, no desc
+ipadipad-low_06800.ts
+#EXTINF:6.0, no desc
+ipadipad-low_06801.ts
+#EXTINF:6.0, no desc
+ipadipad-low_06802.ts
+#EXTINF:6.0, no desc
+ipadipad-low_06803.ts
+#EXTINF:6.0, no desc
+ipadipad-low_06804.ts
+#EXTINF:6, no desc
+ipadipad-low_06807.ts
+#EXT-X-ENDLIST

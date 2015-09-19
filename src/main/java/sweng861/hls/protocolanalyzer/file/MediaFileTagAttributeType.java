@@ -24,16 +24,7 @@ public enum MediaFileTagAttributeType {
 	CLOSED_CAPTIONS("CLOSED-CAPTINS", MediaFileTagValueDataType.QUOTED_STRING),
 	
 	@AllowedValues({"AUDIO", "VIDEO", "SUBTITLES", "CLOSED-CAPTIONS"})
-	TYPE("TYPE", MediaFileTagValueDataType.ENUMERATED_STRING){
-//		@Override
-//		protected boolean isAllowedValue(String anAttributeDataValue){
-//			String[] allowedValues = new String []{"AUDIO", "VIDEO", "SUBTITLES", "CLOSED-CAPTIONS"};
-//			if (Arrays.asList(allowedValues).contains(anAttributeDataValue)){
-//				return true; 
-//			}
-//			return false; 
-//		}
-	},
+	TYPE("TYPE", MediaFileTagValueDataType.ENUMERATED_STRING),
 	
 	URI("URI", MediaFileTagValueDataType.QUOTED_STRING),
 	
@@ -46,28 +37,13 @@ public enum MediaFileTagAttributeType {
 	NAME("NAME", MediaFileTagValueDataType.QUOTED_STRING),
 	
 	@AllowedValues({"YES", "NO"})
-	DEFAULT("DEFAULT", MediaFileTagValueDataType.ENUMERATED_STRING){
-//		@Override
-//		protected boolean isAllowedValue(String anAttributeDataValue){
-//			return isAllowedValueYesNo(anAttributeDataValue);
-//		}
-	},
+	DEFAULT("DEFAULT", MediaFileTagValueDataType.ENUMERATED_STRING),
 	
 	@AllowedValues({"YES", "NO"})
-	AUTO_SELECT("AUTO-SELECT", MediaFileTagValueDataType.ENUMERATED_STRING){
-//		@Override
-//		protected boolean isAllowedValue(String anAttributeDataValue){
-//			return isAllowedValueYesNo(anAttributeDataValue);
-//		}
-	},
+	AUTO_SELECT("AUTO-SELECT", MediaFileTagValueDataType.ENUMERATED_STRING),
 	
 	@AllowedValues({"YES", "NO"})
-	FORCED("FORCED", MediaFileTagValueDataType.ENUMERATED_STRING){
-//		@Override
-//		protected boolean isAllowedValue(String anAttributeDataValue){
-//			return isAllowedValueYesNo(anAttributeDataValue);
-//		}
-	},
+	FORCED("FORCED", MediaFileTagValueDataType.ENUMERATED_STRING),
 	
 	INSTREAM_ID("INSTREAM-ID", MediaFileTagValueDataType.QUOTED_STRING),
 	
@@ -76,28 +52,14 @@ public enum MediaFileTagAttributeType {
 	TIME_OFFSET("TIME-OFFSET", MediaFileTagValueDataType.SIGNED_DECIMAL_FLOATING_POINT), 
 	
 	@AllowedValues({"YES", "NO"})
-	PRECISE("PRECISE", MediaFileTagValueDataType.ENUMERATED_STRING){
-//		@Override
-//		protected boolean isAllowedValue(String anAttributeDataValue){
-//			return isAllowedValueYesNo(anAttributeDataValue);
-//		}
-	},
+	PRECISE("PRECISE", MediaFileTagValueDataType.ENUMERATED_STRING),
 	
 	DATA_ID ("DATA-ID", MediaFileTagValueDataType.QUOTED_STRING),
 	
 	VALUE("VALUE", MediaFileTagValueDataType.QUOTED_STRING),
 	
 	@AllowedValues({"NONE", "AES-128", "SAMPLE-AES"})
-	METHOD("METHOD", MediaFileTagValueDataType.ENUMERATED_STRING){
-//		@Override
-//		protected boolean isAllowedValue(String anAttributeDataValue){
-//			String[] allowedValues = new String []{"NONE", "AES-128", "SAMPLE-AES"};
-//			if (Arrays.asList(allowedValues).contains(anAttributeDataValue)){
-//				return true; 
-//			}
-//			return false; 
-//		}
-	},
+	METHOD("METHOD", MediaFileTagValueDataType.ENUMERATED_STRING),
 	
 	IV("IV", MediaFileTagValueDataType.HEXADECIMAL_SEQUENCE),
 	
@@ -161,14 +123,6 @@ public enum MediaFileTagAttributeType {
 		return true;
 	}
 	
-//	protected boolean isAllowedValueYesNo(String anAttributeDataValue){
-//		String[] allowedValues = new String []{"YES", "NO"};
-//		if (Arrays.asList(allowedValues).contains(anAttributeDataValue)){
-//			return true; 
-//		}
-//		return false; 
-//	}
-	
 	public static MediaFileTagAttributeType getAttributeTypeFromString(String anAttributeName){
 		for(MediaFileTagAttributeType type : MediaFileTagAttributeType.values()){
 			if (type.getAttributeName().equals(anAttributeName)){
@@ -178,17 +132,5 @@ public enum MediaFileTagAttributeType {
 		return NOT_FOUND;
 	}
 	
-//	private boolean isAllowedValue(String anAttributeValue){
-//		for(String allowedValue : this.getEnumeratedAttributeSet()){
-//			if(allowedValue.equals(anAttributeValue)){
-//				return true; 
-//			}
-//		}
-//		return false;
-//	}
-	
-	//TODO - may need to allow for custom rule checks
-	
-	//TODO - add abstract method to return enumerated values. 
 
 }

@@ -20,11 +20,7 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
 	private static final char TAG_SEPARATOR = ':';
 	private static final String ATTRIBUTE_SEPARATOR = ",";
 	private static final String NAME_VALUE_SEPARATOR = "=";
-	private static final String TAG_FORMAT_ERROR = "Tag [%s] is not formatted with the proper data type. Value = [%s]";
-	private static final String TAG_MISSING_COLON = "Could not determine data type for tag [%s] because : could not be found";
-	private static final String ATTRIBUTE_DATA_TYPE = "Attribue [%s] data type does not match. Value = [%s]";
-	private static final String ATTRIBUTE_NOT_FOUND = "Attribue [%s] was not recognized for tag [%s]";
-	private static final String DEPRECATED_TAG_FOUND = "Found use of a deprecated tag: %s";
+
 
 	/**
 	 * @see HLSRule#runRuleCheck(HLSMediaFile, HLSMediaFileLineInfo)
@@ -33,7 +29,7 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
 
 		MediaFileTagType lineType = fileLine.getLineType();
 		String lineData = fileLine.getLineData();
-		checkForDeprecatedTag(lineType, file, fileLine);
+		checkForDeprecatedProtocol(lineType, file, fileLine);
 		
 		int index = lineData.indexOf(TAG_SEPARATOR);
 		if(index != -1){ 
@@ -45,15 +41,15 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
 			}else {
 				super.addToErrorLog(
 						file, 
-						ErrorSeverityType.FATAL, 
-						String.format(TAG_FORMAT_ERROR, lineType.name(), tagValue), 
+						ErrorType.TAG_FORMAT_ERROR, 
+						String.format(ErrorType.TAG_FORMAT_ERROR.getMessageFormat(), lineType.name(), tagValue), 
 						fileLine.getLineNumber());
 			}
 		}else {
 			super.addToErrorLog(
 					file, 
-					ErrorSeverityType.FATAL, 
-					String.format(TAG_MISSING_COLON, lineType.name()), 
+					ErrorType.TAG_MISSING_COLON, 
+					String.format(ErrorType.TAG_MISSING_COLON.getMessageFormat(), lineType.name()), 
 					fileLine.getLineNumber());
 		}
 
@@ -68,13 +64,6 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
 		//If the data type is an enumerated string, the enum validation should handle enforcing that the value is one of the enumerated strings. 
 
 	}
-	
-	private void checkForDeprecatedTag(MediaFileTagType type, HLSMediaFile file, HLSMediaFileLineInfo lineInfo){
-		if(type.isDeprecated()){
-			super.addToErrorLog(file, ErrorSeverityType.INFO, String.format(DEPRECATED_TAG_FOUND, type.name()), lineInfo.getLineNumber());
-		}
-	}
-
 	private void checkTagAttributes(MediaFileTagType type, String tagValue, HLSMediaFile file, HLSMediaFileLineInfo lineInfo){
 
 		String[] attributes = tagValue.split(ATTRIBUTE_SEPARATOR);
@@ -83,21 +72,21 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
 			String[] nameValue = attribute.split(NAME_VALUE_SEPARATOR); //length should be 2. 
 			MediaFileTagAttributeType attributeType = MediaFileTagAttributeType.getAttributeTypeFromString(nameValue[0].trim());
 			
-			checkForDeprecatedEntity(attributeType, file, lineInfo);
+			checkForDeprecatedProtocol(attributeType, file, lineInfo);
 			
 			if(!attributeType.equals(MediaFileTagAttributeType.NOT_FOUND)){
 				if (!attributeType.isAttributeValueProperlyFormatted(nameValue[1])){
 					super.addToErrorLog(
 							file, 
-							ErrorSeverityType.FATAL, 
-							String.format(ATTRIBUTE_DATA_TYPE, attributeType.name(), tagValue),
+							ErrorType.INVALID_ATTRIBUTE_DATA_TYPE, 
+							String.format(ErrorType.INVALID_ATTRIBUTE_DATA_TYPE.getMessageFormat(), attributeType.name(), tagValue),
 							lineInfo.getLineNumber() );
 				}
 			}else {
 				super.addToErrorLog(
 						file, 
-						ErrorSeverityType.FATAL,
-						String.format(ATTRIBUTE_NOT_FOUND, nameValue[0], lineInfo.getLineType().name()), 
+						ErrorType.ATTRIBUTE_NOT_FOUND,
+						String.format(ErrorType.ATTRIBUTE_NOT_FOUND.getMessageFormat(), nameValue[0], lineInfo.getLineType().name()), 
 						lineInfo.getLineNumber() );
 			}
 
@@ -110,7 +99,7 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
 
 	}
 	
-	private void checkForDeprecatedEntity(MediaFileTagAttributeType attributeType, HLSMediaFile file, HLSMediaFileLineInfo lineInfo){
+	private void checkForDeprecatedProtocol(Enum attributeType, HLSMediaFile file, HLSMediaFileLineInfo lineInfo){
 		
 		DeprecatedProtocol deprecatedIndicator = null;
 		try {
@@ -123,8 +112,8 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
 		
 		if(deprecatedIndicator !=null){
 			super.addToErrorLog(file, 
-					ErrorType.USE_OF_DEPRECATED_ATTRIBUTE.getSeverity(),
-					String.format(ErrorType.USE_OF_DEPRECATED_ATTRIBUTE.getMessageFormat(), attributeType.name(), deprecatedIndicator.asOf()), 
+					ErrorType.USE_OF_DEPRECATED_PROTOCOL,
+					String.format(ErrorType.USE_OF_DEPRECATED_PROTOCOL.getMessageFormat(), attributeType.name(), deprecatedIndicator.asOf()), 
 					lineInfo.getLineNumber());
 		}
 	}

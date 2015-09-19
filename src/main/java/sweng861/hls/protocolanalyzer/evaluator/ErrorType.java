@@ -2,7 +2,7 @@ package sweng861.hls.protocolanalyzer.evaluator;
 
 public enum ErrorType {
 	
-	USE_OF_DEPRECATED_ATTRIBUTE(ErrorSeverityType.INFO, "Attribute [%s] is deprecated as of %s"),
+	USE_OF_DEPRECATED_PROTOCOL(ErrorSeverityType.INFO, "The tag or attribute [%s] is deprecated as of %s"),
 	
 	MEDIA_SEGMENTS_NOT_IN_SEQUENCE(ErrorSeverityType.FATAL, "Media Segment [%s] did not match expected sequence of [%d]"),
 	
@@ -25,6 +25,16 @@ public enum ErrorType {
 	INVALID_FILE_TYPE (ErrorSeverityType.FATAL, "File [%s] is not a recognized file type"),
 
 	MISSING_FOLLOWING_TAG  (ErrorSeverityType.FATAL, "The tag [%s] is not followed by the required type."),
+	
+	TAG_FORMAT_ERROR(ErrorSeverityType.FATAL, "Tag [%s] is not formatted with the proper data type. Value = [%s]"),
+	
+	TAG_MISSING_COLON (ErrorSeverityType.FATAL, "Could not determine data type for tag [%s] because : could not be found"),
+	
+	INVALID_ATTRIBUTE_DATA_TYPE (ErrorSeverityType.WARNING, "Attribue [%s] data type does not match. Value = [%s]"),
+	
+	ATTRIBUTE_NOT_FOUND (ErrorSeverityType.WARNING, "Attribue [%s] was not recognized for tag [%s]"),
+	
+	INVALID_URI_FOUND(ErrorSeverityType.FATAL, "URL [%s] was not found or found invalid text in the file."),
 
 	;
 	private ErrorSeverityType severity; 
