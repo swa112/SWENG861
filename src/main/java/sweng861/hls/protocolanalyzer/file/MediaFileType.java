@@ -18,9 +18,14 @@ public enum MediaFileType {
 
 		@Override
 		public MediaFileTagType[] getOptionalTags() {
-			// TODO Auto-generated method stub
 			return new MediaFileTagType [] {
-					MediaFileTagType.EXT_X_ALLOW_CACHE
+					MediaFileTagType.EXT_X_ALLOW_CACHE,
+					MediaFileTagType.EXT_X_MEDIA,
+					MediaFileTagType.EXT_X_I_FRAME_STREAM_INF,
+					MediaFileTagType.EXT_X_SESSION_DATA,
+					MediaFileTagType.EXT_X_INDEPENDENT_SEGMENTS,
+					MediaFileTagType.EXT_X_START,
+					MediaFileTagType.COMMENT
 			};
 		}
 
@@ -52,7 +57,15 @@ public enum MediaFileType {
 					MediaFileTagType.EXT_X_MEDIA_SEQUENCE,
 					MediaFileTagType.EXT_X_ENDLIST,
 					MediaFileTagType.COMMENT,
-			}; //TODO
+					MediaFileTagType.EXT_X_BYTERANGE,
+					MediaFileTagType.EXT_X_DISCONTINUITY,
+					MediaFileTagType.EXT_X_KEY,
+					MediaFileTagType.EXT_X_MAP,
+					MediaFileTagType.EXT_X_PROGRAM_DATE_TIME,
+					MediaFileTagType.EXT_X_DISCONTINUITY_SEQUENCE,
+					MediaFileTagType.EXT_X_PLAYLIST_TYPE,
+					MediaFileTagType.EXT_X_I_FRAMES_ONLY
+			};
 		}
 
 		@Override
@@ -86,7 +99,6 @@ public enum MediaFileType {
 
 		@Override
 		public MediaFileTagType getStartTag() {
-			// TODO Auto-generated method stub
 			return MediaFileTagType.NOT_A_TAG;
 		}
 		

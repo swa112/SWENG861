@@ -6,6 +6,6 @@ import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 
 public interface Evaluator {
 	
-	public void validate(List<HLSMediaFile> files);
+	public void evaluate(List<HLSMediaFile> files);
 
 }

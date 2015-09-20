@@ -1,5 +1,8 @@
 package sweng861.hls.protocolanalyzer.evaluator;
 
+import javax.xml.bind.annotation.XmlEnum;
+
+@XmlEnum
 public enum ErrorType {
 	
 	USE_OF_DEPRECATED_PROTOCOL(ErrorSeverityType.INFO, "The tag or attribute [%s] is deprecated as of %s"),

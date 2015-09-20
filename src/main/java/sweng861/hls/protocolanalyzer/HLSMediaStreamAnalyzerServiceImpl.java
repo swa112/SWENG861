@@ -37,11 +37,11 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		List<HLSMediaFile> fileList = new ArrayList<HLSMediaFile>();
 		result.setFiles(fileList);
 		processFiles(urlStr, result);
-		Evaluator validator = new MediaFileEvaluator();
-		validator.validate(fileList);
+		Evaluator evaluator = new MediaFileEvaluator();
+		evaluator.evaluate(fileList);
 		result.setFiles(fileList);
-		Logger logger = new Logger(result);
-		logger.run();
+//		Logger logger = new Logger(result);
+//		logger.run();
 //		LogUtility.writeToLog(result);
 		return result;
 	}

@@ -81,7 +81,7 @@ public class TestFileDriver {
 		}
 		
 		Evaluator validator = new MediaFileEvaluator();
-		validator.validate(result.getFiles());
+		validator.evaluate(result.getFiles());
 		result.setFiles(result.getFiles());
 		Logger logger = new Logger(result);
 		logger.run();

@@ -21,5 +21,6 @@ public class HLSUtility {
 		String value = lineData.substring(index + 1, endIndex);
 		return value;
 	}
+	
 
 }

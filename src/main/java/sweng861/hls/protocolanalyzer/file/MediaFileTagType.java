@@ -99,7 +99,7 @@ public enum MediaFileTagType {
 		}
 	},
 	
-	EXT_I_FRAMES_ONLY("^#EXT-I-FRAMES-ONLY$", false, false){
+	EXT_X_I_FRAMES_ONLY("^#EXT-I-FRAMES-ONLY$", false, false){
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.NONE;

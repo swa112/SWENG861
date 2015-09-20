@@ -9,7 +9,7 @@ import sweng861.hls.protocolanalyzer.rule.HLSRuleFactory;
 
 public class MediaFileEvaluator implements Evaluator {
 
-	public void validate(List<HLSMediaFile> files) {
+	public void evaluate(List<HLSMediaFile> files) {
 		List<HLSRule> fileLevelRules = HLSRuleFactory.getFileRules();
 		List<HLSRule> tagLevelRules = HLSRuleFactory.getTagRules();
 		for(HLSMediaFile file : files){
