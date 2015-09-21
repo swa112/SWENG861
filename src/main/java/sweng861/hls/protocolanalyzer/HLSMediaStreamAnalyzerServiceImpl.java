@@ -20,10 +20,7 @@ import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
 import sweng861.hls.protocolanalyzer.file.MediaFileType;
-import sweng861.hls.protocolanalyzer.log.Logger;
 
-//@Singleton
-//@Path("singleton-bean")
  
 public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzerService{
 	
@@ -85,9 +82,9 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 				result.getFiles().add(file); 
 			
 			}catch(MalformedURLException e){
-				logURIError(urlStr, result);
+				logURIError(urlStr, result, lineNumberReader.getLineNumber());
 			}catch (IOException e){
-				logURIError(urlStr, result);
+				logURIError(urlStr, result, lineNumberReader.getLineNumber());
 			}finally {
 				try {
 					if (inStreamReader != null){
@@ -106,9 +103,9 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		
 		}
 	
-	private void logURIError(String url, MediaStreamAnalyzerResult result){
+	private void logURIError(String url, MediaStreamAnalyzerResult result, int lineNum){
 		String mesage = String.format(ErrorType.INVALID_URI_FOUND.getMessageFormat(), url);
-		ErrorLogEntry entry = new ErrorLogEntry(ErrorType.INVALID_URI_FOUND, mesage, 0);
+		ErrorLogEntry entry = new ErrorLogEntry(ErrorType.INVALID_URI_FOUND, HLSConstants.APPLICATION,  mesage, lineNum);
 		result.addError(entry);
 	}
 	
@@ -127,7 +124,7 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		String header = connection.getHeaderField("Content-type");
 		if (!Arrays.asList(allowedContentHeaders).contains(header)){
 			ErrorLogEntry logEntry = new ErrorLogEntry(
-					ErrorType.INVALID_CONTENT_TYPE_HEADER,
+					ErrorType.INVALID_CONTENT_TYPE_HEADER, HLSConstants.APPLICATION,
 					String.format(ErrorType.INVALID_CONTENT_TYPE_HEADER.getMessageFormat(),header), 
 					0);
 			result.addError(logEntry);

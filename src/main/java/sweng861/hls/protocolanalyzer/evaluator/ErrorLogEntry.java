@@ -7,6 +7,8 @@ public class ErrorLogEntry{
 	
 	private ErrorType error;
 	
+	private String fileName;
+	
 	private ErrorSeverityType severity; 
 	
 	private String message; 
@@ -14,8 +16,10 @@ public class ErrorLogEntry{
 	private int lineNumber; 
 	
 	
-	public ErrorLogEntry(ErrorType errorType,  String message, int lineNumber){
+	public ErrorLogEntry(ErrorType errorType, String fileName,  String message, int lineNumber){
 		this.error = errorType; 
+		int lastIndexOf = fileName.lastIndexOf('/');
+		this.fileName = fileName.substring(lastIndexOf +1);
 		this.severity = errorType.getSeverity();
 		this.message = message; 
 		this.lineNumber = lineNumber;
@@ -35,6 +39,14 @@ public class ErrorLogEntry{
 	}
 	
 	
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
 	public ErrorSeverityType getSeverity() {
 		return severity;
 	}

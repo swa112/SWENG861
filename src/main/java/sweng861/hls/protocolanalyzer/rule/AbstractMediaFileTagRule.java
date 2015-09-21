@@ -16,7 +16,7 @@ public abstract class AbstractMediaFileTagRule implements HLSRule {
 	
 	protected void addToErrorLog(HLSMediaFile file, ErrorType errorType, String message, int lineNumber){
 		ErrorLogEntry entry = new ErrorLogEntry(
-				errorType, message, lineNumber);
+				errorType, file.getFileName(), message, lineNumber);
 		file.addValidationError(entry);
 	}
 

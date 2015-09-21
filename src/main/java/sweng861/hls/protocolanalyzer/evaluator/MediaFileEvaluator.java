@@ -19,18 +19,6 @@ public class MediaFileEvaluator implements Evaluator {
 			validateFileTags(tagLevelRules, file);
 			
 		}
-		//Loop over files, call file level rules on file.
-		//Then loop over lines, calling line level rules for each line. 
-		
-//		MediaFileType fileType = file.getFileType();
-//		String firstLine = file.getFileLines().get(0);
-//		if(! firstLine.matches(fileType.getStartTag().getTagPattern())){
-//			
-//		}
-		
-		//Determine tags in file, and evaluate required and allowed for each file. 
-		
-		//Determine if tags that can only have one per file are unique. 
 		
 	}
 	

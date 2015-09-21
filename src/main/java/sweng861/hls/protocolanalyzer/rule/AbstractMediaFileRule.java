@@ -20,7 +20,7 @@ public abstract class AbstractMediaFileRule implements HLSRule {
 	
 	protected void addToErrorLog(HLSMediaFile file, ErrorType error, String message, int lineNumber){
 		ErrorLogEntry entry = new ErrorLogEntry(
-				error, message, lineNumber);
+				error, file.getFileName(), message, lineNumber);
 		file.addValidationError(entry);
 	}
 	
