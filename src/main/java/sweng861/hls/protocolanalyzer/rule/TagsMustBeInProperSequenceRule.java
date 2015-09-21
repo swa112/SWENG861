@@ -21,7 +21,7 @@ class TagsMustBeInProperSequenceRule extends AbstractMediaFileRule {
 				if (!isTagFollowedByRequiredType(hlsMediaFileLineInfo.getLineType(), nextNonCommentLine)){
 					super.addToErrorLog(file, 
 							ErrorType.MISSING_FOLLOWING_TAG,
-							String.format(ErrorType.MISSING_FOLLOWING_TAG.getMessageFormat(), hlsMediaFileLineInfo.getLineType().name()),
+							String.format(ErrorType.MISSING_FOLLOWING_TAG.getMessageFormat(), hlsMediaFileLineInfo.getLineType().toString()),
 							hlsMediaFileLineInfo.getLineNumber());
 				}
 			}

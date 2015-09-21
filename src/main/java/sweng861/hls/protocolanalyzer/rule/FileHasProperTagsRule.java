@@ -21,14 +21,14 @@ import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
 		if(!file.getFileLines().get(0).getLineType().equals(startTag)){
 			super.addToErrorLog(file, 
 					ErrorType.MISSING_START_TAG,
-					String.format(ErrorType.MISSING_START_TAG.getMessageFormat(), file.getFileType().name(), startTag));
+					String.format(ErrorType.MISSING_START_TAG.getMessageFormat(), file.getFileType().toString(), startTag));
 		}
 		//Evaluate required tags	
 		for (MediaFileTagType requiredTag : requiredTags){
 			if (!tagSet.contains(requiredTag)){
 				super.addToErrorLog(file, 
-						ErrorType.MISSING_REQUIRED_TAG_FORMAT, 
-						String.format(ErrorType.MISSING_REQUIRED_TAG_FORMAT.getMessageFormat(), requiredTag.name(), file.getFileType().name()));
+						ErrorType.MISSING_REQUIRED_TAG, 
+						String.format(ErrorType.MISSING_REQUIRED_TAG.getMessageFormat(), requiredTag.toString(), file.getFileType().name()));
 			}
 		}
 		//Evaluate allowed tags (must be in required and optional sets)
@@ -40,7 +40,7 @@ import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
 				if(!tag.equals(MediaFileTagType.NOT_A_TAG)){ //Improper tags are handled in a different rule. 
 					super.addToErrorLog(file, 
 							ErrorType.INVALID_TAG_FOR_FILE, 
-							String.format(ErrorType.INVALID_TAG_FOR_FILE.getMessageFormat(), tag.name(), file.getFileType().name()));
+							String.format(ErrorType.INVALID_TAG_FOR_FILE.getMessageFormat(), tag.toString(), file.getFileType().name()));
 				}
 			}	
 			

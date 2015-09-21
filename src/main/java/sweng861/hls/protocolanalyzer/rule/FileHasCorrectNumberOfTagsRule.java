@@ -35,7 +35,7 @@ class FileHasCorrectNumberOfTagsRule extends AbstractMediaFileRule {
 			if(numberOfTimesType != null && !numberOfTimesType.evaluate(matches)) {
 				super.addToErrorLog(file, 
 						ErrorType.TAG_HAS_INVALID_NUMBER_OF_OCCURENCES, 
-						String.format(ErrorType.TAG_HAS_INVALID_NUMBER_OF_OCCURENCES.getMessageFormat(), tag.name(), matches, numberOfTimesType.name()));
+						String.format(ErrorType.TAG_HAS_INVALID_NUMBER_OF_OCCURENCES.getMessageFormat(), tag.toString(), matches, numberOfTimesType.name()));
 			}
 			
 		}

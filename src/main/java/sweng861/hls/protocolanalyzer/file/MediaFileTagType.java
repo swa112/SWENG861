@@ -454,7 +454,12 @@ public enum MediaFileTagType {
 		return tagsWithTimesConstraint; 
 
 	}
-
+	
+	@Override
+	public String toString(){
+		String name = this.name();
+		return name.replace('_', '-');
+	}
 
 	
 	public static void main(String [] args){

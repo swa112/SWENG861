@@ -42,32 +42,23 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
 				super.addToErrorLog(
 						file, 
 						ErrorType.TAG_FORMAT_ERROR, 
-						String.format(ErrorType.TAG_FORMAT_ERROR.getMessageFormat(), lineType.name(), tagValue), 
+						String.format(ErrorType.TAG_FORMAT_ERROR.getMessageFormat(), lineType.toString(), tagValue), 
 						fileLine.getLineNumber());
 			}
 		}else {
 			super.addToErrorLog(
 					file, 
 					ErrorType.TAG_MISSING_COLON, 
-					String.format(ErrorType.TAG_MISSING_COLON.getMessageFormat(), lineType.name()), 
+					String.format(ErrorType.TAG_MISSING_COLON.getMessageFormat(), lineType.toString()), 
 					fileLine.getLineNumber());
 		}
 
-
-
-
-		// Get media tag and determine data type
-		//parse the tag after the ":", and run a match on the data type regex (includes attribute list)
-		//if the data type is an attribute list, enforce that the required attributes are present
-		//also enforce that only the allowed attributes are found. 
-		//For each attribute, parse on the = and , to get the value and send it through the data type validator. 
-		//If the data type is an enumerated string, the enum validation should handle enforcing that the value is one of the enumerated strings. 
-
 	}
+	
 	private void checkTagAttributes(MediaFileTagType type, String tagValue, HLSMediaFile file, HLSMediaFileLineInfo lineInfo){
 
 		String[] attributes = tagValue.split(ATTRIBUTE_SEPARATOR);
-		//Need a list of attributes to do the required and allowed checks. 
+
 		for (String attribute : attributes){
 			String[] nameValue = attribute.split(NAME_VALUE_SEPARATOR); //length should be 2. 
 			MediaFileTagAttributeType attributeType = MediaFileTagAttributeType.getAttributeTypeFromString(nameValue[0].trim());
@@ -86,14 +77,11 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
 				super.addToErrorLog(
 						file, 
 						ErrorType.ATTRIBUTE_NOT_FOUND,
-						String.format(ErrorType.ATTRIBUTE_NOT_FOUND.getMessageFormat(), nameValue[0], lineInfo.getLineType().name()), 
+						String.format(ErrorType.ATTRIBUTE_NOT_FOUND.getMessageFormat(), nameValue[0], lineInfo.getLineType().toString()), 
 						lineInfo.getLineNumber() );
 			}
 
-			//get AttributeName
-			//validate data type for attribute
-			//check required attributes
-			//check allowable attributes
+	
 		}
 
 

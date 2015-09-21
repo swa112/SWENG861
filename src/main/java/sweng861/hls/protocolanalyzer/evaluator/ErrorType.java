@@ -17,7 +17,7 @@ public enum ErrorType {
 	
 	COMMENT_FOUND(ErrorSeverityType.INFO, "Found comment [%s], ensure that this is intended to comment and not a misformed tag."),
 	
-	MISSING_REQUIRED_TAG_FORMAT(ErrorSeverityType.FATAL, "Required Tag [%s] was not found in file type %s"),
+	MISSING_REQUIRED_TAG(ErrorSeverityType.FATAL, "Required Tag [%s] was not found in file type %s"),
 	
 	INVALID_TAG_FOR_FILE (ErrorSeverityType.FATAL, "Found tag [%s] that is not allowed in file type %s"),
 	
