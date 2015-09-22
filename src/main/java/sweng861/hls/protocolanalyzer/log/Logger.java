@@ -38,7 +38,7 @@ public class Logger implements Runnable {
 			SimpleDateFormat format = new SimpleDateFormat("MMddyy");
 			String logFile = format.format(currentDate).concat(".log");
 //			File log = new File("C:\\Users\\Scott\\Documents\\PSU Software Engineering\\Fall 2015\\SWENG861\\workspace\\protocal-analyzer\\logs\\" + logFile);
-			File log = new File("logs\\" + logFile);
+			File log = new File("V:\\protocol-analyzer\\SWENG861\\logs\\" + logFile);
 			FileWriter filewriter = new FileWriter(log);
 			BufferedWriter writer = new BufferedWriter(filewriter);
 			List<ErrorLogEntry> allErrors = result.getErrors();

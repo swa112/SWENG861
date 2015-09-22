@@ -7,7 +7,7 @@ public class HLSApplication extends ResourceConfig{
 	public HLSApplication(){
 		register(new ApplicationBinder());
 		register(new MOXyJsonProvider());;
-		register(new CORSFilter());
+//		register(new CORSFilter());
         packages("sweng861.hls.protocolanalyzer.resource", "sweng861.hls.protocolanalyzer.application");
         
 	}

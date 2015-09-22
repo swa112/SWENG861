@@ -20,6 +20,7 @@ import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
 import sweng861.hls.protocolanalyzer.file.MediaFileType;
+import sweng861.hls.protocolanalyzer.log.Logger;
 
  
 public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzerService{
@@ -37,8 +38,8 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		Evaluator evaluator = new MediaFileEvaluator();
 		evaluator.evaluate(fileList);
 		result.setFiles(fileList);
-//		Logger logger = new Logger(result);
-//		logger.run();
+		Logger logger = new Logger(result);
+		logger.run();
 //		LogUtility.writeToLog(result);
 		return result;
 	}
@@ -82,9 +83,9 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 				result.getFiles().add(file); 
 			
 			}catch(MalformedURLException e){
-				logURIError(urlStr, result, lineNumberReader.getLineNumber());
+				logURIError(urlStr, result);
 			}catch (IOException e){
-				logURIError(urlStr, result, lineNumberReader.getLineNumber());
+				logURIError(urlStr, result);
 			}finally {
 				try {
 					if (inStreamReader != null){
@@ -103,9 +104,9 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		
 		}
 	
-	private void logURIError(String url, MediaStreamAnalyzerResult result, int lineNum){
-		String mesage = String.format(ErrorType.INVALID_URI_FOUND.getMessageFormat(), url);
-		ErrorLogEntry entry = new ErrorLogEntry(ErrorType.INVALID_URI_FOUND, HLSConstants.APPLICATION,  mesage, lineNum);
+	private void logURIError(String url, MediaStreamAnalyzerResult result){
+		String message = String.format(ErrorType.INVALID_URI_FOUND.getMessageFormat(), url);
+		ErrorLogEntry entry = new ErrorLogEntry(ErrorType.INVALID_URI_FOUND, HLSConstants.APPLICATION,  message, 0);
 		result.addError(entry);
 	}
 	
