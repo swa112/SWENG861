@@ -132,5 +132,10 @@ public enum MediaFileTagAttributeType {
 		return NOT_FOUND;
 	}
 	
+	@Override
+	public String toString(){
+		String name = this.name();
+		return name.replace('_', '-');
+	}
 
 }
