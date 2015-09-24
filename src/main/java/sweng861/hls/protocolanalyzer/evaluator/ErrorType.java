@@ -13,7 +13,7 @@ public enum ErrorType {
 	MEDIA_SEGMENTS_NOT_IN_SEQUENCE(ErrorSeverityType.FATAL, "Media Segment [%s] did not match expected sequence of [%d]"),
 	
 	@XmlEnumValue("Tag has invalid number of occurences")
-	TAG_HAS_INVALID_NUMBER_OF_OCCURENCES (ErrorSeverityType.FATAL, "Tag [%s] was found %d times, but it must occur [%s]"),
+	TAG_HAS_INVALID_NUMBER_OF_OCCURENCES (ErrorSeverityType.FATAL, "Tag [%s] was found %d times but it must occur [%s]"),
 	
 	@XmlEnumValue("Found invalid content-type header")
 	INVALID_CONTENT_TYPE_HEADER(ErrorSeverityType.FATAL, "HTTP Content-Type header [%s] is invalid."),
@@ -21,7 +21,7 @@ public enum ErrorType {
 	@XmlEnumValue("Media segment does not match the target")
 	MEDIA_SEGMENT_DURATION_DOES_NOT_EQUAL_TARGET(ErrorSeverityType.WARNING, "Media Segment [%s] does match target duration of %d"),
 	
-	COMMENT_FOUND(ErrorSeverityType.INFO, "Found comment [%s], ensure that this is intended to comment and not a misformed tag."),
+	COMMENT_FOUND(ErrorSeverityType.INFO, "Found comment [%s] ensure that this is intended to comment and not a misformed tag."),
 	
 	@XmlEnumValue("Missing required tag")
 	MISSING_REQUIRED_TAG(ErrorSeverityType.FATAL, "Required Tag [%s] was not found in file type %s"),
