@@ -13,5 +13,7 @@ public class HLSConstants {
 	public static final String ATTRIBUTE_SEPARATOR = ",";
 	public static final String NAME_VALUE_SEPARATOR = "=";
 	public static final String APPLICATION = "APPLICATION";
+	public static final String SLASH = "/";
+	public static final String DOT = ".";
 
 }

@@ -72,6 +72,9 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 						if(lineType.isURI() && !lineType.equals(MediaFileTagType.TRANSPORT_STREAM_URI)){
 							String nextURL = this.getNextURL(line, baseUrl, lineType);
 							processFiles(nextURL, result);
+						}else if (lineType.equals(MediaFileTagType.TRANSPORT_STREAM_URI)){
+							//verify TS file exists
+							getConnection(urlStr, result);
 						}
 					}
 //					

@@ -53,7 +53,7 @@ public enum ErrorType {
 	@XmlEnumValue("Attribute was not found")
 	ATTRIBUTE_NOT_FOUND (ErrorSeverityType.WARNING, "Attribue [%s] was not recognized for tag [%s]"),
 	
-	@XmlEnumValue("Invalid URI found")
+	@XmlEnumValue("Invalid URI found in playlist")
 	INVALID_URI_FOUND(ErrorSeverityType.FATAL, "URL [%s] was not found or found invalid text in the file."),
 
 	;
