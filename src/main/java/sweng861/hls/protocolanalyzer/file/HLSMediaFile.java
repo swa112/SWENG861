@@ -28,7 +28,7 @@ public class HLSMediaFile  {
 	
 	private List<MediaFileTagType> tagList;
 	
-	private int version; 
+	private int version = 1; //default to version 1 if version is not specified. 
 
 
 	public HLSMediaFile(String fileName){

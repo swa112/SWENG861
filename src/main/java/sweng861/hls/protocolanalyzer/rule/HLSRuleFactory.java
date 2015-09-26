@@ -15,15 +15,9 @@ public class HLSRuleFactory {
 		ruleList.add(new FileHasCorrectNumberOfTagsRule());
 		ruleList.add(new FileDoesNotContainImproperTagsRule());
 		ruleList.add(new TagsAreProperlyFormattedRule());
-		ruleList.add(new ProtocolVersionCompatibilityRule());
+
 		return ruleList;
 	}
 	
-//	public static List<HLSRule> getTagRules(){
-//			
-//		List<HLSRule> ruleList = new ArrayList<HLSRule>();
-//		ruleList.add(new TagsAreProperlyFormattedRule());
-//		return ruleList;
-//	}
 	
 }

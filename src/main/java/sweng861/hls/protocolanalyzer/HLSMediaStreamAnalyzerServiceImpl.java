@@ -40,7 +40,6 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		result.setFiles(fileList);
 		Logger logger = new Logger(result);
 		logger.run();
-//		LogUtility.writeToLog(result);
 		return result;
 	}
 	

@@ -1,10 +1,8 @@
 package sweng861.hls.protocolanalyzer.rule;
 
 import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
-import sweng861.hls.protocolanalyzer.evaluator.ErrorSeverityType;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorType;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
-import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 
 public abstract class AbstractMediaFileRule implements HLSRule {
 
@@ -19,6 +17,23 @@ public abstract class AbstractMediaFileRule implements HLSRule {
 				error, file.getFileName(), message, lineNumber);
 		file.addValidationError(entry);
 	}
-	
+//	
+//	protected void addConsolidatedRuleToErrorLog(HLSMediaFile file, ErrorType error, String message){
+//		if(!doesErrorTypeExist(file, error)){
+//			ErrorLogEntry entry = new ErrorLogEntry(
+//					error, file.getFileName(), message, 0);
+//			file.addValidationError(entry);
+//		}
+//		
+//	}
+//	
+//	private boolean doesErrorTypeExist(HLSMediaFile file, ErrorType error){
+//		for(ErrorLogEntry entry : file.getValidationErrors()){
+//			if(entry.getError().equals(error)){
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 }

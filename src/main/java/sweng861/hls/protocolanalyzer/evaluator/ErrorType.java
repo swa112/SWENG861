@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlEnumValue;
 public enum ErrorType {
 	
 	@XmlEnumValue("Found use of deprecated protocol")
-	USE_OF_DEPRECATED_PROTOCOL(ErrorSeverityType.INFO, "The tag or attribute [%s] is deprecated as of %s"),
+	USE_OF_DEPRECATED_PROTOCOL(ErrorSeverityType.INFO, "The tag or attribute [%s] is deprecated as of %d"),
 	
 	@XmlEnumValue("Found error in media segments, not in sequence")
 	MEDIA_SEGMENTS_NOT_IN_SEQUENCE(ErrorSeverityType.FATAL, "Media Segment [%s] did not match expected sequence of [%d]"),
@@ -60,7 +60,7 @@ public enum ErrorType {
 	GENERIC_ERROR(ErrorSeverityType.FATAL, "Unable to process the entered URL. Please try a anoter url."),
 	
 	@XmlEnumValue("HLS Protocol ineligibility")
-	EXT_INF_INCOMPATIBILITY(ErrorSeverityType.FATAL, "Found floating decimal type EXTINF values in a version less than 3"),
+	INCOMPATIBLE_VERSION(ErrorSeverityType.FATAL, "Found incompatible version of tag [%s] for version %d"),
 	
 	@XmlEnumValue("HLS Protocol ineligibility")
 	USE_OF_DEPRECATED_TAG_VALUE_TYPE(ErrorSeverityType.WARNING, "Found integer value EXTINF values in protocol of 3 or higher."),

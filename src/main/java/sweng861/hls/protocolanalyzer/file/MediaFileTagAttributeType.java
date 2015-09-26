@@ -3,7 +3,7 @@ package sweng861.hls.protocolanalyzer.file;
 import java.util.Arrays;
 
 import sweng861.hls.protocolanalyzer.annotation.AllowedValues;
-import sweng861.hls.protocolanalyzer.annotation.DeprecatedProtocol;
+import sweng861.hls.protocolanalyzer.annotation.ProtocolCompatibility;
 
 public enum MediaFileTagAttributeType {
 	
@@ -63,13 +63,15 @@ public enum MediaFileTagAttributeType {
 	
 	IV("IV", MediaFileTagValueDataType.HEXADECIMAL_SEQUENCE),
 	
+	@ProtocolCompatibility(version=5)
 	KEY_FORMAT("KEYFORMAT", MediaFileTagValueDataType.QUOTED_STRING),
 	
+	@ProtocolCompatibility(version=5)
 	KEY_FORMAT_VERSIONS("KEYFORMATVERSIONS", MediaFileTagValueDataType.QUOTED_STRING),  
 	
 	BYTE_RANGE("BYTERANGE", MediaFileTagValueDataType.QUOTED_STRING),
 	
-	@DeprecatedProtocol(asOf="version 6")
+	@ProtocolCompatibility(deprecatedAsOf=6)
 	PROGRAM_ID("PROGRAM-ID", MediaFileTagValueDataType.DECIMAL_INTEGER),
 	
 	NOT_FOUND("ATTRIBUTE NOT FOUND", MediaFileTagValueDataType.NONE),

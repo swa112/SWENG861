@@ -2,7 +2,8 @@ package sweng861.hls.protocolanalyzer.rule;
 
 import java.util.List;
 
-import sweng861.hls.protocolanalyzer.annotation.DeprecatedProtocol;
+import sweng861.hls.protocolanalyzer.HLSUtility;
+import sweng861.hls.protocolanalyzer.annotation.ProtocolCompatibility;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorSeverityType;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorType;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
@@ -34,7 +35,7 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileRule {
 				MediaFileTagType lineType = fileLine.getLineType();
 				if(lineType.isEvaluateTag()){
 					String lineData = fileLine.getLineData();
-					checkForDeprecatedProtocol(lineType, file, fileLine);
+					checkForProtocolCompatibility(lineType, file, fileLine);
 					
 					int index = lineData.indexOf(TAG_SEPARATOR);
 					if(index != -1){ 
@@ -71,7 +72,7 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileRule {
 			String[] nameValue = attribute.split(NAME_VALUE_SEPARATOR); //length should be 2. 
 			MediaFileTagAttributeType attributeType = MediaFileTagAttributeType.getAttributeTypeFromString(nameValue[0].trim());
 			
-			checkForDeprecatedProtocol(attributeType, file, lineInfo);
+			checkForProtocolCompatibility(attributeType, file, lineInfo);
 			
 			if(!attributeType.equals(MediaFileTagAttributeType.NOT_FOUND)){
 				if (!attributeType.isAttributeValueProperlyFormatted(nameValue[1])){
@@ -95,23 +96,48 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileRule {
 
 	}
 	
-	private void checkForDeprecatedProtocol(Enum attributeType, HLSMediaFile file, HLSMediaFileLineInfo lineInfo){
-		
-		DeprecatedProtocol deprecatedIndicator = null;
+	private void checkForProtocolCompatibility(Enum type, HLSMediaFile file, HLSMediaFileLineInfo lineInfo){
+
+		ProtocolCompatibility protocolCompatibilityIndicator = null;
 		try {
-			deprecatedIndicator = attributeType.getClass().getField(attributeType.name()).getAnnotation(DeprecatedProtocol.class);
+			protocolCompatibilityIndicator = type.getClass().getField(type.name()).getAnnotation(ProtocolCompatibility.class);
 		} catch (NoSuchFieldException e) {
 			e.printStackTrace();
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		}
 		
-		if(deprecatedIndicator !=null){
-			super.addToErrorLog(file, 
-					ErrorType.USE_OF_DEPRECATED_PROTOCOL,
-					String.format(ErrorType.USE_OF_DEPRECATED_PROTOCOL.getMessageFormat(), attributeType.name(), deprecatedIndicator.asOf()), 
-					lineInfo.getLineNumber());
+		if(protocolCompatibilityIndicator !=null){
+			int version = file.getVersion();
+			int compatibleVersion = protocolCompatibilityIndicator.version();
+			int deprecatedVersion = protocolCompatibilityIndicator.deprecatedAsOf();
+			MediaFileTagValueDataType dataType = protocolCompatibilityIndicator.compatibleDataType();
+			
+			if(dataType.equals(MediaFileTagValueDataType.NONE)){
+				if(compatibleVersion > version){
+					addToErrorLog(file, 
+							ErrorType.INCOMPATIBLE_VERSION,
+							String.format(ErrorType.INCOMPATIBLE_VERSION.getMessageFormat(), type.toString(), version),
+							lineInfo.getLineNumber());
+				}
+				if(version > deprecatedVersion){
+					addToErrorLog(file, 
+							ErrorType.USE_OF_DEPRECATED_PROTOCOL,
+							String.format(ErrorType.USE_OF_DEPRECATED_PROTOCOL.getMessageFormat(), type.name(), protocolCompatibilityIndicator.deprecatedAsOf()),
+							lineInfo.getLineNumber());
+				}
+			}else if (version >= compatibleVersion){
+					String tagValue = HLSUtility.getTagValue(lineInfo.getLineData());
+					if(!tagValue.matches(dataType.getDataTypeRegEx())){
+						addToErrorLog(file, 
+								ErrorType.USE_OF_DEPRECATED_TAG_VALUE_TYPE,
+								String.format(ErrorType.USE_OF_DEPRECATED_TAG_VALUE_TYPE.getMessageFormat(), ""),
+								lineInfo.getLineNumber());
+					}
+				
+			}
 		}
+		
 	}
 
 }

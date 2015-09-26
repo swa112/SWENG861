@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import sweng861.hls.protocolanalyzer.annotation.DeprecatedProtocol;
+import sweng861.hls.protocolanalyzer.annotation.ProtocolCompatibility;
 import sweng861.hls.protocolanalyzer.annotation.FollowedBy;
 import sweng861.hls.protocolanalyzer.annotation.Times;
 import sweng861.hls.protocolanalyzer.annotation.TimesType;
@@ -99,6 +99,7 @@ public enum MediaFileTagType {
 		}
 	},
 	
+	@ProtocolCompatibility(version=4)
 	EXT_X_I_FRAMES_ONLY("^#EXT-I-FRAMES-ONLY$", false, false){
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
@@ -256,23 +257,16 @@ public enum MediaFileTagType {
 	//**********Media Segment Tags**************//
 	
 	@FollowedBy({MediaFileTagType.TRANSPORT_STREAM_URI})
+	@ProtocolCompatibility(version=3, compatibleDataType=MediaFileTagValueDataType.EXTINF_FLOATING_POINT)
 	EXTINF("^#EXTINF.+$", false, true) {
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
 			return MediaFileTagValueDataType.EXTINF_CUSTOM;
 		}
 		
-//		@Override
-//		public boolean isTagProperlyFormatted(String aTagDataValue, int aVersionNumber){
-//			if(aVersionNumber < 3 ){
-//				return aTagDataValue.matches(MediaFileTagValueDataType.EXTINF_INTEGER.getDataTypeRegEx());
-//			} 
-//			
-//			return aTagDataValue.matches(this.getValueDataType().getDataTypeRegEx());			
-//		}
-		
 	},
 	
+	@ProtocolCompatibility(version=4)
 	EXT_X_BYTERANGE("^#EXT-X-BYTERANGE.+$", false, true){
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
@@ -342,7 +336,7 @@ public enum MediaFileTagType {
 	
 	//*********Deprecated Tags*******//
 	
-	@DeprecatedProtocol(asOf="version 6")
+	@ProtocolCompatibility(deprecatedAsOf=7)
 	EXT_X_ALLOW_CACHE("^#EXT-X-ALLOW-CACHE.+$", false, true){
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
