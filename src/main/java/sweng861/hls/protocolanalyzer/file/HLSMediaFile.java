@@ -21,13 +21,15 @@ public class HLSMediaFile  {
 	@XmlElement
 	private MediaFileType fileType; 
 	
-	//@XmlElement 
 	private List<HLSMediaFileLineInfo> fileLines;
 	
 	@XmlElement
 	private List<ErrorLogEntry> validationErrors = new ArrayList<ErrorLogEntry>();
 	
 	private List<MediaFileTagType> tagList;
+	
+	private int version; 
+
 
 	public HLSMediaFile(String fileName){
 		this.fileName = fileName;
@@ -93,6 +95,14 @@ public class HLSMediaFile  {
 			tagList = new ArrayList<MediaFileTagType>();
 		}
 		this.tagList.add(tag);
+	}
+	
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 	@Override

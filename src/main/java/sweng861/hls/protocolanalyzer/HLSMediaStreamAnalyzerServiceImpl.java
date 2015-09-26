@@ -68,13 +68,20 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 						lineInfo.setLineData(line);
 						lineInfo.setLineNumber(lineNumberReader.getLineNumber());
 						lineInfo.setLineType(lineType);
+						if(lineType.equals(MediaFileTagType.EXT_X_VERSION)){
+							file.setVersion(Integer.parseInt(HLSUtility.getTagValue(line)));
+						}
 						file.addFileLine(lineInfo);
 						if(lineType.isURI() && !lineType.equals(MediaFileTagType.TRANSPORT_STREAM_URI)){
 							String nextURL = this.getNextURL(line, baseUrl, lineType);
 							processFiles(nextURL, result);
 						}else if (lineType.equals(MediaFileTagType.TRANSPORT_STREAM_URI)){
 							//verify TS file exists
-							getConnection(urlStr, result);
+							URLConnection tsConnection = getConnection(urlStr, result);
+							System.out.println(tsConnection.getContentLength());
+							//if no content url is bad
+							
+						
 						}
 					}
 //					
@@ -86,9 +93,9 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 				result.getFiles().add(file); 
 			
 			}catch(MalformedURLException e){
-				logURIError(urlStr, result);
+				logURIError(urlStr, result, file);
 			}catch (IOException e){
-				logURIError(urlStr, result);
+				logURIError(urlStr, result, file);
 			}finally {
 				try {
 					if (inStreamReader != null){
@@ -107,9 +114,9 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		
 		}
 	
-	private void logURIError(String url, MediaStreamAnalyzerResult result){
+	private void logURIError(String url, MediaStreamAnalyzerResult result, HLSMediaFile file){
 		String message = String.format(ErrorType.INVALID_URI_FOUND.getMessageFormat(), url);
-		ErrorLogEntry entry = new ErrorLogEntry(ErrorType.INVALID_URI_FOUND, HLSConstants.APPLICATION,  message, 0);
+		ErrorLogEntry entry = new ErrorLogEntry(ErrorType.INVALID_URI_FOUND, file != null?file.getFileName():HLSConstants.APPLICATION,  message, 0);
 		result.addError(entry);
 	}
 	

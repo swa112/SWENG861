@@ -35,36 +35,36 @@ public class Logger implements Runnable {
 		
 	public void run() {
 			try {
-			long currentTime = System.currentTimeMillis();
-			Date currentDate = new Date(currentTime);
-			String fileName = getMasterPlaylistName(result);
-			SimpleDateFormat dateformat = new SimpleDateFormat("MMddyy");
-			String logFile = dateformat.format(currentDate).concat("_").concat(fileName).concat(".csv");
-//			File log = new File("C:\\Users\\Scott\\Documents\\PSU Software Engineering\\Fall 2015\\SWENG861\\workspace\\protocal-analyzer\\logs\\" + logFile);
-			File log = new File("V:\\protocol-analyzer\\SWENG861\\logs\\" + logFile);
-			FileWriter filewriter = new FileWriter(log);
-			BufferedWriter writer = new BufferedWriter(filewriter);
-			writer.write("Number, Error, File, Line Number, Message");
-			writer.newLine();
-			List<ErrorLogEntry> allErrors = result.getErrors();
-			int counter = 0;
-			for (ErrorLogEntry entry : allErrors){
-				writer.write(String.format(LOG_FORMAT, counter, entry.getError().name(), APPLICATION, entry.getLineNumber(), entry.getMessage()));
+				long currentTime = System.currentTimeMillis();
+				Date currentDate = new Date(currentTime);
+				String fileName = getMasterPlaylistName(result);
+				SimpleDateFormat dateformat = new SimpleDateFormat("MMddyy");
+				String logFile = dateformat.format(currentDate).concat("_").concat(fileName).concat(".csv");
+				File log = new File("C:\\Users\\Scott\\Documents\\PSU Software Engineering\\Fall 2015\\SWENG861\\workspace\\protocal-analyzer\\logs\\" + logFile);
+//				File log = new File("V:\\protocol-analyzer\\SWENG861\\logs\\" + logFile);
+				FileWriter filewriter = new FileWriter(log);
+				BufferedWriter writer = new BufferedWriter(filewriter);
+				writer.write("Number, Error, File, Line Number, Message");
 				writer.newLine();
-				counter++;
-			}
-			List<HLSMediaFile> files = result.getFiles();
-			for (HLSMediaFile file : files){
-				List<ErrorLogEntry> validationErrors = file.getValidationErrors();
-				for (ErrorLogEntry entry : validationErrors){
-					writer.write(String.format(LOG_FORMAT, counter, entry.getError().name(), file.getFileName(), entry.getLineNumber(), entry.getMessage()));
+				List<ErrorLogEntry> allErrors = result.getErrors();
+				int counter = 0;
+				for (ErrorLogEntry entry : allErrors){
+					writer.write(String.format(LOG_FORMAT, counter, entry.getError().name(), APPLICATION, entry.getLineNumber(), entry.getMessage()));
 					writer.newLine();
 					counter++;
 				}
-			}
-			
-			writer.close();
-			filewriter.close();
+				List<HLSMediaFile> files = result.getFiles();
+				for (HLSMediaFile file : files){
+					List<ErrorLogEntry> validationErrors = file.getValidationErrors();
+					for (ErrorLogEntry entry : validationErrors){
+						writer.write(String.format(LOG_FORMAT, counter, entry.getError().name(), file.getFileName(), entry.getLineNumber(), entry.getMessage()));
+						writer.newLine();
+						counter++;
+					}
+				}
+				
+				writer.close();
+				filewriter.close();
 			}catch(IOException io){
 				io.printStackTrace();
 			}

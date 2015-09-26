@@ -10,10 +10,6 @@ public abstract class AbstractMediaFileRule implements HLSRule {
 
 	private static final int FILE_LEVEL = 0;
 
-	public void runRuleCheck(HLSMediaFile file, HLSMediaFileLineInfo lineInfo){
-		throw new UnsupportedOperationException();//TODO
-	}
-
 	protected void addToErrorLog(HLSMediaFile file, ErrorType error, String message){
 		addToErrorLog(file, error, message, FILE_LEVEL);
 	}

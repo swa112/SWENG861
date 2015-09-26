@@ -11,27 +11,27 @@ public class MediaFileEvaluator implements Evaluator {
 
 	public void evaluate(List<HLSMediaFile> files) {
 		List<HLSRule> fileLevelRules = HLSRuleFactory.getFileRules();
-		List<HLSRule> tagLevelRules = HLSRuleFactory.getTagRules();
+//		List<HLSRule> tagLevelRules = HLSRuleFactory.getTagRules();
 		for(HLSMediaFile file : files){
 			for(HLSRule rule : fileLevelRules){
 				rule.runRuleCheck(file);
 			}
-			validateFileTags(tagLevelRules, file);
+//			validateFileTags(tagLevelRules, file);
 			
 		}
 		
 	}
 	
-	private void validateFileTags(List<HLSRule> tagRules, HLSMediaFile file){
-		List<HLSMediaFileLineInfo> fileLines = file.getFileLines();
-		for (HLSMediaFileLineInfo line : fileLines){
-			
-			if(line.getLineType().isEvaluateTag()){
-				for(HLSRule rule : tagRules){
-					rule.runRuleCheck(file, line);
-				}
-			}
-		}
-	}
+//	private void validateFileTags(List<HLSRule> tagRules, HLSMediaFile file){
+//		List<HLSMediaFileLineInfo> fileLines = file.getFileLines();
+//		for (HLSMediaFileLineInfo line : fileLines){
+//			
+//			if(line.getLineType().isEvaluateTag()){
+//				for(HLSRule rule : tagRules){
+//					rule.runRuleCheck(file, line);
+//				}
+//			}
+//		}
+//	}
 
 } 

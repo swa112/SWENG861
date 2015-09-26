@@ -10,6 +10,7 @@ import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import sweng861.hls.protocolanalyzer.HLSUtility;
 import sweng861.hls.protocolanalyzer.MediaStreamAnalyzerResult;
 import sweng861.hls.protocolanalyzer.evaluator.Evaluator;
 import sweng861.hls.protocolanalyzer.evaluator.MediaFileEvaluator;
@@ -35,7 +36,7 @@ public class TestFileDriver {
 		List<HLSMediaFile> fileList = new ArrayList<HLSMediaFile>();
 		MediaStreamAnalyzerResult result = new MediaStreamAnalyzerResult();
 		result.setFiles(fileList);
-		String directory = "C:\\Users\\Scott\\Documents\\PSU Software Engineering\\Fall 2015\\SWENG861\\workspace\\protocal-analyzer\\testFiles2";
+		String directory = "C:\\Users\\Scott\\Documents\\PSU Software Engineering\\Fall 2015\\SWENG861\\workspace\\protocal-analyzer\\testFiles";
 		File master = new File(directory + "\\ipad.m3u8");
 		File high = new File (directory + "\\ipadipad-high.m3u8");
 		File med = new File (directory +"\\ipadipad-med.m3u8");
@@ -61,6 +62,9 @@ public class TestFileDriver {
 						lineInfo.setLineData(line);
 						lineInfo.setLineNumber(lineNumberReader.getLineNumber());
 						lineInfo.setLineType(lineType);
+						if(lineType.equals(MediaFileTagType.EXT_X_VERSION)){
+							mediaFile.setVersion(Integer.parseInt(HLSUtility.getTagValue(line)));
+						}
 						mediaFile.addFileLine(lineInfo);
 					
 					}

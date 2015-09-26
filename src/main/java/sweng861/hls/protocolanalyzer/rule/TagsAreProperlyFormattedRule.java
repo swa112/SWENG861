@@ -1,5 +1,7 @@
 package sweng861.hls.protocolanalyzer.rule;
 
+import java.util.List;
+
 import sweng861.hls.protocolanalyzer.annotation.DeprecatedProtocol;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorSeverityType;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorType;
@@ -15,7 +17,7 @@ import sweng861.hls.protocolanalyzer.file.MediaFileTagValueDataType;
  * @author Scott
  *
  */
-class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
+class TagsAreProperlyFormattedRule extends AbstractMediaFileRule {
 
 	private static final char TAG_SEPARATOR = ':';
 	private static final String ATTRIBUTE_SEPARATOR = ",";
@@ -25,35 +27,41 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileTagRule {
 	/**
 	 * @see HLSRule#runRuleCheck(HLSMediaFile, HLSMediaFileLineInfo)
 	 */
-	public void runRuleCheck(HLSMediaFile file, HLSMediaFileLineInfo fileLine) {
+	public void runRuleCheck(HLSMediaFile file) {
 
-		MediaFileTagType lineType = fileLine.getLineType();
-		String lineData = fileLine.getLineData();
-		checkForDeprecatedProtocol(lineType, file, fileLine);
-		
-		int index = lineData.indexOf(TAG_SEPARATOR);
-		if(index != -1){ 
-			String tagValue = lineData.substring(index + 1);
-			if(lineType.isTagProperlyFormatted(tagValue)){
-				if(lineType.getValueDataType().equals(MediaFileTagValueDataType.ATTRIBUTE_LIST)){
-					checkTagAttributes(lineType, tagValue, file, fileLine);
+			List<HLSMediaFileLineInfo> fileLines = file.getFileLines();
+			for (HLSMediaFileLineInfo fileLine : fileLines){
+				MediaFileTagType lineType = fileLine.getLineType();
+				if(lineType.isEvaluateTag()){
+					String lineData = fileLine.getLineData();
+					checkForDeprecatedProtocol(lineType, file, fileLine);
+					
+					int index = lineData.indexOf(TAG_SEPARATOR);
+					if(index != -1){ 
+						String tagValue = lineData.substring(index + 1);
+						if(lineType.isTagProperlyFormatted(tagValue, file.getVersion())){
+							if(lineType.getValueDataType().equals(MediaFileTagValueDataType.ATTRIBUTE_LIST)){
+								checkTagAttributes(lineType, tagValue, file, fileLine);
+							}
+						}else {
+							super.addToErrorLog(
+									file, 
+									ErrorType.TAG_FORMAT_ERROR, 
+									String.format(ErrorType.TAG_FORMAT_ERROR.getMessageFormat(), lineType.toString(), tagValue), 
+									fileLine.getLineNumber());
+						}
+					}else {
+						super.addToErrorLog(
+								file, 
+								ErrorType.TAG_MISSING_COLON, 
+								String.format(ErrorType.TAG_MISSING_COLON.getMessageFormat(), lineType.toString()), 
+								fileLine.getLineNumber());
+					}
+				
 				}
-			}else {
-				super.addToErrorLog(
-						file, 
-						ErrorType.TAG_FORMAT_ERROR, 
-						String.format(ErrorType.TAG_FORMAT_ERROR.getMessageFormat(), lineType.toString(), tagValue), 
-						fileLine.getLineNumber());
 			}
-		}else {
-			super.addToErrorLog(
-					file, 
-					ErrorType.TAG_MISSING_COLON, 
-					String.format(ErrorType.TAG_MISSING_COLON.getMessageFormat(), lineType.toString()), 
-					fileLine.getLineNumber());
 		}
 
-	}
 	
 	private void checkTagAttributes(MediaFileTagType type, String tagValue, HLSMediaFile file, HLSMediaFileLineInfo lineInfo){
 

@@ -23,9 +23,13 @@ public enum MediaFileTagValueDataType {
 	
 	DECIMAL_RESOLUTION("^\\d+x\\d+"),
 	
-	DECIMAL_FLOATING_POINT("^\\d+\\.\\d+$"),
+	DECIMAL_FLOATING_POINT("^\\d+\\.\\d+"),
 	
-	EXT_INF_CUSTOM("^\\d+(\\.\\d+)?,(.+)?$"),
+	EXTINF_CUSTOM("^\\d+(\\.\\d+)?,(.+)?$"),
+	
+	EXTINF_INTEGER(DECIMAL_INTEGER.getDataTypeRegEx() + "(.+)?$"),
+	
+	EXTINF_FLOATING_POINT(DECIMAL_FLOATING_POINT.getDataTypeRegEx() + "(.+)?$"),
 	
 	SIGNED_DECIMAL_FLOATING_POINT("^([0-9]-\\.)+$"),
 	

@@ -259,8 +259,18 @@ public enum MediaFileTagType {
 	EXTINF("^#EXTINF.+$", false, true) {
 		@Override
 		public MediaFileTagValueDataType getValueDataType() {
-			return MediaFileTagValueDataType.EXT_INF_CUSTOM;
+			return MediaFileTagValueDataType.EXTINF_CUSTOM;
 		}
+		
+//		@Override
+//		public boolean isTagProperlyFormatted(String aTagDataValue, int aVersionNumber){
+//			if(aVersionNumber < 3 ){
+//				return aTagDataValue.matches(MediaFileTagValueDataType.EXTINF_INTEGER.getDataTypeRegEx());
+//			} 
+//			
+//			return aTagDataValue.matches(this.getValueDataType().getDataTypeRegEx());			
+//		}
+		
 	},
 	
 	EXT_X_BYTERANGE("^#EXT-X-BYTERANGE.+$", false, true){
@@ -430,7 +440,7 @@ public enum MediaFileTagType {
 	 * @param aTagDataValue
 	 * @return
 	 */
-	public boolean isTagProperlyFormatted(String aTagDataValue){
+	public boolean isTagProperlyFormatted(String aTagDataValue, int aVersionNumber){
 		boolean isProperlyFormatted = false;
 		if (aTagDataValue.matches(this.getValueDataType().getDataTypeRegEx())){
 			isProperlyFormatted = true;

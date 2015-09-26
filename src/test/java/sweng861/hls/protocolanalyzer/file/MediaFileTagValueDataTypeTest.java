@@ -42,6 +42,8 @@ public class MediaFileTagValueDataTypeTest {
 		assertTrue("800x1200".matches(MediaFileTagValueDataType.DECIMAL_RESOLUTION.getDataTypeRegEx()));
 		assertTrue("ATTRIBUTENAME=ATTRIBUTEVALUE".matches(MediaFileTagValueDataType.ATTRIBUTE_LIST.getDataTypeRegEx()));
 		assertTrue("ATTRIBUTE-NAME=ATTRIBUTE-VALUE,ATTRIBUTE2-NAME=ATTRIBUTE2-VALUE".matches(MediaFileTagValueDataType.ATTRIBUTE_LIST.getDataTypeRegEx()));
+		assertTrue("6.0, no desc".matches(MediaFileTagValueDataType.EXTINF_FLOATING_POINT.getDataTypeRegEx()));
+		assertTrue("6, no desc".matches(MediaFileTagValueDataType.EXTINF_INTEGER.getDataTypeRegEx()));
 	}
 	
 	/**
@@ -114,6 +116,12 @@ public class MediaFileTagValueDataTypeTest {
 		assertFalse("attribute".matches(MediaFileTagValueDataType.ATTRIBUTE_LIST.getDataTypeRegEx()));
 		assertFalse("=value".matches(MediaFileTagValueDataType.ATTRIBUTE_LIST.getDataTypeRegEx()));
 	
+	}
+	
+	@Test
+	public void testGetDataTypeRegEx_ExpectedNoMatch_EXTINF(){
+		assertFalse("6, no desc".matches(MediaFileTagValueDataType.EXTINF_FLOATING_POINT.getDataTypeRegEx()));
+		assertTrue("6.0, no desc".matches(MediaFileTagValueDataType.EXTINF_INTEGER.getDataTypeRegEx()));
 	}
 
 

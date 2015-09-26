@@ -55,7 +55,15 @@ public enum ErrorType {
 	
 	@XmlEnumValue("Invalid URI found in playlist")
 	INVALID_URI_FOUND(ErrorSeverityType.FATAL, "URL [%s] was not found or found invalid text in the file."),
-
+	
+	@XmlEnumValue("Unable to process")
+	GENERIC_ERROR(ErrorSeverityType.FATAL, "Unable to process the entered URL. Please try a anoter url."),
+	
+	@XmlEnumValue("HLS Protocol ineligibility")
+	EXT_INF_INCOMPATIBILITY(ErrorSeverityType.FATAL, "Found floating decimal type EXTINF values in a version less than 3"),
+	
+	@XmlEnumValue("HLS Protocol ineligibility")
+	USE_OF_DEPRECATED_TAG_VALUE_TYPE(ErrorSeverityType.WARNING, "Found integer value EXTINF values in protocol of 3 or higher."),
 	;
 	private ErrorSeverityType severity; 
 	

@@ -13,20 +13,17 @@ public class HLSRuleFactory {
 		ruleList.add(new TagsMustBeInProperSequenceRule());
 		ruleList.add(new MediaSequenceFilesAreValidForPlaylist());
 		ruleList.add(new FileHasCorrectNumberOfTagsRule());
-		return ruleList;
-	}
-	
-	public static List<HLSRule> getTagRules(){
-			
-		List<HLSRule> ruleList = new ArrayList<HLSRule>();
-		ruleList.add(new TagsAreProperlyFormattedRule());
 		ruleList.add(new FileDoesNotContainImproperTagsRule());
+		ruleList.add(new TagsAreProperlyFormattedRule());
+		ruleList.add(new ProtocolVersionCompatibilityRule());
 		return ruleList;
 	}
 	
-	//TODO - use reflection to instantiate all instances that implement HLSRule. Get a list of classes within the package and test that they 
-	//are assignable from the abstract class to create the rule sets. 
+//	public static List<HLSRule> getTagRules(){
+//			
+//		List<HLSRule> ruleList = new ArrayList<HLSRule>();
+//		ruleList.add(new TagsAreProperlyFormattedRule());
+//		return ruleList;
+//	}
 	
-
-
 }

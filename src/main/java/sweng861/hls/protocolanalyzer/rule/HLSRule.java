@@ -8,8 +8,6 @@ public interface HLSRule {
 	
 	public void runRuleCheck(HLSMediaFile file);
 	
-	public void runRuleCheck(HLSMediaFile file, HLSMediaFileLineInfo lineInfo);
-	
-//	public boolean handlesRequest(HLSMediaEntity file);
+
 
 }
