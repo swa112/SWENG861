@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
+import sweng861.hls.protocolanalyzer.evaluator.ErrorType;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
@@ -75,7 +76,19 @@ public class HLSMediaFile  {
 	}
 	
 	public void addValidationError(ErrorLogEntry validationError){
-		this.validationErrors.add(validationError);
+		boolean isAdd = true;
+		if(validationError.getError().equals(ErrorType.USE_OF_DEPRECATED_TAG_VALUE_TYPE)){
+			for(ErrorLogEntry entry : validationErrors){
+				if (entry.getError().equals(ErrorType.USE_OF_DEPRECATED_TAG_VALUE_TYPE)){
+					entry.setLineNumber("Multiple");
+					isAdd = false;
+					break;
+				}
+			}
+		} 
+		if(isAdd){
+			this.validationErrors.add(validationError);
+		}
 	}
 
 	public void setValidationErrors(List<ErrorLogEntry> validationErrors) {

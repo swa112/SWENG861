@@ -59,10 +59,10 @@ public enum ErrorType {
 	@XmlEnumValue("Unable to process")
 	GENERIC_ERROR(ErrorSeverityType.FATAL, "Unable to process the entered URL. Please try a anoter url."),
 	
-	@XmlEnumValue("HLS Protocol ineligibility")
+	@XmlEnumValue("HLS Protocol incompatibility")
 	INCOMPATIBLE_VERSION(ErrorSeverityType.FATAL, "Found incompatible version of tag [%s] for version %d"),
 	
-	@XmlEnumValue("HLS Protocol ineligibility")
+	@XmlEnumValue("HLS Protocol incompatibility")
 	USE_OF_DEPRECATED_TAG_VALUE_TYPE(ErrorSeverityType.WARNING, "Found integer value EXTINF values in protocol of 3 or higher."),
 	;
 	private ErrorSeverityType severity; 

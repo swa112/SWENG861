@@ -76,9 +76,16 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 							processFiles(nextURL, result);
 						}else if (lineType.equals(MediaFileTagType.TRANSPORT_STREAM_URI)){
 							//verify TS file exists
-							URLConnection tsConnection = getConnection(urlStr, result);
-							System.out.println(tsConnection.getContentLength());
-							//if no content url is bad
+							String tsURL = this.getNextURL(line, baseUrl, lineType);
+							try {
+								URLConnection tsConnection = getConnection(tsURL, result);
+								tsConnection.getInputStream();
+								System.out.println(tsConnection.getContentLength());
+							}catch(MalformedURLException e){
+								logURIError(tsURL, result, file);
+							}catch (IOException e){
+								logURIError(tsURL, result, file);
+							}
 							
 						
 						}
@@ -115,12 +122,12 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 	
 	private void logURIError(String url, MediaStreamAnalyzerResult result, HLSMediaFile file){
 		String message = String.format(ErrorType.INVALID_URI_FOUND.getMessageFormat(), url);
-		ErrorLogEntry entry = new ErrorLogEntry(ErrorType.INVALID_URI_FOUND, file != null?file.getFileName():HLSConstants.APPLICATION,  message, 0);
+		ErrorLogEntry entry = new ErrorLogEntry(ErrorType.INVALID_URI_FOUND, file != null?file.getFileName():HLSConstants.APPLICATION,  message, HLSConstants.FILE_LEVEL);
 		result.addError(entry);
 	}
 	
 	private String getNextURL(String uri, String baseUrl,  MediaFileTagType uriType){
-		if(uriType.equals(MediaFileTagType.RELATIVE_PLAYLIST_URI)){
+		if(uriType.equals(MediaFileTagType.RELATIVE_PLAYLIST_URI) || uriType.equals(MediaFileTagType.TRANSPORT_STREAM_URI)){
 			return baseUrl.concat(uri);
 		}
 		return uri;
@@ -131,16 +138,16 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		URL url = new URL(urlStr);
 		URLConnection connection = url.openConnection();
 		connection.connect();
-		String header = connection.getHeaderField("Content-type");
-		if (!Arrays.asList(allowedContentHeaders).contains(header)){
-			ErrorLogEntry logEntry = new ErrorLogEntry(
-					ErrorType.INVALID_CONTENT_TYPE_HEADER, HLSConstants.APPLICATION,
-					String.format(ErrorType.INVALID_CONTENT_TYPE_HEADER.getMessageFormat(),header), 
-					0);
-			result.addError(logEntry);
-		}
+//		String header = connection.getHeaderField("Content-type");
+//		if (!Arrays.asList(allowedContentHeaders).contains(header)){
+//			ErrorLogEntry logEntry = new ErrorLogEntry(
+//					ErrorType.INVALID_CONTENT_TYPE_HEADER, HLSConstants.APPLICATION,
+//					String.format(ErrorType.INVALID_CONTENT_TYPE_HEADER.getMessageFormat(),header), 
+//					0);
+//			result.addError(logEntry);
+//		}
 		//if(header.equals(a))
-		System.out.println(header); //TODO validate and add error.
+//		System.out.println(header); //TODO validate and add error.
 		
 		return connection;
 	}

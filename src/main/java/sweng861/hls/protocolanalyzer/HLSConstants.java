@@ -15,5 +15,6 @@ public class HLSConstants {
 	public static final String APPLICATION = "APPLICATION";
 	public static final String SLASH = "/";
 	public static final String DOT = ".";
+	public static final String FILE_LEVEL = "File Level";
 
 }

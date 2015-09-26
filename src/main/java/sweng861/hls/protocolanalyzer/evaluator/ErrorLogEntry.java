@@ -13,10 +13,10 @@ public class ErrorLogEntry{
 	
 	private String message; 
 	
-	private int lineNumber; 
+	private String lineNumber; 
 	
 	
-	public ErrorLogEntry(ErrorType errorType, String fileName,  String message, int lineNumber){
+	public ErrorLogEntry(ErrorType errorType, String fileName,  String message, String lineNumber){
 		this.error = errorType; 
 		int lastIndexOf = fileName.lastIndexOf('/');
 		this.fileName = fileName.substring(lastIndexOf +1);
@@ -63,11 +63,11 @@ public class ErrorLogEntry{
 		this.message = message;
 	}
 
-	public int getLineNumber() {
+	public String getLineNumber() {
 		return lineNumber;
 	}
 
-	public void setLineNumber(int lineNumber) {
+	public void setLineNumber(String lineNumber) {
 		this.lineNumber = lineNumber;
 	}
 	

@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import sweng861.hls.protocolanalyzer.HLSConstants;
 import sweng861.hls.protocolanalyzer.HLSMediaStreamAnalyzerService;
 import sweng861.hls.protocolanalyzer.HLSMediaStreamAnalyzerServiceImpl;
 import sweng861.hls.protocolanalyzer.MediaStreamAnalyzerResult;
@@ -31,7 +32,7 @@ public class StreamAnalyzerResource {
 		try {
 			result = fileMediaService.analyzeFiles(url);
 		}catch (Exception e){ //io should be refactored. 
-			errorList.add(new ErrorLogEntry(ErrorType.GENERIC_ERROR, "Invalid URL", ErrorType.GENERIC_ERROR.getMessageFormat(), 0));
+			errorList.add(new ErrorLogEntry(ErrorType.GENERIC_ERROR, "Invalid URL", ErrorType.GENERIC_ERROR.getMessageFormat(), HLSConstants.FILE_LEVEL));
 		}
 		if(result != null){
 			errorList.addAll(result.getErrors());
