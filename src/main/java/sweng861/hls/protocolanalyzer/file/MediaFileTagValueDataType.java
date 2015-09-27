@@ -7,7 +7,7 @@ package sweng861.hls.protocolanalyzer.file;
  */
 public enum MediaFileTagValueDataType {
 	
-	NONE("\\z"), //Should be an empty string ("\\z") should I always check for a line end?
+	NONE("\\z"), 
 	
 	ANY("^.+$"),
 	
@@ -53,8 +53,6 @@ public enum MediaFileTagValueDataType {
 		return  aDataValue.matches(this.getDataTypeRegEx());
 	}	
 	
-	
-	
-	//To Do - add a validation method that can be used to verify the formats. 
+
 
 }

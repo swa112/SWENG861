@@ -99,9 +99,7 @@ public class HLSMediaFile  {
 		return tagList;
 	}
 
-//	public void setTagSet(Set<MediaFileTagType> tagSet) {
-//		this.tagSet = tagSet;
-//	}
+
 	
 	void addTag(MediaFileTagType tag) {
 		if(this.tagList == null){
