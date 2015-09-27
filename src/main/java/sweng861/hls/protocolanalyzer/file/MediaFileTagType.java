@@ -15,7 +15,7 @@ import sweng861.hls.protocolanalyzer.annotation.TimesType;
  * @author Scott
  *
  */
-public enum MediaFileTagType {
+public enum MediaFileTagType implements HLSMediaFileEntity {
 	
 	//**********URI Tags**************//
 	

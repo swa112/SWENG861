@@ -15,7 +15,7 @@ import java.util.List;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorType;
 import sweng861.hls.protocolanalyzer.evaluator.Evaluator;
-import sweng861.hls.protocolanalyzer.evaluator.MediaFileEvaluator;
+import sweng861.hls.protocolanalyzer.evaluator.HLSRuleEvaluator;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
@@ -35,7 +35,7 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		List<HLSMediaFile> fileList = new ArrayList<HLSMediaFile>();
 		result.setFiles(fileList);
 		processFiles(urlStr, result);
-		Evaluator evaluator = new MediaFileEvaluator();
+		Evaluator evaluator = new HLSRuleEvaluator();
 		evaluator.evaluate(fileList);
 		result.setFiles(fileList);
 		Logger logger = new Logger(result);
@@ -79,8 +79,9 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 							String tsURL = this.getNextURL(line, baseUrl, lineType);
 							try {
 								URLConnection tsConnection = getConnection(tsURL, result);
+								//Attempt to get Input stream. Is there a more efficient way to do this?
 								tsConnection.getInputStream();
-								System.out.println(tsConnection.getContentLength());
+//								System.out.println(tsConnection.getContentLength());
 							}catch(MalformedURLException e){
 								logURIError(tsURL, result, file);
 							}catch (IOException e){
@@ -152,21 +153,4 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		return connection;
 	}
 			
-
-	public static void main (String [] args){
-
-		URL url = null; 
-		try {
-			new URL("" );
-			URLConnection connection = url.openConnection();
-			connection.connect();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		
-	}
-
-
-	
-
 }

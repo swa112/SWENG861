@@ -5,7 +5,7 @@ import java.util.Arrays;
 import sweng861.hls.protocolanalyzer.annotation.AllowedValues;
 import sweng861.hls.protocolanalyzer.annotation.ProtocolCompatibility;
 
-public enum MediaFileTagAttributeType {
+public enum MediaFileTagAttributeType implements HLSMediaFileEntity {
 	
 	BANDWIDTH ("BANDWIDTH", MediaFileTagValueDataType.DECIMAL_INTEGER),
 	

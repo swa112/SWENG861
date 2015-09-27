@@ -31,8 +31,11 @@ public class StreamAnalyzerResource {
 		List<ErrorLogEntry> errorList = new ArrayList<ErrorLogEntry>();
 		try {
 			result = fileMediaService.analyzeFiles(url);
-		}catch (Exception e){ //io should be refactored. 
-			errorList.add(new ErrorLogEntry(ErrorType.GENERIC_ERROR, "Invalid URL", ErrorType.GENERIC_ERROR.getMessageFormat(), HLSConstants.FILE_LEVEL));
+		}catch (Exception e){ 
+			errorList.add(new ErrorLogEntry(ErrorType.GENERIC_ERROR, 
+					"Invalid URL", 
+					ErrorType.GENERIC_ERROR.getMessageFormat(), 
+					HLSConstants.FILE_LEVEL));
 		}
 		if(result != null){
 			errorList.addAll(result.getErrors());

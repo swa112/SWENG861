@@ -13,7 +13,7 @@ import java.util.List;
 import sweng861.hls.protocolanalyzer.HLSUtility;
 import sweng861.hls.protocolanalyzer.MediaStreamAnalyzerResult;
 import sweng861.hls.protocolanalyzer.evaluator.Evaluator;
-import sweng861.hls.protocolanalyzer.evaluator.MediaFileEvaluator;
+import sweng861.hls.protocolanalyzer.evaluator.HLSRuleEvaluator;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
@@ -84,7 +84,7 @@ public class TestFileDriver {
 
 		}
 		
-		Evaluator validator = new MediaFileEvaluator();
+		Evaluator validator = new HLSRuleEvaluator();
 		validator.evaluate(result.getFiles());
 		result.setFiles(result.getFiles());
 		Logger logger = new Logger(result);

@@ -4,9 +4,9 @@ import java.util.List;
 
 import sweng861.hls.protocolanalyzer.HLSUtility;
 import sweng861.hls.protocolanalyzer.annotation.ProtocolCompatibility;
-import sweng861.hls.protocolanalyzer.evaluator.ErrorSeverityType;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorType;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
+import sweng861.hls.protocolanalyzer.file.HLSMediaFileEntity;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagAttributeType;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
@@ -79,7 +79,7 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileRule {
 					super.addToErrorLog(
 							file, 
 							ErrorType.INVALID_ATTRIBUTE_DATA_TYPE, 
-							String.format(ErrorType.INVALID_ATTRIBUTE_DATA_TYPE.getMessageFormat(), attributeType.name(), tagValue),
+							String.format(ErrorType.INVALID_ATTRIBUTE_DATA_TYPE.getMessageFormat(), attributeType.toString(), tagValue),
 							lineInfo.getLineNumber() );
 				}
 			}else {
@@ -96,7 +96,7 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileRule {
 
 	}
 	
-	private void checkForProtocolCompatibility(Enum type, HLSMediaFile file, HLSMediaFileLineInfo lineInfo){
+	private void checkForProtocolCompatibility(Enum<? extends HLSMediaFileEntity> type, HLSMediaFile file, HLSMediaFileLineInfo lineInfo){
 
 		ProtocolCompatibility protocolCompatibilityIndicator = null;
 		try {
@@ -123,7 +123,7 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileRule {
 				if(version > deprecatedVersion){
 					addToErrorLog(file, 
 							ErrorType.USE_OF_DEPRECATED_PROTOCOL,
-							String.format(ErrorType.USE_OF_DEPRECATED_PROTOCOL.getMessageFormat(), type.name(), protocolCompatibilityIndicator.deprecatedAsOf()),
+							String.format(ErrorType.USE_OF_DEPRECATED_PROTOCOL.getMessageFormat(), type.toString(), protocolCompatibilityIndicator.deprecatedAsOf()),
 							lineInfo.getLineNumber());
 				}
 			}else if (version >= compatibleVersion){
@@ -131,7 +131,7 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileRule {
 					if(!tagValue.matches(dataType.getDataTypeRegEx())){
 						addToErrorLog(file, 
 								ErrorType.USE_OF_DEPRECATED_TAG_VALUE_TYPE,
-								String.format(ErrorType.USE_OF_DEPRECATED_TAG_VALUE_TYPE.getMessageFormat(), ""),
+								String.format(ErrorType.USE_OF_DEPRECATED_TAG_VALUE_TYPE.getMessageFormat(),lineInfo.getLineType().toString(), tagValue),
 								lineInfo.getLineNumber());
 					}
 				

@@ -63,7 +63,7 @@ public enum ErrorType {
 	INCOMPATIBLE_VERSION(ErrorSeverityType.FATAL, "Found incompatible version of tag [%s] for version %d"),
 	
 	@XmlEnumValue("HLS Protocol incompatibility")
-	USE_OF_DEPRECATED_TAG_VALUE_TYPE(ErrorSeverityType.WARNING, "Found integer value EXTINF values in protocol of 3 or higher."),
+	USE_OF_DEPRECATED_TAG_VALUE_TYPE(ErrorSeverityType.WARNING, "Found incompatible data type for tag [%s]. Value is: [%s]"),
 	;
 	private ErrorSeverityType severity; 
 	
