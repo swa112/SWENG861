@@ -21,7 +21,7 @@ import sweng861.hls.protocolanalyzer.file.MediaFileType;
  * @author Scott
  *
  */
-public class Logger implements Runnable {
+public class Logger extends Thread {
 
 	private static final String LOG_FORMAT = "%d, %s, File: %s, line: %s, message: %s,";
 	

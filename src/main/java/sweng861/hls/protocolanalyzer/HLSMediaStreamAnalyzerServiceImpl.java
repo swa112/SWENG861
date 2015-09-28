@@ -9,7 +9,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
@@ -39,7 +38,7 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		evaluator.evaluate(fileList);
 		result.setFiles(fileList);
 		Logger logger = new Logger(result);
-		logger.run();
+		logger.start();
 		return result;
 	}
 	
