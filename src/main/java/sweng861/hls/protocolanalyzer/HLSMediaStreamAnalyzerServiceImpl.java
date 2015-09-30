@@ -5,10 +5,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
@@ -24,11 +28,11 @@ import sweng861.hls.protocolanalyzer.log.Logger;
  
 public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzerService{
 	
-	private final static String [] allowedContentHeaders = new String []{
-		"application/mpegurl", 
-		"audio/x-mpegurl", 
-		"application/vnd.apple.mpegurl"};
-	
+//	private final static String [] allowedContentHeaders = new String []{
+//		"application/mpegurl", 
+//		"audio/x-mpegurl", 
+//		"application/vnd.apple.mpegurl"};
+//	
 	public MediaStreamAnalyzerResult analyzeFiles(String urlStr) throws MalformedURLException, IOException {
 		MediaStreamAnalyzerResult result = new MediaStreamAnalyzerResult();
 		List<HLSMediaFile> fileList = new ArrayList<HLSMediaFile>();
@@ -77,10 +81,18 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 							//verify TS file exists
 							String tsURL = this.getNextURL(line, baseUrl, lineType);
 							try {
-								URLConnection tsConnection = getConnection(tsURL, result);
-								//Attempt to get Input stream. Is there a more efficient way to do this?
-								tsConnection.getInputStream();
-//								System.out.println(tsConnection.getContentLength());
+
+								URL url = new URL(tsURL);
+								HttpURLConnection tsConnection = (HttpURLConnection) url.openConnection();
+
+								System.out.println(tsConnection);
+								tsConnection.setRequestMethod("HEAD");
+								tsConnection.connect();
+								int responseCode = tsConnection.getResponseCode();
+								if(responseCode == HttpURLConnection.HTTP_NOT_FOUND){
+									logURIError(tsURL, result, file);
+								}
+//							
 							}catch(MalformedURLException e){
 								logURIError(tsURL, result, file);
 							}catch (IOException e){
@@ -102,7 +114,8 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 				logURIError(urlStr, result, file);
 			}catch (IOException e){
 				logURIError(urlStr, result, file);
-			}finally {
+			}
+			finally {
 				try {
 					if (inStreamReader != null){
 						inStreamReader.close();
@@ -143,10 +156,10 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 //			ErrorLogEntry logEntry = new ErrorLogEntry(
 //					ErrorType.INVALID_CONTENT_TYPE_HEADER, HLSConstants.APPLICATION,
 //					String.format(ErrorType.INVALID_CONTENT_TYPE_HEADER.getMessageFormat(),header), 
-//					0);
+//					HLSConstants.FILE_LEVEL);
 //			result.addError(logEntry);
 //		}
-		//if(header.equals(a))
+//		if(header.equals(a))
 //		System.out.println(header); //TODO validate and add error.
 		
 		return connection;

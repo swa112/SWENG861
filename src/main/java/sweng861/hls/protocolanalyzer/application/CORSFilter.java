@@ -11,6 +11,7 @@ import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.ext.Provider;
 
 /**
+ * Filter setup to allow localhost cross domain requests. 
  * @author Scott
  *
  */
