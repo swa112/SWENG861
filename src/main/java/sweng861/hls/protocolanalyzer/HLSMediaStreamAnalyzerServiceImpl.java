@@ -6,13 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.net.HttpURLConnection;
-import java.net.InetAddress;
 import java.net.MalformedURLException;
-import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
@@ -56,7 +54,7 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 			try {
 				URLConnection connection = getConnection(urlStr, result);
 				InputStream inStream = (InputStream)connection.getContent();
-				inStreamReader = new InputStreamReader(inStream);
+				inStreamReader = new InputStreamReader(inStream, Charset.forName("UTF-8"));
 				reader = new BufferedReader(inStreamReader);
 				lineNumberReader = new LineNumberReader(reader);
 				String line = "";
@@ -84,22 +82,18 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 
 								URL url = new URL(tsURL);
 								HttpURLConnection tsConnection = (HttpURLConnection) url.openConnection();
-
-								System.out.println(tsConnection);
 								tsConnection.setRequestMethod("HEAD");
 								tsConnection.connect();
 								int responseCode = tsConnection.getResponseCode();
 								if(responseCode == HttpURLConnection.HTTP_NOT_FOUND){
 									logURIError(tsURL, result, file);
-								}
+								} 							
 //							
 							}catch(MalformedURLException e){
 								logURIError(tsURL, result, file);
 							}catch (IOException e){
 								logURIError(tsURL, result, file);
-							}
-							
-						
+							}						
 						}
 					}
 //					

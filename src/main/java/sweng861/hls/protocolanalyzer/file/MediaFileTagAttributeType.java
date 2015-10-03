@@ -61,6 +61,7 @@ public enum MediaFileTagAttributeType implements HLSMediaFileEntity {
 	@AllowedValues({"NONE", "AES-128", "SAMPLE-AES"})
 	METHOD("METHOD", MediaFileTagValueDataType.ENUMERATED_STRING),
 	
+	@ProtocolCompatibility(version=2)
 	IV("IV", MediaFileTagValueDataType.HEXADECIMAL_SEQUENCE),
 	
 	@ProtocolCompatibility(version=5)
