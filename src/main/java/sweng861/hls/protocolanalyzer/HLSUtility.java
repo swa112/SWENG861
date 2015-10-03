@@ -23,6 +23,9 @@ public class HLSUtility {
 	}
 	
 	public static String getFileNameFromURL(String url){
+		if(url.equals(HLSConstants.APPLICATION)){
+			return url;
+		}
 		int start = url.lastIndexOf(HLSConstants.SLASH);
 		int end = url.lastIndexOf(HLSConstants.DOT);
 		return url.substring(start + 1, end);

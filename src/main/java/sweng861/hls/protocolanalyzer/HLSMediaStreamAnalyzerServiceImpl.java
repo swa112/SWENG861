@@ -27,10 +27,10 @@ import sweng861.hls.protocolanalyzer.log.Logger;
  
 public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzerService{
 	
-	private final static String [] allowedContentHeaders = new String []{
-		"application/mpegurl", 
-		"audio/x-mpegurl", 
-		"application/vnd.apple.mpegurl"};
+//	private final static String [] allowedContentHeaders = new String []{
+//		"application/mpegurl", 
+//		"audio/x-mpegurl", 
+//		"application/vnd.apple.mpegurl"};
 	
 	public MediaStreamAnalyzerResult analyzeFiles(String urlStr) throws MalformedURLException, IOException {
 		MediaStreamAnalyzerResult result = new MediaStreamAnalyzerResult();
@@ -89,16 +89,22 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 								if(responseCode == HttpURLConnection.HTTP_NOT_FOUND){
 									logURIError(tsURL, result, file);
 								} else {
-									String header = tsConnection.getHeaderField("Content-type");
-									System.out.println(tsConnection.getContentLength());
-									System.out.println(tsConnection.getContentType());
-									if (!Arrays.asList(allowedContentHeaders).contains(header)){
-										ErrorLogEntry logEntry = new ErrorLogEntry(
-												ErrorType.INVALID_CONTENT_TYPE_HEADER, HLSConstants.APPLICATION,
-												String.format(ErrorType.INVALID_CONTENT_TYPE_HEADER.getMessageFormat(),header), 
-												HLSConstants.FILE_LEVEL);
-										result.addError(logEntry);
-									}
+//									String header = tsConnection.getHeaderField("Content-type");
+									System.out.println(tsURL);
+									int contentLength = tsConnection.getContentLength();
+									System.out.println("Length: " +contentLength);
+									int bitrate = (contentLength / 6) *8;
+									System.out.println("Expected Bitrate: " + bitrate);
+									
+//									System.out.println(header);
+//									
+//									if (!Arrays.asList(allowedContentHeaders).contains(header)){
+//										ErrorLogEntry logEntry = new ErrorLogEntry(
+//												ErrorType.INVALID_CONTENT_TYPE_HEADER, file.getFileName(),
+//												String.format(ErrorType.INVALID_CONTENT_TYPE_HEADER.getMessageFormat(),header), 
+//												HLSConstants.FILE_LEVEL);
+//										result.addError(logEntry);
+//									}
 								}
 //							
 							}catch(MalformedURLException e){
