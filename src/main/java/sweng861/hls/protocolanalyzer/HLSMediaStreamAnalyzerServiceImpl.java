@@ -11,6 +11,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
@@ -26,11 +27,11 @@ import sweng861.hls.protocolanalyzer.log.Logger;
  
 public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzerService{
 	
-//	private final static String [] allowedContentHeaders = new String []{
-//		"application/mpegurl", 
-//		"audio/x-mpegurl", 
-//		"application/vnd.apple.mpegurl"};
-//	
+	private final static String [] allowedContentHeaders = new String []{
+		"application/mpegurl", 
+		"audio/x-mpegurl", 
+		"application/vnd.apple.mpegurl"};
+	
 	public MediaStreamAnalyzerResult analyzeFiles(String urlStr) throws MalformedURLException, IOException {
 		MediaStreamAnalyzerResult result = new MediaStreamAnalyzerResult();
 		List<HLSMediaFile> fileList = new ArrayList<HLSMediaFile>();
@@ -87,7 +88,18 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 								int responseCode = tsConnection.getResponseCode();
 								if(responseCode == HttpURLConnection.HTTP_NOT_FOUND){
 									logURIError(tsURL, result, file);
-								} 							
+								} else {
+									String header = tsConnection.getHeaderField("Content-type");
+									System.out.println(tsConnection.getContentLength());
+									System.out.println(tsConnection.getContentType());
+									if (!Arrays.asList(allowedContentHeaders).contains(header)){
+										ErrorLogEntry logEntry = new ErrorLogEntry(
+												ErrorType.INVALID_CONTENT_TYPE_HEADER, HLSConstants.APPLICATION,
+												String.format(ErrorType.INVALID_CONTENT_TYPE_HEADER.getMessageFormat(),header), 
+												HLSConstants.FILE_LEVEL);
+										result.addError(logEntry);
+									}
+								}
 //							
 							}catch(MalformedURLException e){
 								logURIError(tsURL, result, file);
