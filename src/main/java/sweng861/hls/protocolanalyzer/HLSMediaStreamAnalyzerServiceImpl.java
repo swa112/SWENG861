@@ -5,14 +5,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import javax.ws.rs.core.HttpHeaders;
+
+import com.sun.research.ws.wadl.HTTPMethods;
+import com.xuggle.xuggler.IContainer;
+import com.xuggle.xuggler.IContainerFormat;
+import com.xuggle.xuggler.ITimeValue;
+
+import javafx.scene.media.Media;
+import javafx.util.Duration;
 
 import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorType;
@@ -22,6 +32,7 @@ import sweng861.hls.protocolanalyzer.file.HLSMediaFile;
 import sweng861.hls.protocolanalyzer.file.HLSMediaFileLineInfo;
 import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
 import sweng861.hls.protocolanalyzer.file.MediaFileType;
+import sweng861.hls.protocolanalyzer.file.TransportStreamFileInfo;
 import sweng861.hls.protocolanalyzer.log.Logger;
 
  
@@ -83,7 +94,7 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 
 								URL url = new URL(tsURL);
 								HttpURLConnection tsConnection = (HttpURLConnection) url.openConnection();
-								tsConnection.setRequestMethod("HEAD");
+								tsConnection.setRequestMethod(HTTPMethods.HEAD.value());
 								tsConnection.connect();
 								int responseCode = tsConnection.getResponseCode();
 								if(responseCode == HttpURLConnection.HTTP_NOT_FOUND){
@@ -91,20 +102,24 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 								} else {
 //									String header = tsConnection.getHeaderField("Content-type");
 									System.out.println(tsURL);
-									int contentLength = tsConnection.getContentLength();
-									System.out.println("Length: " +contentLength);
-									int bitrate = (contentLength / 6) *8;
-									System.out.println("Expected Bitrate: " + bitrate);
-									
-//									System.out.println(header);
-//									
-//									if (!Arrays.asList(allowedContentHeaders).contains(header)){
-//										ErrorLogEntry logEntry = new ErrorLogEntry(
-//												ErrorType.INVALID_CONTENT_TYPE_HEADER, file.getFileName(),
-//												String.format(ErrorType.INVALID_CONTENT_TYPE_HEADER.getMessageFormat(),header), 
-//												HLSConstants.FILE_LEVEL);
-//										result.addError(logEntry);
-//									}
+									IContainer container = IContainer.make();
+									IContainerFormat format = IContainerFormat.make();
+									format.setInputFormat(".ts");
+							
+									int returnCode = container.open(tsURL,IContainer.Type.READ, format);
+									if(returnCode >= 0){
+										
+										BigDecimal bitRate = BigDecimal.valueOf(container.getBitRate());
+										BigDecimal duration = BigDecimal.valueOf(container.getDuration());
+										BigDecimal inSeconds = duration.divide(BigDecimal.valueOf(1000000));
+										System.out.println(bitRate);
+										System.out.println(inSeconds.toString());
+										TransportStreamFileInfo tsFileInfo = new TransportStreamFileInfo();
+										tsFileInfo.setDuration(inSeconds);
+										tsFileInfo.setCalculatedBitRate(bitRate);
+										file.addTsFiles(tsFileInfo);
+									}
+									container.close();
 								}
 //							
 							}catch(MalformedURLException e){

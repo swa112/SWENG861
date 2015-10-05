@@ -24,6 +24,8 @@ public class HLSMediaFile  {
 	
 	private List<HLSMediaFileLineInfo> fileLines;
 	
+	private List<TransportStreamFileInfo> tsFiles = new ArrayList<TransportStreamFileInfo>();
+	
 	@XmlElement
 	private List<ErrorLogEntry> validationErrors = new ArrayList<ErrorLogEntry>();
 	
@@ -114,6 +116,15 @@ public class HLSMediaFile  {
 
 	public void setVersion(int version) {
 		this.version = version;
+	}
+
+	public List<TransportStreamFileInfo> getTsFiles() {
+		return tsFiles;
+	}
+
+	public void addTsFiles(TransportStreamFileInfo tsFile) {
+		tsFiles.add(tsFile);
+		
 	}
 
 	@Override
