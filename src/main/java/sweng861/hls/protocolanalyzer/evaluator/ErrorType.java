@@ -57,7 +57,7 @@ public enum ErrorType {
 	INVALID_URI_FOUND(ErrorSeverityType.FATAL, "URL [%s] was not found or found invalid text in the file."),
 	
 	@XmlEnumValue("Unable to process")
-	GENERIC_ERROR(ErrorSeverityType.FATAL, "Unable to process the entered URL. Please try a anoter url."),
+	GENERIC_ERROR(ErrorSeverityType.FATAL, "Unable to process the entered URL. Please try a another url."),
 	
 	@XmlEnumValue("HLS Protocol incompatibility")
 	INCOMPATIBLE_VERSION(ErrorSeverityType.FATAL, "Found incompatible version of tag [%s] for version %d"),
