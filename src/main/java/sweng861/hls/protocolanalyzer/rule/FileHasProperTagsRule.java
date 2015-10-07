@@ -65,7 +65,7 @@ import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
 	
 	private void evaluateEndTag(HLSMediaFile file){
 		MediaFileTagType endTag = file.getFileType().getEndTag();
-		if(endTag != null){
+		if(endTag != null && !file.getFileLines().isEmpty()){
 			HLSMediaFileLineInfo lastTagInFile = file.getFileLines().get(file.getFileLines().size() -1);
 			if(!endTag.equals(lastTagInFile)){
 				super.addToErrorLog(file, 
