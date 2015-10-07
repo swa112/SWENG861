@@ -35,6 +35,9 @@ public enum ErrorType {
 	@XmlEnumValue("The start tag for file is missing")
 	MISSING_START_TAG (ErrorSeverityType.FATAL, "Start tag for file type %s [%s] was not found"),
 	
+	@XmlEnumValue("The start tag for file is missing")
+	MISSING_END_TAG (ErrorSeverityType.FATAL, "End tag for file type %s [%s] was not found."),
+	
 	@XmlEnumValue("Found an invalid file type")
 	INVALID_FILE_TYPE (ErrorSeverityType.FATAL, "File [%s] is not a recognized file type"),
 
