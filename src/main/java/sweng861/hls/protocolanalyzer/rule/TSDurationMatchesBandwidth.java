@@ -35,21 +35,20 @@ public class TSDurationMatchesBandwidth extends AbstractMediaFileRule {
 	 */
 	public void runRuleCheck(HLSMediaFile file) {
 		String fileName = HLSUtility.getFileNameFromURL(file.getFileName());
-		HLSMediaFileLineInfo lineInfo = getLineFromMasterPlaylist(fileName);
+		HLSMediaFileLineInfo lineInfo = getLineFromMasterPlaylist(fileName, file);
 		if(lineInfo != null ){
-			double bandwidth = determineBandwidth(lineInfo);
-			double high = bandwidth * TOLERANCE_LEVEL_HIGH_MULTIPLIER;
-			double low = bandwidth * TOLERANCE_LEVEL_LOW_MULTIPLIER;
-			// TODO Auto-generated method stub
+			Double bandwidth = Double.valueOf(determineBandwidth(lineInfo));
+			Double high = bandwidth * TOLERANCE_LEVEL_HIGH_MULTIPLIER;
+			Double low = bandwidth * TOLERANCE_LEVEL_LOW_MULTIPLIER;
 			List<TransportStreamFileInfo> tsFiles = file.getTsFiles();
 			for (TransportStreamFileInfo tsFile : tsFiles){
 				BigDecimal bitRate = tsFile.getCalculatedBitRate();
-				double bitRateDbl = bitRate.doubleValue();
+				Double bitRateDbl = bitRate.doubleValue();
 				if (!(high > bitRateDbl && bitRateDbl > low)){
 					String tsName = HLSUtility.getFileNameFromURL(tsFile.getFileName());
 					super.addToErrorLog(file, 
 							ErrorType.BANDWIDTH_OUT_OF_TOLERANCE, 
-							String.format(ErrorType.BANDWIDTH_OUT_OF_TOLERANCE.getMessageFormat(), bitRateDbl, bandwidth),
+							String.format(ErrorType.BANDWIDTH_OUT_OF_TOLERANCE.getMessageFormat(), bitRateDbl.intValue(), bandwidth.intValue()),
 							tsName);
 							
 				}
@@ -58,11 +57,18 @@ public class TSDurationMatchesBandwidth extends AbstractMediaFileRule {
 
 	}
 	
-	private HLSMediaFileLineInfo getLineFromMasterPlaylist(String name){
+	private HLSMediaFileLineInfo getLineFromMasterPlaylist(String name, HLSMediaFile file){
 		List<HLSMediaFileLineInfo> fileLines = masterPlayList.getFileLines();
-		for (HLSMediaFileLineInfo fileLine: fileLines){
-			if(fileLine.getLineType().equals(MediaFileTagType.EXT_X_STREAM_INF)){
-				return fileLine;
+		int index = file.getFileName().lastIndexOf(HLSConstants.SLASH);
+		String fileName = file.getFileName().substring(index +1);
+		
+		for (int i =0; i < fileLines.size(); i++){
+			if(fileLines.get(i).getLineType().equals(MediaFileTagType.EXT_X_STREAM_INF)){
+				String nextLine = fileLines.get(i+1).getLineData();
+			
+				if(nextLine.equals(fileName)){
+					return fileLines.get(i);
+				}
 			}
 		}
 		return null;

@@ -37,11 +37,11 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 //		"audio/x-mpegurl", 
 //		"application/vnd.apple.mpegurl"};
 	
-	public MediaStreamAnalyzerResult analyzeFiles(String urlStr) throws MalformedURLException, IOException {
+	public MediaStreamAnalyzerResult analyzeFiles(String urlStr, boolean isAnalyzeTS) throws MalformedURLException, IOException {
 		MediaStreamAnalyzerResult result = new MediaStreamAnalyzerResult();
 		List<HLSMediaFile> fileList = new ArrayList<HLSMediaFile>();
 		result.setFiles(fileList);
-		processFiles(urlStr, result);
+		processFiles(urlStr, result, isAnalyzeTS);
 		Evaluator evaluator = new HLSRuleEvaluator();
 		evaluator.evaluate(fileList);
 		result.setFiles(fileList);
@@ -50,7 +50,7 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		return result;
 	}
 	
-	private void processFiles(String urlStr, MediaStreamAnalyzerResult result){
+	private void processFiles(String urlStr, MediaStreamAnalyzerResult result, boolean isAnalyzeTS){
 			HLSMediaFile file = new HLSMediaFile(urlStr);
 			int lastIndex = urlStr.lastIndexOf('/');
 			String baseUrl = urlStr.substring(0, lastIndex+1); 
@@ -80,7 +80,7 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 						file.addFileLine(lineInfo);
 						if(lineType.isURI() && !lineType.equals(MediaFileTagType.TRANSPORT_STREAM_URI)){
 							String nextURL = this.getNextURL(line, baseUrl, lineType);
-							processFiles(nextURL, result);
+							processFiles(nextURL, result, isAnalyzeTS);
 						}else if (lineType.equals(MediaFileTagType.TRANSPORT_STREAM_URI)){
 							//verify TS file exists
 							String tsURL = this.getNextURL(line, baseUrl, lineType);
@@ -93,27 +93,9 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 								int responseCode = tsConnection.getResponseCode();
 								if(responseCode == HttpURLConnection.HTTP_NOT_FOUND){
 									logURIError(tsURL, result, file);
-								} else {
-//									String header = tsConnection.getHeaderField("Content-type");
-									System.out.println(tsURL);
-									IContainer container = IContainer.make();
-									IContainerFormat format = IContainerFormat.make();
-									format.setInputFormat(".ts");
-							
-									int returnCode = container.open(tsURL,IContainer.Type.READ, format);
-									if(returnCode >= 0){
-										
-										BigDecimal bitRate = BigDecimal.valueOf(container.getBitRate());
-										BigDecimal duration = BigDecimal.valueOf(container.getDuration());
-										BigDecimal inSeconds = duration.divide(BigDecimal.valueOf(1000000));
-										System.out.println(bitRate);
-										System.out.println(inSeconds.toString());
-										TransportStreamFileInfo tsFileInfo = new TransportStreamFileInfo();
-										tsFileInfo.setDuration(inSeconds);
-										tsFileInfo.setCalculatedBitRate(bitRate);
-										file.addTsFiles(tsFileInfo);
-									}
-									container.close();
+								} else if (isAnalyzeTS){
+//								
+									analyzeTransportStream(file, tsURL);
 								}
 //							
 							}catch(MalformedURLException e){
@@ -153,6 +135,29 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 			}
 		
 		}
+
+	private void analyzeTransportStream(HLSMediaFile file, String tsURL) {
+		System.out.println(tsURL);
+		IContainer container = IContainer.make();
+		IContainerFormat format = IContainerFormat.make();
+		format.setInputFormat(".ts");
+
+		int returnCode = container.open(tsURL,IContainer.Type.READ, format);
+		if(returnCode >= 0){
+			
+			BigDecimal bitRate = BigDecimal.valueOf(container.getBitRate());
+			BigDecimal duration = BigDecimal.valueOf(container.getDuration());
+			BigDecimal inSeconds = duration.divide(BigDecimal.valueOf(1000000));
+			System.out.println(bitRate);
+			System.out.println(inSeconds.toString());
+			TransportStreamFileInfo tsFileInfo = new TransportStreamFileInfo();
+			tsFileInfo.setDuration(inSeconds);
+			tsFileInfo.setCalculatedBitRate(bitRate);
+			tsFileInfo.setFileName(tsURL);
+			file.addTsFiles(tsFileInfo);
+		}
+		container.close();
+	}
 	
 	private void logURIError(String url, MediaStreamAnalyzerResult result, HLSMediaFile file){
 		String message = String.format(ErrorType.INVALID_URI_FOUND.getMessageFormat(), url);
@@ -172,16 +177,7 @@ public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzer
 		URL url = new URL(urlStr);
 		URLConnection connection = url.openConnection();
 		connection.connect();
-//		String header = connection.getHeaderField("Content-type");
-//		if (!Arrays.asList(allowedContentHeaders).contains(header)){
-//			ErrorLogEntry logEntry = new ErrorLogEntry(
-//					ErrorType.INVALID_CONTENT_TYPE_HEADER, HLSConstants.APPLICATION,
-//					String.format(ErrorType.INVALID_CONTENT_TYPE_HEADER.getMessageFormat(),header), 
-//					HLSConstants.FILE_LEVEL);
-//			result.addError(logEntry);
-//		}
-//		if(header.equals(a))
-//		System.out.println(header); //TODO validate and add error.
+
 		
 		return connection;
 	}

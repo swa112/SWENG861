@@ -5,6 +5,6 @@ import java.net.MalformedURLException;
 
 public interface HLSMediaStreamAnalyzerService {
 	
-	public MediaStreamAnalyzerResult analyzeFiles(String urlStr) throws MalformedURLException, IOException;
+	public MediaStreamAnalyzerResult analyzeFiles(String urlStr, boolean isAnalyzeTS) throws MalformedURLException, IOException;
 	
 }

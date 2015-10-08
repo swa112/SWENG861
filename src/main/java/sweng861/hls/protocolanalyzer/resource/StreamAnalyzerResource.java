@@ -24,13 +24,13 @@ public class StreamAnalyzerResource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<ErrorLogEntry> analyzeStreamResult(@QueryParam("url") @NotNull String url){
+	public Collection<ErrorLogEntry> analyzeStreamResult(@QueryParam("url") @NotNull String url, @QueryParam("analyzeTS") String analyzeTS){
 
 		HLSMediaStreamAnalyzerService fileMediaService = new HLSMediaStreamAnalyzerServiceImpl();
 		MediaStreamAnalyzerResult result = null;
 		List<ErrorLogEntry> errorList = new ArrayList<ErrorLogEntry>();
 		try {
-			result = fileMediaService.analyzeFiles(url);
+			result = fileMediaService.analyzeFiles(url, isAnalyzeTS(analyzeTS));
 		}catch (Exception e){ 
 			errorList.add(new ErrorLogEntry(ErrorType.GENERIC_ERROR, 
 					"Invalid URL", 
@@ -48,6 +48,13 @@ public class StreamAnalyzerResource {
 	
 
 		return errorList;
+	}
+	
+	private boolean isAnalyzeTS(String analyzeTS){
+		if(analyzeTS != null && analyzeTS.equalsIgnoreCase("Y")){
+			return true;
+		}
+		return false;
 	}
 	
 	

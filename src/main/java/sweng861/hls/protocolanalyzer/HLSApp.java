@@ -26,7 +26,7 @@ public class HLSApp {
 		MediaStreamAnalyzerResult result;
 		HLSMediaStreamAnalyzerService fileService = new HLSMediaStreamAnalyzerServiceImpl();
 		try {
-			result = fileService.analyzeFiles(urlStr);
+			result = fileService.analyzeFiles(urlStr, true);
 		}catch (Exception e){
 			e.printStackTrace();
 		}
