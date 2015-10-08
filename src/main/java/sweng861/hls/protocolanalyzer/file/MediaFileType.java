@@ -38,6 +38,11 @@ public enum MediaFileType {
 		public MediaFileTagType getStartTag() {
 			return MediaFileTagType.EXTM3U;
 		}
+
+		@Override
+		public MediaFileTagType getEndTag() {
+			return null;
+		}
 	},
 	
 	MEDIA_PLAYLIST {
@@ -77,6 +82,11 @@ public enum MediaFileType {
 		public MediaFileTagType getStartTag() {
 			return MediaFileTagType.EXTM3U;
 		}
+
+		@Override
+		public MediaFileTagType getEndTag() {
+			return MediaFileTagType.EXT_X_ENDLIST;
+		}
 	},
 	
 	
@@ -100,6 +110,12 @@ public enum MediaFileType {
 		@Override
 		public MediaFileTagType getStartTag() {
 			return MediaFileTagType.NOT_A_TAG;
+		}
+
+		@Override
+		public MediaFileTagType getEndTag() {
+			
+			return null;
 		}
 		
 	}
@@ -132,6 +148,12 @@ public enum MediaFileType {
 	 * @return
 	 */
 	public abstract MediaFileTagType getStartTag();
+	
+	/**
+	 * Override this method with the ending tag, if required.
+	 * @return
+	 */
+	public abstract MediaFileTagType getEndTag();
 	
 	/**
 	 * Evaluate the lines that make up the file to determine the corresponding file type. 
