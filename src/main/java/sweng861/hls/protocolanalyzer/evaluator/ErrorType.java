@@ -64,6 +64,9 @@ public enum ErrorType {
 	
 	@XmlEnumValue("HLS Protocol incompatibility")
 	USE_OF_DEPRECATED_TAG_VALUE_TYPE(ErrorSeverityType.WARNING, "Found incompatible data type for tag [%s]. Value is: [%s]"),
+	
+	@XmlEnumValue("Bitrate vs bandwith out of tolerance")
+	BANDWIDTH_OUT_OF_TOLERANCE(ErrorSeverityType.WARNING, "Calculated bit rate %d is out of tolerance level with BANDWIDTH attribute %d"),
 	;
 	private ErrorSeverityType severity; 
 	

@@ -14,16 +14,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.HttpHeaders;
-
-import com.sun.research.ws.wadl.HTTPMethods;
-import com.xuggle.xuggler.IContainer;
-import com.xuggle.xuggler.IContainerFormat;
-import com.xuggle.xuggler.ITimeValue;
-
-import javafx.scene.media.Media;
-import javafx.util.Duration;
-
 import sweng861.hls.protocolanalyzer.evaluator.ErrorLogEntry;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorType;
 import sweng861.hls.protocolanalyzer.evaluator.Evaluator;
@@ -34,6 +24,10 @@ import sweng861.hls.protocolanalyzer.file.MediaFileTagType;
 import sweng861.hls.protocolanalyzer.file.MediaFileType;
 import sweng861.hls.protocolanalyzer.file.TransportStreamFileInfo;
 import sweng861.hls.protocolanalyzer.log.Logger;
+
+import com.sun.research.ws.wadl.HTTPMethods;
+import com.xuggle.xuggler.IContainer;
+import com.xuggle.xuggler.IContainerFormat;
 
  
 public class HLSMediaStreamAnalyzerServiceImpl implements HLSMediaStreamAnalyzerService{
