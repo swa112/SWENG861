@@ -21,6 +21,7 @@ public enum ErrorType {
 	@XmlEnumValue("Media segment does not match the target")
 	MEDIA_SEGMENT_DURATION_DOES_NOT_EQUAL_TARGET(ErrorSeverityType.WARNING, "Media Segment [%s] does match target duration of %d"),
 	
+	@XmlEnumValue("Comment Found")
 	COMMENT_FOUND(ErrorSeverityType.INFO, "Found comment [%s] ensure that this is intended to comment and not a misformed tag."),
 	
 	@XmlEnumValue("Missing required tag")
@@ -35,7 +36,7 @@ public enum ErrorType {
 	@XmlEnumValue("The start tag for file is missing")
 	MISSING_START_TAG (ErrorSeverityType.FATAL, "Start tag for file type %s [%s] was not found"),
 	
-	@XmlEnumValue("The start tag for file is missing")
+	@XmlEnumValue("The end tag for file is missing")
 	MISSING_END_TAG (ErrorSeverityType.FATAL, "End tag for file type %s [%s] was not found."),
 	
 	@XmlEnumValue("Found an invalid file type")
