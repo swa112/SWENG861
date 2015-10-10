@@ -38,8 +38,8 @@ public class Logger extends Thread {
 				String fileName = getMasterPlaylistName(result);
 				SimpleDateFormat dateformat = new SimpleDateFormat("MMddyy");
 				String logFile = dateformat.format(currentDate).concat("_").concat(fileName).concat(".csv");
-				File log = new File("C:\\Users\\Scott\\Documents\\PSU Software Engineering\\Fall 2015\\SWENG861\\workspace\\protocal-analyzer\\logs\\" + logFile);
-//				File log = new File("V:\\protocol-analyzer\\SWENG861\\logs\\" + logFile);
+//				File log = new File("C:\\Users\\Scott\\Documents\\PSU Software Engineering\\Fall 2015\\SWENG861\\workspace\\protocal-analyzer\\logs\\" + logFile);
+				File log = new File("V:\\protocol-analyzer\\SWENG861\\logs\\" + logFile);
 				FileWriter filewriter = new FileWriter(log);
 				BufferedWriter writer = new BufferedWriter(filewriter);
 				writer.write("Number, Error, File, Line Number, Message");

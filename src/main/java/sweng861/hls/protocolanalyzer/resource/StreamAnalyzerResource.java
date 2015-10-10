@@ -25,7 +25,7 @@ public class StreamAnalyzerResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<ErrorLogEntry> analyzeStreamResult(@QueryParam("url") @NotNull String url, @QueryParam("analyzeTS") String analyzeTS){
-
+		long start = System.currentTimeMillis();
 		HLSMediaStreamAnalyzerService fileMediaService = new HLSMediaStreamAnalyzerServiceImpl();
 		MediaStreamAnalyzerResult result = null;
 		List<ErrorLogEntry> errorList = new ArrayList<ErrorLogEntry>();
@@ -46,7 +46,9 @@ public class StreamAnalyzerResource {
 			}
 		}
 	
-
+		long end = System.currentTimeMillis();
+		long executionTime = end - start; 
+		System.out.println("Proccessed in : " + executionTime + " ms");
 		return errorList;
 	}
 	
