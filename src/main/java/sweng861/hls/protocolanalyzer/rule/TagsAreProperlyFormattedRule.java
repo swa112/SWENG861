@@ -2,6 +2,7 @@ package sweng861.hls.protocolanalyzer.rule;
 
 import java.util.List;
 
+import sweng861.hls.protocolanalyzer.HLSConstants;
 import sweng861.hls.protocolanalyzer.HLSUtility;
 import sweng861.hls.protocolanalyzer.annotation.ProtocolCompatibility;
 import sweng861.hls.protocolanalyzer.evaluator.ErrorType;
@@ -20,11 +21,6 @@ import sweng861.hls.protocolanalyzer.file.MediaFileTagValueDataType;
  */
 class TagsAreProperlyFormattedRule extends AbstractMediaFileRule {
 
-	private static final char TAG_SEPARATOR = ':';
-	private static final String ATTRIBUTE_SEPARATOR = ",";
-	private static final String NAME_VALUE_SEPARATOR = "=";
-
-
 	/**
 	 * @see HLSRule#runRuleCheck(HLSMediaFile, HLSMediaFileLineInfo)
 	 */
@@ -37,7 +33,7 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileRule {
 					String lineData = fileLine.getLineData();
 					checkForProtocolCompatibility(lineType, file, fileLine);
 					
-					int index = lineData.indexOf(TAG_SEPARATOR);
+					int index = lineData.indexOf(HLSConstants.TAG_SEPARATOR);
 					if(index != -1){ 
 						String tagValue = lineData.substring(index + 1);
 						if(lineType.isTagProperlyFormatted(tagValue, file.getVersion())){
@@ -66,10 +62,10 @@ class TagsAreProperlyFormattedRule extends AbstractMediaFileRule {
 	
 	private void checkTagAttributes(MediaFileTagType type, String tagValue, HLSMediaFile file, HLSMediaFileLineInfo lineInfo){
 
-		String[] attributes = tagValue.split(ATTRIBUTE_SEPARATOR);
+		String[] attributes = tagValue.split(HLSConstants.ATTRIBUTE_SEPARATOR);
 
 		for (String attribute : attributes){
-			String[] nameValue = attribute.split(NAME_VALUE_SEPARATOR); //length should be 2. 
+			String[] nameValue = attribute.split(HLSConstants.NAME_VALUE_SEPARATOR); //length should be 2. 
 			MediaFileTagAttributeType attributeType = MediaFileTagAttributeType.getAttributeTypeFromString(nameValue[0].trim());
 			
 			checkForProtocolCompatibility(attributeType, file, lineInfo);

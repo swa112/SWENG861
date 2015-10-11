@@ -343,10 +343,6 @@ public enum MediaFileTagType implements HLSMediaFileEntity {
 			return MediaFileTagValueDataType.ANY;
 		}
 		
-		@Override
-		public boolean isDeprecated(){
-			return true;
-		}
 	},
 	
 
@@ -442,9 +438,6 @@ public enum MediaFileTagType implements HLSMediaFileEntity {
 		return isProperlyFormatted;
 	}
 	
-	public boolean isDeprecated(){
-		return false; 
-	}
 	
 	public static List<MediaFileTagType> getTagsWithTimesConstraint(){
 		List<MediaFileTagType> tagsWithTimesConstraint = new ArrayList<MediaFileTagType>();
@@ -466,10 +459,5 @@ public enum MediaFileTagType implements HLSMediaFileEntity {
 	}
 
 	
-	public static void main(String [] args){
-		String test = "#EXT-X-TARGET-DURATION:10";
-		System.out.println(test.matches(EXT_X_TARGET_DURATION.getTagPattern()));
-		
-	}
 
 }
